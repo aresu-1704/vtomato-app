@@ -165,7 +165,9 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                    onTap: _saveHistory,
+                    onTap: _viewModel.isLoading
+                    ? null
+                    : _saveHistory,
                     child: Column(
                       children: const [
                         Icon(Icons.save_as_rounded, color: Colors.white),

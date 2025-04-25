@@ -20,14 +20,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     if (!_formKey.currentState!.validate()) return;
     FocusScope.of(context).unfocus();
 
+    ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Đang gửi OTP đến Email của bạn...')
+        )
+    );
+
     setState(() => _isLoading = true);
 
     final result = await viewModel.sendOTP(emailController.text.trim());
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Đang gửi OTP đến Email của bạn...')
-      )
-    );
 
     setState(() => _isLoading = false);
 
