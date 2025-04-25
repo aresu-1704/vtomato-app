@@ -36,4 +36,32 @@ Hỗ trợ nông dân và kỹ thuật viên nông nghiệp **phát hiện sớm
 
 ---
 
+### 🖼️ Giao diện ứng dụng
+
+#### 🔐 Xác thực người dùng
+<p align="center">
+  <img src="UI/login.jpg" width="220"/>
+  <img src="UI/register.jpg" width="220"/>
+  <img src="UI/forget-password.jpg" width="220"/>
+  <img src="UI/verify-otp.jpg" width="220"/>
+  <img src="UI/reset-password.jpg" width="220"/>
+</p>
+
+---
+
+#### 🌿 Nhận diện bệnh cây
+<p align="center">
+  <img src="UI/camera-upload.jpg" width="300"/>
+  <img src="UI/predict-result.jpg" width="300"/>
+</p>
+
+---
+
+#### 📜 Lịch sử & chi tiết dự đoán
+<p align="center">
+  <img src="UI/history.jpg" width="300"/>
+</p>
+
+
+
 
