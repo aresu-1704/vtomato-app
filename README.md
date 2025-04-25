@@ -36,4 +36,26 @@ Hỗ trợ nông dân và kỹ thuật viên nông nghiệp **phát hiện sớm
 
 ---
 
+### 🖼️ Giao diện ứng dụng
+
+#### 🔐 Xác thực người dùng
+| Đăng nhập | Đăng ký | Quên mật khẩu | Nhập mã OTP | Khôi phục mật khẩu |
+|----------|---------|----------------|-------------|---------------------|
+| ![](images/login.png) | ![](images/register.png) | ![](images/forget-password.png) | ![](images/verify-otp.png) | ![](images/reset-password.png) |
+
+---
+
+#### 🌿 Nhận diện bệnh cây
+| Giao diện quét bằng camera hoặc Upload ảnh từ thư viện | Kết quả dự đoán |
+|----------------------------|-------------------|
+| ![](images/camera-upload.png) | ![](images/predict-result.png) |
+
+---
+
+#### 📜 Lịch sử & chi tiết dự đoán
+| Danh sách lịch sử |
+|-------------------|
+| ![](images/history.png) |
+
+
 
