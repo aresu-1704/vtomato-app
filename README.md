@@ -40,11 +40,11 @@ Hỗ trợ nông dân và kỹ thuật viên nông nghiệp **phát hiện sớm
 
 #### 🔐 Xác thực người dùng
 <p align="center">
-  <img src="images/UI/login.jpg" width="200"/>
-  <img src="images/UI/register.jpg" width="200"/>
-  <img src="images/UI/forgot-password.jpg" width="200"/>
-  <img src="images/UI/verify-otp.jpg" width="200"/>
-  <img src="images/UI/reset-password.jpg" width="200"/>
+  <img src="images/UI/login.jpg" width="150"/>
+  <img src="images/UI/register.jpg" width="150"/>
+  <img src="images/UI/forgot-password.jpg" width="150"/>
+  <img src="images/UI/verify-otp.jpg" width="150"/>
+  <img src="images/UI/reset-password.jpg" width="150"/>
 </p>
 
 ---
