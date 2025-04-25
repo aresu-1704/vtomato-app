@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="Replace SQLServer to PostgreSQL">
+      <change afterPath="$PROJECT_DIR$/utils/otp_storage/start_redis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Disease_History_Controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/disease_history_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Login_Controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/auth_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Predict_Controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/predict_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kaggle.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/database/Disease_History.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/entitys/disease_history.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/database/Disease_Info.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/entitys/disease_info.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/database/Login_Info.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/entitys/login_info.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/F1_curve.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/PR_curve.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/P_curve.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/R_curve.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/args.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/confusion_matrix.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/confusion_matrix_normalized.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/labels.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/labels_correlogram.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/results.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/results.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/train_batch0.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/train_batch1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/train_batch2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/train_batch9310.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/train_batch9311.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/train_batch9312.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/val_batch0_labels.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/val_batch0_pred.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/val_batch1_labels.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/val_batch1_pred (1).jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/val_batch1_pred.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/val_batch2_labels.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/weights/last.pt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Disease_History_Service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/disease_history_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Disease_Info_Service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/disease_info_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Login_Service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/auth_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Predict_Service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/predict_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/database_util/DatabaseConnect.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/database/postgreSQL_connection.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/password_util/Hash_Password.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/hash_password/hash_password.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/send_otp_util/Send_OTP_By_PhoneNumber.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/send_otp/send_OTP_to_email.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Lý Thuận An &lt;aresu.work1704@gmail.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="API-predict" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;aresu-1704&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/aresu-1704/tomato-disease-detect_backend-yolov12.git&quot;,
+    &quot;accountId&quot;: &quot;877ed401-8177-4a7e-bb9c-29bd42d9e96b&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;aresu-1704&quot;,
+    &quot;repository&quot;: &quot;Tomato_Leaf_Disease_Detect_YOLOv12&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2viEvyOwXa2N1qoTM7aIgs6Tov0" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Python.Disease_History_Controller.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Predict_Controller.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Predict_Service.executor&quot;: &quot;Run&quot;,
+    &quot;Python.adas.executor&quot;: &quot;Run&quot;,
+    &quot;Python.asas.executor&quot;: &quot;Run&quot;,
+    &quot;Python.asd.executor&quot;: &quot;Run&quot;,
+    &quot;Python.asdada.executor&quot;: &quot;Run&quot;,
+    &quot;Python.check_label.executor&quot;: &quot;Run&quot;,
+    &quot;Python.data_check.executor&quot;: &quot;Run&quot;,
+    &quot;Python.draw_log.executor&quot;: &quot;Run&quot;,
+    &quot;Python.evaluate_model.executor&quot;: &quot;Run&quot;,
+    &quot;Python.haha.executor&quot;: &quot;Run&quot;,
+    &quot;Python.hehe.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/anly1/Desktop/DoAnCoSo/Tomato-Disease-Detect-App-Project/tomato-disease-detect_backend-yolov12/utils&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\anly1\Desktop\DoAnCoSo\Tomato-Disease-Detect-App-Project\tomato-disease-detect_backend-yolov12\utils" />
+      <recent name="C:\Users\anly1\Desktop\DoAnCoSo\Tomato-Disease-Detect-App-Project\tomato-disease-detect_backend-yolov12\models" />
+      <recent name="C:\Users\anly1\Desktop\DoAnCoSo\Tomato-Disease-Detect-App-Project\tomato-disease-detect_backend-yolov12" />
+      <recent name="C:\Users\anly1\Desktop\DoAnCoSo\AI\Tomato_Leaf_Disease_Detect_YOLOv12\utils\otp_storage" />
+      <recent name="C:\Users\anly1\Desktop\DoAnCoSo\AI\Tomato_Leaf_Disease_Detect_YOLOv12\utils\database_util" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\anly1\Desktop\DoAnCoSo\AI\Tomato_Leaf_Disease_Detect_YOLOv12\utils" />
+      <recent name="C:\Users\anly1\Desktop\DoAnCoSo\AI\Tomato_Leaf_Disease_Detect_YOLOv12" />
+      <recent name="C:\Users\anly1\Desktop\DoAnCoSo\AI\Tomato_Leaf_Disease_Detect_YOLOv12\utils\password_util" />
+      <recent name="C:\Users\anly1\Desktop\DoAnCoSo\AI\Tomato_Leaf_Disease_Detect_YOLOv12\models\predicts" />
+      <recent name="C:\Users\anly1\Desktop\DoAnCoSo\AI\Tomato_Leaf_Disease_Detect_YOLOv12\models" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-fb887030ada0-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.21565.199" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="" />
+      <created>1744619729248</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744619729248</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Create README.md&#10;&#10;Add dataset">
+      <option name="closed" value="true" />
+      <created>1744908103554</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1744908103554</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Create API to Predict with Web Socket">
+      <option name="closed" value="true" />
+      <created>1745000705154</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1745000705154</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Update API to Predict with HTTP&#10;Create API save the Predict History">
+      <option name="closed" value="true" />
+      <created>1745131409583</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1745131409583</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Update API Limit for Authencation Request&#10;Update Src for Dataset Preprocess&#10;Add new Model's Version">
+      <option name="closed" value="true" />
+      <created>1745300236312</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1745300236312</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Fix Git lack file">
+      <option name="closed" value="true" />
+      <created>1745336917409</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1745336917409</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fix Status Email have an OTP to Feature send OTP to Email">
+      <option name="closed" value="true" />
+      <created>1745400495154</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1745400495157</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fix Status Email have an OTP to Feature send OTP to Email">
+      <option name="closed" value="true" />
+      <created>1745416109920</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1745416109920</updated>
+    </task>
+    <task id="LOCAL-00008" summary="requirement.txt for deploy with no GPU to render">
+      <option name="closed" value="true" />
+      <created>1745423593878</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1745423593878</updated>
+    </task>
+    <task id="LOCAL-00009" summary="requirement.txt for deploy with no GPU to render">
+      <option name="closed" value="true" />
+      <created>1745423841801</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1745423841801</updated>
+    </task>
+    <task id="LOCAL-00010" summary="requirement.txt for deploy with no GPU to render">
+      <option name="closed" value="true" />
+      <created>1745424672365</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1745424672365</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Replace SQLServer to PostgreSQL">
+      <option name="closed" value="true" />
+      <created>1745428207426</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1745428207426</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Replace SQLServer to PostgreSQL">
+      <option name="closed" value="true" />
+      <created>1745429393812</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1745429393812</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Replace SQLServer to PostgreSQL">
+      <option name="closed" value="true" />
+      <created>1745478997475</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1745478997475</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add requirements.txt" />
+    <MESSAGE value="Create README.md&#10;&#10;Add dataset" />
+    <MESSAGE value="Create API to Predict with Web Socket" />
+    <MESSAGE value="Update API to Predict with HTTP&#10;Create API save the Predict History" />
+    <MESSAGE value="Update API Limit for Authencation Request&#10;Update Src for Dataset Preprocess&#10;Add new Model's Version" />
+    <MESSAGE value="Fix Git lack file" />
+    <MESSAGE value="Fix Status Email have an OTP to Feature send OTP to Email" />
+    <MESSAGE value="requirement.txt for deploy with no GPU to render" />
+    <MESSAGE value="Replace SQLServer to PostgreSQL" />
+    <option name="LAST_COMMIT_MESSAGE" value="Replace SQLServer to PostgreSQL" />
+  </component>
+</project>
