@@ -41,21 +41,22 @@ Hỗ trợ nông dân và kỹ thuật viên nông nghiệp **phát hiện sớm
 #### 🔐 Xác thực người dùng
 | Đăng nhập | Đăng ký | Quên mật khẩu | Nhập mã OTP | Khôi phục mật khẩu |
 |----------|---------|----------------|-------------|---------------------|
-| ![](UI/login.png) | ![](UI/register.png) | ![](UI/forget-password.png) | ![](UI/verify-otp.png) | ![](UI/reset-password.png) |
+| ![](UI/login.jpg) | ![](UI/register.jpg) | ![](UI/forget-password.jpg) | ![](UI/verify-otp.jpg) | ![](UI/reset-password.jpg) |
 
 ---
 
 #### 🌿 Nhận diện bệnh cây
 | Giao diện quét bằng camera hoặc Upload ảnh từ thư viện | Kết quả dự đoán |
 |----------------------------|-------------------|
-| ![](UI/camera-upload.png) | ![](UI/predict-result.png) |
+| ![](UI/camera-upload.jpg) | ![](UI/predict-result.jpg) |
 
 ---
 
 #### 📜 Lịch sử & chi tiết dự đoán
 | Danh sách lịch sử |
 |-------------------|
-| ![](UI/history.png) |
+| ![](UI/history.jpg) |
+
 
 
 
