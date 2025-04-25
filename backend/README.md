@@ -53,6 +53,7 @@
 ### 🧪 Các bước setup:
 
 ```bash
+
 # Clone repo
 git clone https://github.com/aresu-1704/tomato-disease-detect_backend-yolov12.git
 cd tomato-disease-detect_backend-yolov12
@@ -67,4 +68,26 @@ pip install -r requirements.txt
 # Chạy server
 uvicorn main:app --reload
 ```
+---
+
+## 🗃️ Cài đặt Cơ sở Dữ liệu
+
+### ⚙️ Yêu cầu:
+- PostgreSQL
+
+### 🧪 Các bước setup:
+
+```bash
+
+#Chạy Script database
+psql -U your_postgres_user -d your_database_name -f .DATABASE_SCHEMAS/postgreSQL_database.sql
+```
+
+## **⚠️ Lưu ý:**
+
+- Đảm bảo bạn đã cài đặt PostgreSQL và đã tạo một cơ sở dữ liệu trống.
+
+- Thay your_postgres_user bằng tên người dùng PostgreSQL của bạn.
+
+- Thay your_database_name bằng tên cơ sở dữ liệu mà bạn muốn sử dụng.
 

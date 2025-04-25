@@ -4,49 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="Replace SQLServer to PostgreSQL">
-      <change afterPath="$PROJECT_DIR$/utils/otp_storage/start_redis.py" afterDir="false" />
+    <list default="true" id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="Add README and Refractor File's Name">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/Disease_History_Controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/disease_history_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/Login_Controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/auth_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/Predict_Controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/predict_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kaggle.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/database/Disease_History.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/entitys/disease_history.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/database/Disease_Info.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/entitys/disease_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/database/Login_Info.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/entitys/login_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/F1_curve.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/PR_curve.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/P_curve.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/R_curve.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/args.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/confusion_matrix.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/confusion_matrix_normalized.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/labels.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/labels_correlogram.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/results.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/results.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/train_batch0.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/train_batch1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/train_batch2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/train_batch9310.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/train_batch9311.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/train_batch9312.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/val_batch0_labels.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/val_batch0_pred.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/val_batch1_labels.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/val_batch1_pred (1).jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/val_batch1_pred.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/val_batch2_labels.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/predicts/yolov12n/weights/last.pt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Disease_History_Service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/disease_history_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Disease_Info_Service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/disease_info_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Login_Service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/auth_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Predict_Service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/predict_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/database_util/DatabaseConnect.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/database/postgreSQL_connection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/password_util/Hash_Password.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/hash_password/hash_password.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/send_otp_util/Send_OTP_By_PhoneNumber.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/send_otp/send_OTP_to_email.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -265,7 +225,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745478997475</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Add README and Refractor File's Name">
+      <option name="closed" value="true" />
+      <created>1745563067969</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1745563067969</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -278,6 +246,7 @@
     <MESSAGE value="Fix Status Email have an OTP to Feature send OTP to Email" />
     <MESSAGE value="requirement.txt for deploy with no GPU to render" />
     <MESSAGE value="Replace SQLServer to PostgreSQL" />
-    <option name="LAST_COMMIT_MESSAGE" value="Replace SQLServer to PostgreSQL" />
+    <MESSAGE value="Add README and Refractor File's Name" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add README and Refractor File's Name" />
   </component>
 </project>
