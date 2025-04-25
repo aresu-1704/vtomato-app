@@ -40,26 +40,33 @@ Hỗ trợ nông dân và kỹ thuật viên nông nghiệp **phát hiện sớm
 
 #### 🔐 Xác thực người dùng
 <p align="center">
-  <img src="UI/login.jpg" width="220"/>
-  <img src="UI/register.jpg" width="220"/>
-  <img src="UI/forget-password.jpg" width="220"/>
-  <img src="UI/verify-otp.jpg" width="220"/>
-  <img src="UI/reset-password.jpg" width="220"/>
+  <img src="images/UI/login.jpg" width="200"/>
+  <img src="images/UI/register.jpg" width="200"/>
+  <img src="images/UI/forgot-password.jpg" width="200"/>
+  <img src="images/UI/verify-otp.jpg" width="200"/>
+  <img src="images/UI/reset-password.jpg" width="200"/>
 </p>
 
 ---
 
 #### 🌿 Nhận diện bệnh cây
 <p align="center">
-  <img src="UI/camera-upload.jpg" width="300"/>
-  <img src="UI/predict-result.jpg" width="300"/>
+  <img src="images/UI/camera-upload.jpg" width="300"/>
+  <img src="images/UI/predict-result.jpg" width="300"/>
 </p>
 
 ---
 
 #### 📜 Lịch sử & chi tiết dự đoán
 <p align="center">
-  <img src="UI/history.jpg" width="300"/>
+  <img src="images/UI/history.jpg" width="300"/>
+</p>
+
+---
+
+#### 📡 Giao diện API (Swagger UI)
+<p align="center">
+  <img src="images/API/api.jpg" width="800"/>
 </p>
 
 
