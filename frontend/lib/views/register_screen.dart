@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
-import 'package:tomato_detect_app/services/auth_service.dart';
+import 'package:tomato_detect_app/view_models/register_viewmodel.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -10,44 +9,33 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final RegisterViewModel _viewModel = RegisterViewModel();
+  bool _isLoading = false;
 
-  final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-  final RegExp phoneRegex = RegExp(r'^(0|\+84)[0-9]{9,10}$');
+  void _onLoadingChange(bool loading) {
+    setState(() => _isLoading = loading);
+  }
 
-  void registerNewAccount() async {
-    if (_formKey.currentState!.validate()) {
-      final email = _emailController.text.trim();
-      final password = _passwordController.text;
-      final phoneNumber = _phoneController.text;
+  Future<void> _register() async {
+    final result = await _viewModel.registerNewAccount(_onLoadingChange);
 
-      final authService = AuthService();
-      final error = await authService.register(email, phoneNumber, password);
-
-      if (error == null) {
-        // Hiển thị thông báo đăng ký thành công
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Đăng ký thành công!')),
+    if (result! == 1) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Đăng ký thành công!')
+        )
+      );
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.pop(
+          context,
         );
-
-        Future.delayed(const Duration(seconds: 1), () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => LoginScreen()),
-          );
-        });
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Email đã tồn tại.')),
-        );
-      }
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Email đã tồn tại.')
+        )
+      );
     }
-
-    FocusScope.of(context).requestFocus(FocusNode());
   }
 
   @override
@@ -57,22 +45,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 58),
         child: Form(
-          key: _formKey,
           child: Column(
             children: [
               Image.asset('assets/images/tomato_icon.png', width: 200, height: 200),
               const SizedBox(height: 15),
-              Text('ĐĂNG KÝ TÀI KHOẢN', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.green[800])),
+              Text(
+                'ĐĂNG KÝ TÀI KHOẢN',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green[800])
+              ),
               const SizedBox(height: 18),
 
               // Số điện thoại
               _buildTextFormField(
-                controller: _phoneController,
+                controller: _viewModel.phoneController,
                 hintText: 'Số điện thoại',
                 icon: Icons.phone,
                 validator: (value) {
-                  if (value == null || value.trim().isEmpty) return 'Số điện thoại không được để trống';
-                  if (!phoneRegex.hasMatch(value)) return 'Số điện thoại không hợp lệ';
+                  if (value == null || value.trim().isEmpty)
+                    return 'Số điện thoại không được để trống';
+                  if (!_viewModel.phoneRegex.hasMatch(value))
+                    return 'Số điện thoại không hợp lệ';
                   return null;
                 },
               ),
@@ -80,12 +75,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               // Email
               _buildTextFormField(
-                controller: _emailController,
+                controller: _viewModel.emailController,
                 hintText: 'Email',
                 icon: Icons.email,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) return 'Email không được để trống';
-                  if (!emailRegex.hasMatch(value)) return 'Email không hợp lệ';
+                  if (!_viewModel.emailRegex.hasMatch(value)) return 'Email không hợp lệ';
                   return null;
                 },
               ),
@@ -93,13 +88,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               // Mật khẩu
               _buildTextFormField(
-                controller: _passwordController,
+                controller: _viewModel.passwordController,
                 hintText: 'Mật khẩu',
                 icon: Icons.lock,
                 isPassword: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) return 'Mật khẩu không được để trống';
-                  if (value.length < 6) return 'Mật khẩu phải từ 6 ký tự';
+                  if (value.length < 8) return 'Mật khẩu phải từ 8 ký tự';
                   return null;
                 },
               ),
@@ -107,13 +102,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               // Xác nhận mật khẩu
               _buildTextFormField(
-                controller: _confirmPasswordController,
+                controller: _viewModel.confirmPasswordController,
                 hintText: 'Xác nhận mật khẩu',
                 icon: Icons.lock,
                 isPassword: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) return 'Vui lòng xác nhận mật khẩu';
-                  if (value != _passwordController.text) return 'Mật khẩu không khớp';
+                  if (value != _viewModel.passwordController.text) return 'Mật khẩu không khớp';
                   return null;
                 },
               ),
@@ -122,15 +117,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: registerNewAccount,
+                  onPressed: _isLoading
+                    ? null
+                    : () => {
+                      FocusScope.of(context).unfocus(),
+                      _register()
+                    },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green[700],
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   ),
-                  child: const Text('ĐĂNG KÝ', style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold)),
+                  child: _isLoading
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : const Text(
+                      'ĐĂNG KÝ',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold
+                      )
+                    ),
+                  ),
                 ),
-              ),
               const SizedBox(height: 10),
 
               Row(
@@ -139,9 +148,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const Text('Đã có tài khoản ?'),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
+                      Navigator.pop(
                         context,
-                        MaterialPageRoute(builder: (context) => const LoginScreen()),
                       );
                     },
                     child: const Text('Đăng nhập', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF002F21))),

@@ -1,10 +1,6 @@
-import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:tomato_detect_app/models/DiseaseInfo.dart';
-import 'package:tomato_detect_app/services/predict_history_repository_service.dart';
-import 'package:tomato_detect_app/services/disease_history_service.dart';
-import 'package:tomato_detect_app/services/predict_service.dart';
+import 'package:tomato_detect_app/view_models/predict_result_viewmodel.dart';
 
 class PredictResultScreen extends StatefulWidget {
   final Uint8List image;
@@ -17,72 +13,23 @@ class PredictResultScreen extends StatefulWidget {
 }
 
 class _PredictResultScreenState extends State<PredictResultScreen> {
-  late PredictService _predictService;
-  late DiseaseHistoryService _diseaseHistoryService;
-
-  Uint8List? resultImage;
-  int? resultClassCount = 0;
-  List<int> resultClassList = [];
-  bool isLoading = true;
-  String? message;
-  late List<DiseaseInfo> _diseaseInfo;
+  late PredictResultViewModel _viewModel;
 
   @override
   void initState() {
     super.initState();
-    _predictService = PredictService();
+    _viewModel = PredictResultViewModel();
     _handlePrediction();
   }
 
   Future<void> _handlePrediction() async {
-    final result = await _predictService.sendImage(widget.image);
-
-    if (result == null) {
-      setState(() {
-        message = "Có lỗi xảy ra khi xử lý ảnh.";
-        isLoading = false;
-      });
-      return;
-    }
-
-    if (result['status'] == 'no_disease') {
-      setState(() {
-        message = result['message'] ?? "Không phát hiện bệnh.";
-        isLoading = false;
-      });
-    } else {
-      setState(() {
-        resultImage = result['image'];
-        resultClassCount = result['class_count'];
-        resultClassList = List<int>.from(result['class_indices']);
-        _diseaseInfo = List<DiseaseInfo>.from(result['disease_info']);
-        isLoading = false;
-      });
-    }
+    await _viewModel.handlePrediction(widget.image);
+    setState(() {});
   }
 
   Future<void> _saveHistory() async {
-    _diseaseHistoryService = DiseaseHistoryService();
-
-    bool _reload_Status = await _diseaseHistoryService.saveDiseaseHistory(
-        resultImage!,
-        widget.userID,
-        resultClassList
-    );
-
-    setState(() {
-      isLoading = true;
-    });
-
-    if(_reload_Status){
-      await PredictHistoryReposotory.fetchHistory(widget.userID);
-    }
-
-    await Future.delayed(const Duration(seconds: 1));
-
-    Navigator.pop(
-      context
-    );
+    await _viewModel.saveHistory(widget.userID);
+    Navigator.pop(context);
   }
 
   @override
@@ -92,31 +39,25 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
       appBar: AppBar(
         title: const Text(
           'Thông tin nhận diện bệnh',
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         centerTitle: true,
         backgroundColor: Colors.green[700],
         iconTheme: IconThemeData(color: Colors.white),
       ),
-      body: isLoading
-      ? Center(
-        child: CircularProgressIndicator(
-          color: Colors.green[700],
-        ),
-      )
-      : Column(
-        children: [
-          const SizedBox(height: 20),
-          Expanded(
-            flex: 7,
-              child: resultClassCount == 0
-                  ? const Center(
+      body: _viewModel.isLoading
+        ? Center(
+        child: CircularProgressIndicator(color: Colors.green[700]),
+        )
+        : Column(
+          children: [
+            const SizedBox(height: 20),
+            Expanded(
+              flex: 7,
+              child: _viewModel.resultClassCount == 0
+                ? const Center(
                 child: Text(
-                  'Cây cà chua của bạn\n hoàn toàn khỏe mạnh\n'
-                      ' 🍅🍅🍅🍅🍅🍅🍅🍅',
+                  'Cây cà chua của bạn\n hoàn toàn khỏe mạnh\n🍅🍅🍅🍅🍅🍅🍅🍅',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
@@ -125,41 +66,45 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
                   ),
                 ),
               )
-                  : Container(
+              : Container(
                 margin: const EdgeInsets.symmetric(horizontal: 28),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   color: Colors.black,
                 ),
-                child: resultImage != null
+                child: _viewModel.resultImage != null
                     ? ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Image.memory(
-                    resultImage!,
+                    _viewModel.resultImage!,
                     fit: BoxFit.contain,
                   ),
                 )
-                    : const Center(
+                : const Center(
                   child: Text(
                     'Không có ảnh hoặc lỗi trong quá trình xử lý.',
-                    style: TextStyle(fontSize: 18, color: Colors.red, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
-          ),
+            ),
           const SizedBox(height: 12),
-
-          if (resultClassCount != null && resultClassCount! > 0)
+          if (_viewModel.resultClassCount != null &&
+              _viewModel.resultClassCount! > 0)
             Expanded(
               flex: 5,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: ListView.builder(
-                  itemCount: _diseaseInfo.length,
+                  itemCount: _viewModel.diseaseInfo.length,
                   itemBuilder: (context, index) {
-                    final disease = _diseaseInfo[index];
+                    final disease = _viewModel.diseaseInfo[index];
                     return Card(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
                       elevation: 3,
                       margin: const EdgeInsets.only(bottom: 12),
                       color: Colors.blue[50],
@@ -202,7 +147,7 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
                                   TextSpan(text: '${disease.treatment}\n'),
                                 ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -211,30 +156,31 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
                 ),
               ),
             ),
-
-          // Bottom buttons
-          Container(
-            color: Colors.green[700],
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                GestureDetector(
-                  onTap: _saveHistory,
-                  child: Column(
-                    children: const [
-                      Icon(Icons.save_as_rounded, color: Colors.white),
-                      SizedBox(height: 4),
-                      Text(
-                        "Lưu lịch sử nhận diện",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
+          if (_viewModel.resultClassCount != null &&
+              _viewModel.resultClassCount! > 0)
+            Container(
+              color: Colors.green[700],
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: _saveHistory,
+                    child: Column(
+                      children: const [
+                        Icon(Icons.save_as_rounded, color: Colors.white),
+                        SizedBox(height: 4),
+                        Text(
+                          "Lưu lịch sử nhận diện",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          )
+          // Bottom buttons
         ],
       ),
     );

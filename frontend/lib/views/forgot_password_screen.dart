@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tomato_detect_app/services/auth_service.dart';
+import 'package:tomato_detect_app/view_models/forgot_password_viewmodel.dart';
 import 'login_screen.dart';
 import 'verify_otp_screen.dart';
 
@@ -12,41 +12,47 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController emailController = TextEditingController();
-  final AuthService _authService = AuthService();
-  bool _isLoading = false;
+  final ForgotPasswordViewModel viewModel = ForgotPasswordViewModel();
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
 
   Future<void> _sendOTPToEmail() async {
-    if (!_formKey.currentState!.validate()) {
-      return;
+    if (!_formKey.currentState!.validate()) return;
+    FocusScope.of(context).unfocus();
+
+    setState(() => _isLoading = true);
+
+    final result = await viewModel.sendOTP(emailController.text.trim());
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Đang gửi OTP đến Email của bạn...')
+      )
+    );
+
+    setState(() => _isLoading = false);
+
+    if (!mounted) return;
+
+    switch (result) {
+      case 1:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => VerifyOtpScreen(email: emailController.text.trim()),
+          ),
+        );
+        break;
+      case 0:
+        _showSnackBar('Tài khoản không tồn tại.');
+        break;
+      default:
+        _showSnackBar('Vui lòng thử lại sau.');
+        break;
     }
+  }
 
-    setState(() {
-      _isLoading = true;
-    });
-
-    final result = await _authService.sendOTPtoemail(emailController.text.trim());
-
-    setState(() {
-      _isLoading = false;
-    });
-
-    if (result == 1) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => VerifyOtpScreen(email: emailController.text.trim()),
-        ),
-      );
-    } else if (result == 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Tài khoản không tồn tại.')),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Vui lòng thử lại sau.')),
-      );
-    }
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -68,7 +74,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         title: Text(
           'QUÊN MẬT KHẨU',
           style: TextStyle(
-              color: Colors.green[800], fontWeight: FontWeight.bold),
+            color: Colors.green[800],
+            fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -109,9 +116,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   if (value == null || value.isEmpty) {
                     return 'Vui lòng nhập Email';
                   }
-                  String pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$';
-                  RegExp regex = RegExp(pattern);
-                  if (!regex.hasMatch(value)) {
+                  final regex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
+                  if (!regex.hasMatch(value.trim())) {
                     return 'Vui lòng nhập địa chỉ email hợp lệ';
                   }
                   return null;
@@ -122,29 +128,24 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: _isLoading ? null : () {
-                    FocusScope.of(context).requestFocus(FocusNode());
-                    _sendOTPToEmail();
-                  },
+                  onPressed: _isLoading ? null : _sendOTPToEmail,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: _isLoading ? Colors.green.shade700 : Colors.green[700],
+                    backgroundColor: Colors.green[700],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   child: _isLoading
-                      ? const CircularProgressIndicator(
-                    color: Colors.white,
-                  )
-                      : const Text(
-                    "NHẬN MÃ",
-                    style: TextStyle(
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : const Text(
+                      "NHẬN MÃ",
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 15),
+                      ),
+                    ),
                   ),
-                ),
-              ),
             ],
           ),
         ),

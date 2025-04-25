@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:tomato_detect_app/services/predict_history_repository_service.dart';
-import 'package:tomato_detect_app/screens/predict_history_screen.dart';
-import 'package:tomato_detect_app/screens/predict_result_screen.dart';
+import 'package:tomato_detect_app/views//predict_history_screen.dart';
+import 'package:tomato_detect_app/views//predict_result_screen.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:image/image.dart' as img;
+import 'package:tomato_detect_app/view_models/camera_viewmodel.dart';
 
 class CameraScreen extends StatefulWidget {
   final int UserId;
@@ -16,103 +14,83 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  late CameraController _cameraController;
+  bool _isLoading = false;
+  bool _isTakePicture = false;
   bool _isCameraInitialized = false;
-  final ImagePicker _picker = ImagePicker();
-  bool isLoading = false;
-  bool isTakePicture = false;
+  late CameraViewModel _viewModel;
 
   @override
   void initState() {
     super.initState();
-    _initCamera();
-    _loadHistory();
-  }
-
-  Future<void> _loadHistory() async {
-    setState(() => isLoading = true);
-    await PredictHistoryReposotory
-        .fetchHistory(widget.UserId)
-        .timeout(Duration(seconds: 10));
-    setState(() => isLoading = false);
+    _viewModel = CameraViewModel();
+    _viewModel.loadHistory(_onLoadingChange, widget.UserId);
+    _viewModel.initCamera(_onCameraInitializedChange);
   }
 
   @override
   void dispose() {
-    _cameraController.dispose();
+    _viewModel.dispose();
     super.dispose();
   }
 
-  Future<void> _initCamera() async {
-    final cameras = await availableCameras();
-    _cameraController = CameraController(
-      cameras.first,
-      ResolutionPreset.medium,
-    );
-    await _cameraController.initialize();
-    if (mounted) {
-      setState(() => _isCameraInitialized = true);
-    }
+  void _onTakePictureChange(bool takePicture){
+    setState(() => _isTakePicture = takePicture);
+  }
+
+  void _onLoadingChange(bool loading){
+    setState(() => _isLoading = loading);
+  }
+
+  void _onCameraInitializedChange(bool cameraInitialized){
+    setState(() => _isCameraInitialized = cameraInitialized);
   }
 
   Future<void> _takePicture() async {
     try {
-
-      setState(() {
-        isTakePicture = true;
-      });
-
-      XFile picture = await _cameraController.takePicture();
-      final imageBytes = await picture.readAsBytes();
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => PredictResultScreen(
-            image: imageBytes,
-            userID: widget.UserId,
+      final imageBytes = await _viewModel.takePicture(_onTakePictureChange);
+      if(imageBytes != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                PredictResultScreen(
+                  image: imageBytes,
+                  userID: widget.UserId,
+                ),
           ),
-        ),
-      );
-    } catch (e) {
-      print('Lỗi khi chụp ảnh: $e');
+        );
+      }
+    } catch (_){
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Lỗi khi chụp ảnh, thử lại.")),
       );
-    } finally {
-      setState(() {
-        isTakePicture = false;
-      });
     }
   }
 
   Future<void> _pickImageFromGallery() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      final Uint8List imageBytes = await image.readAsBytes();
-
-      img.Image? originalImage = img.decodeImage(imageBytes);
-      if (originalImage == null) {
-        print("Không thể decode ảnh");
-        return;
-      }
-
-      img.Image rotatedImage = img.copyRotate(originalImage, angle: -90);
-
-      final Uint8List rotatedBytes = Uint8List.fromList(img.encodeJpg(rotatedImage));
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => PredictResultScreen(
-              image: rotatedBytes,
-              userID: widget.UserId
+    try {
+      final imageBytes = await _viewModel.pickImageFromGallery();
+      if(imageBytes != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                PredictResultScreen(
+                  image: imageBytes,
+                  userID: widget.UserId,
+                ),
           ),
-        ),
+        );
+      }
+      else{
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Không có ảnh nào được chọn.")),
+        );
+      }
+    } catch (_){
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Lỗi khi chọn ảnh, thử lại.")),
       );
-    } else {
-      print("Không có ảnh nào được chọn");
     }
   }
 
@@ -121,13 +99,13 @@ class _CameraScreenState extends State<CameraScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFFEF7ED),
       body: SafeArea(
-        child: isLoading
-        ? Center(
+        child: _isLoading
+            ? Center(
           child: CircularProgressIndicator(
             color: Colors.green[700],
           ),
         )
-        : Column(
+            : Column(
           children: [
             const SizedBox(height: 8),
             Text(
@@ -152,7 +130,7 @@ class _CameraScreenState extends State<CameraScreen> {
                   borderRadius: BorderRadius.circular(16),
                   child: Stack(
                     children: [
-                      CameraPreview(_cameraController),
+                      CameraPreview(_viewModel.cameraController),
                     ],
                   ),
                 )
@@ -174,7 +152,7 @@ class _CameraScreenState extends State<CameraScreen> {
             const SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: isTakePicture
+              child: _isTakePicture || !_isCameraInitialized
                 ? Container(
                 width: 60,
                 height: 60,
@@ -191,19 +169,22 @@ class _CameraScreenState extends State<CameraScreen> {
                   )
                 )
               )
-              : GestureDetector(
-                onTap: _takePicture,
-                child: Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.green[700],
-                    shape: BoxShape.circle,
+                : GestureDetector(
+                  onTap: _takePicture,
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Colors.green[700],
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.camera_alt,
+                      color: Colors.white
+                    ),
                   ),
-                  child: const Icon(Icons.camera_alt, color: Colors.white),
-                ),
-              )
-            ),
+                )
+              ),
             const SizedBox(height: 16),
 
             Container(
@@ -213,7 +194,9 @@ class _CameraScreenState extends State<CameraScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                    onTap: _pickImageFromGallery,
+                    onTap: _isTakePicture || !_isCameraInitialized
+                    ? null
+                    : _pickImageFromGallery,
                     child: Column(
                       children: const [
                         Icon(Icons.add_photo_alternate, color: Colors.white),
@@ -226,7 +209,9 @@ class _CameraScreenState extends State<CameraScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
+                    onTap: _isTakePicture || !_isCameraInitialized
+                      ? null
+                      : () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) =>

@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:tomato_detect_app/view_models/verify_OTP_viewmodel.dart';
 import 'login_screen.dart';
 import 'forgot_password_screen.dart';
-import 'newpassword_screen.dart';
-import 'package:tomato_detect_app/services/auth_service.dart';
+import 'new_password_screen.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
   final String email;
@@ -15,50 +15,21 @@ class VerifyOtpScreen extends StatefulWidget {
 }
 
 class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
-  final List<TextEditingController> otpControllers =
-  List.generate(5, (_) => TextEditingController());
-  final AuthService _authService = AuthService();
-
-  int secondsRemaining = 60;
-  bool isResendEnabled = false;
-  Timer? countdownTimer;
+  late VerifyOtpViewModel _viewModel;
 
   @override
   void initState() {
     super.initState();
-    _startCountdown();
+    _viewModel = VerifyOtpViewModel();
+    _viewModel.startCountdown(_updateUI);
   }
 
-  void _startCountdown() {
-    setState(() {
-      secondsRemaining = 60;
-      isResendEnabled = false;
-    });
-
-    countdownTimer?.cancel();
-
-    countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (secondsRemaining > 0) {
-        setState(() {
-          secondsRemaining--;
-        });
-      } else {
-        setState(() {
-          isResendEnabled = true;
-        });
-        timer.cancel();
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    countdownTimer?.cancel();
-    super.dispose();
+  void _updateUI() {
+    setState(() {});
   }
 
   Future<void> _verifyOTP() async {
-    String otp = otpControllers.map((c) => c.text).join();
+    String otp = _viewModel.otpControllers.map((c) => c.text).join();
 
     if (otp.length != 5) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -67,7 +38,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       return;
     }
 
-    final result = await _authService.verifyOTP(widget.email, int.parse(otp));
+    final result = await _viewModel.verifyOTP(widget.email);
 
     if (result == 1) {
       Navigator.pushReplacement(
@@ -88,6 +59,12 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   }
 
   @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFEF7ED),
@@ -99,8 +76,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(
-                  builder: (context) => const ForgotPasswordScreen()),
+              MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()),
             );
           },
         ),
@@ -118,9 +94,10 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               Text(
                 "Nhập mã xác minh",
                 style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green[800]),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green[800],
+                ),
               ),
               const SizedBox(height: 8),
               const Text(
@@ -138,7 +115,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     width: 50,
                     height: 60,
                     child: TextField(
-                      controller: otpControllers[index],
+                      controller: _viewModel.otpControllers[index],
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
                       maxLength: 1,
@@ -155,7 +132,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         ),
                       ),
                       onChanged: (value) {
-                        if (value.length == 1 && index < otpControllers.length - 1) {
+                        if (value.length == 1 && index < _viewModel.otpControllers.length - 1) {
                           FocusScope.of(context).nextFocus();
                         } else if (value.isEmpty && index > 0) {
                           FocusScope.of(context).previousFocus();
@@ -171,27 +148,24 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                 children: [
                   const Text("Chưa nhận được OTP?"),
                   TextButton(
-                    onPressed: isResendEnabled
+                    onPressed: _viewModel.isResendEnabled
                         ? () async {
-                      final resend = await _authService
-                          .sendOTPtoemail(widget.email);
-                      if (resend == 1) {
-                        _startCountdown();
-                      }
+                      final resend = await _viewModel.resendOTP(widget.email);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                            content: Text(resend == 1
-                                ? 'Mã OTP đã được gửi lại.'
-                                : 'Gửi lại thất bại.')),
+                          content: Text(
+                            resend == 1 ? 'Mã OTP đã được gửi lại.' : 'Gửi lại thất bại.',
+                          ),
+                        ),
                       );
                     }
                         : null,
                     child: Text(
-                      isResendEnabled
+                      _viewModel.isResendEnabled
                           ? "Gửi lại"
-                          : "Gửi lại sau ${secondsRemaining}s",
+                          : "Gửi lại sau ${_viewModel.secondsRemaining}s",
                       style: TextStyle(
-                        color: isResendEnabled
+                        color: _viewModel.isResendEnabled
                             ? const Color(0xFF002F21)
                             : Colors.grey,
                         fontWeight: FontWeight.bold,
@@ -215,19 +189,16 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     },
                     style: OutlinedButton.styleFrom(
                       side: const BorderSide(color: Colors.green),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 41, vertical: 14),
+                      padding: const EdgeInsets.symmetric(horizontal: 41, vertical: 14),
                     ),
-                    child: const Text("Hủy bỏ",
-                        style: TextStyle(color: Color(0xFF002F21))),
+                    child: const Text("Hủy bỏ", style: TextStyle(color: Color(0xFF002F21))),
                   ),
                   const SizedBox(width: 16),
                   ElevatedButton(
                     onPressed: _verifyOTP,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green[700],
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 33, vertical: 14),
+                      padding: const EdgeInsets.symmetric(horizontal: 33, vertical: 14),
                     ),
                     child: const Text(
                       "Xác minh",
@@ -239,7 +210,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tomato_detect_app/models/DiseaseHistory.dart';
-import 'package:tomato_detect_app/screens/history_detail_screen.dart';
-import 'package:tomato_detect_app/services/predict_history_repository_service.dart';
+import 'package:tomato_detect_app/views//history_detail_screen.dart';
+import 'package:tomato_detect_app/view_models/predicts_history_viewmodel.dart';
+
 
 class PredictHistoryScreen extends StatefulWidget {
   final int userID;
@@ -9,18 +10,16 @@ class PredictHistoryScreen extends StatefulWidget {
   const PredictHistoryScreen({super.key, required this.userID});
 
   @override
-  State<PredictHistoryScreen> createState() => _PredictHistoryScreenState();
+  _PredictHistoryScreenState createState() => _PredictHistoryScreenState();
 }
 
 class _PredictHistoryScreenState extends State<PredictHistoryScreen> {
-  bool isLoading = true;
+  late PredictsHistoryViewModel _viewModel;
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      isLoading = false;
-    });
+    _viewModel = PredictsHistoryViewModel();
   }
 
   Widget _buildHistoryCard(DiseaseHistory history) {
@@ -87,11 +86,11 @@ class _PredictHistoryScreenState extends State<PredictHistoryScreen> {
         backgroundColor: Colors.green[700],
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: isLoading
+      body: _viewModel.isLoading
           ? Center(
         child: CircularProgressIndicator(color: Colors.green[700]),
       )
-          : PredictHistoryReposotory.listDiseaseHistory.isEmpty
+          : _viewModel.historyList.isEmpty
           ? const Center(
         child: Text(
           'Chưa có lịch sử dự đoán nào.',
@@ -99,9 +98,9 @@ class _PredictHistoryScreenState extends State<PredictHistoryScreen> {
         ),
       )
           : ListView.builder(
-        itemCount: PredictHistoryReposotory.listDiseaseHistory.length,
+        itemCount: _viewModel.historyList.length,
         itemBuilder: (context, index) {
-          final history = PredictHistoryReposotory.listDiseaseHistory[index];
+          final history = _viewModel.historyList[index];
           return GestureDetector(
             onTap: () {
               Navigator.push(
