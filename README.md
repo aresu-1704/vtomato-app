@@ -24,8 +24,6 @@ Hệ thống nhận diện bệnh trên cây cà chua gồm **2 thành phần ch
 
 Hỗ trợ nông dân và kỹ thuật viên nông nghiệp **phát hiện sớm** và **xử lý kịp thời** các loại bệnh thường gặp trên cây cà chua, giúp **giảm thiểu thiệt hại mùa vụ**, tăng hiệu quả sản xuất.
 
----
-
 ### 🧱 Kiến trúc hệ thống:
 
 ---
