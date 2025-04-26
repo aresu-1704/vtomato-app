@@ -1,5 +1,4 @@
-# 🍅🍅🍅
-# HỆ THỐNG NHẬN DIỆN BỆNH TRÊN CÂY CÀ CHUA BẰNG HÌNH ẢNH (ỨNG DỤNG MẠNG HỌC SÂU YOLOv12)
+# 🍅 ỨNG DỤNG NHẬN DIỆN BỆNH TRÊN CÂY CÀ CHUA BẰNG HÌNH ẢNH (ỨNG DỤNG MẠNG HỌC SÂU YOLOv12)
 
 Ứng dụng nhận diện bệnh cây cà chua được xây dựng bằng Flutter, kết nối với backend YOLOv12 Nano (FastAPI) để quét ảnh lá cây và dự đoán bệnh.
 
