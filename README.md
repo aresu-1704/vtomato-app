@@ -24,12 +24,31 @@ Hệ thống nhận diện bệnh trên cây cà chua gồm **2 thành phần ch
 
 Hỗ trợ nông dân và kỹ thuật viên nông nghiệp **phát hiện sớm** và **xử lý kịp thời** các loại bệnh thường gặp trên cây cà chua, giúp **giảm thiểu thiệt hại mùa vụ**, tăng hiệu quả sản xuất.
 
-### 🧱 Kiến trúc hệ thống:
+## 🤖 Mô hình mạng học sâu:
 
 ---
-# 🤖 ĐÁNH GIÁ MÔ HÌNH YOLOv12 NANO CHO BÀI TOÁN
 
-Mô hình mạng học sâu YOLOv12 được xây dựng trên 1 tập dữ liệu về **8 bệnh** trên cây **Cà chua** phổ biến tại Việt Nam
+# 🌱 TỔNG QUAN TẬP DỮ LIỆU
+
+Mô hình mạng học sâu được xây dựng trên 1 tập dữ liệu về **8 bệnh** trên cây **Cà chua** phổ biến tại Việt Nam gồm 4000 ảnh được gán nhãn
+
+## 📊 Sơ đồ phân bố nhãn
+
+<p align="center">
+  <img src="images/Charts/trainandvalidloss.jpg" width="800"/>
+</p>
+
+## 🖼️ Ảnh mẫu
+
+<p align="center">
+  <img src="images/Charts/labelexample.jpg" width="800"/>
+</p>
+
+---
+
+# 🌟 ĐÁNH GIÁ MÔ HÌNH YOLOv12 NANO CHO BÀI TOÁN
+
+Đánh giá mô hình mạng học sâu YOLOv12 sau 200 Epoch huấn luyện
 
 ## 📈 Biểu đồ Loss qua các Epoch huấn luyện
 
@@ -54,6 +73,10 @@ Mô hình mạng học sâu YOLOv12 được xây dựng trên 1 tập dữ li�
 <p align="center">
   <img src="images/Charts/evaluatedmetricstest.jpg" width="300"/>
 </p>
+
+---
+
+### 🧱 Kiến trúc hệ thống:
 
 ---
 
