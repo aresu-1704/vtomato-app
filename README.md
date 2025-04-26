@@ -10,7 +10,7 @@ Hệ thống nhận diện bệnh trên cây cà chua gồm **2 thành phần ch
   Giúp người dùng dễ dàng chụp ảnh lá cây, gửi ảnh lên server và hiển thị kết quả dự đoán. Giao diện thân thiện, dễ sử dụng cho cả nông dân và kỹ thuật viên.
 
 - 🧠 **Hệ thống phân tích bệnh (Backend - FastAPI + YOLOv12 Nano):**  
-  Nhận ảnh từ người dùng, chạy mô hình học sâu (YOLOv12 Nano) để xác định vùng lá bệnh và phân loại loại bệnh (mốc sương, xoăn lá, đốm vi khuẩn, v.v.).
+  Nhận ảnh từ người dùng, chạy mô hình học sâu (YOLOv12 Nano) để xác định lá bệnh và phân loại loại bệnh (mốc sương, xoăn lá, đốm vi khuẩn, v.v.).
 
 ### ✅ Các tính năng nổi bật:
 
