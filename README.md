@@ -20,9 +20,13 @@ Hệ thống nhận diện bệnh trên cây cà chua gồm **2 thành phần ch
 - **Hiển thị kết quả trực quan và dễ hiểu.**
 - **Lưu lịch sử ảnh.**
 
-### 🎯 Mục tiêu dự án
+### 🎯 Mục tiêu dự án:
 
 Hỗ trợ nông dân và kỹ thuật viên nông nghiệp **phát hiện sớm** và **xử lý kịp thời** các loại bệnh thường gặp trên cây cà chua, giúp **giảm thiểu thiệt hại mùa vụ**, tăng hiệu quả sản xuất.
+
+---
+
+### 🧱 Kiến trúc hệ thống:
 
 ---
 
@@ -111,6 +115,13 @@ psql -U your_postgres_user -d your_database_name -f .DATABASE_SCHEMAS/postgreSQL
 
 ---
 
+## 📡 Giao diện API (Swagger UI)
+<p align="center">
+  <img src="images/API/api.jpg" width="800"/>
+</p>
+
+---
+
 # 📱 Flutter App (Frontend)
 
 Ứng dụng nhận diện bệnh cây cà chua được xây dựng bằng Flutter, kết nối với backend YOLOv12 Nano (FastAPI) để quét ảnh lá cây và dự đoán bệnh.
@@ -193,11 +204,6 @@ Cấu hình API url trong `lib/constants/api_constant.dart`:
 </p>
 
 ---
-
-#### 📡 Giao diện API (Swagger UI)
-<p align="center">
-  <img src="images/API/api.jpg" width="800"/>
-</p>
 
 
 
