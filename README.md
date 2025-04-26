@@ -27,6 +27,35 @@ Hỗ trợ nông dân và kỹ thuật viên nông nghiệp **phát hiện sớm
 ### 🧱 Kiến trúc hệ thống:
 
 ---
+# 🤖 ĐÁNH GIÁ MÔ HÌNH YOLOv12 NANO CHO BÀI TOÁN
+
+Mô hình mạng học sâu YOLOv12 được xây dựng trên 1 tập dữ liệu về **8 bệnh** trên cây **Cà chua** phổ biến tại Việt Nam
+
+## 📈 Biểu đồ Loss qua các Epoch huấn luyện
+
+<p align="center">
+  <img src="images/Charts/trainandvalidloss.jpg" width="800"/>
+</p>
+
+## 📈 Biểu đồ đánh giá Metrics qua các Epoch huấn luyện
+
+<p align="center">
+  <img src="images/Charts/evaluatedmetrics.jpg" width="800"/>
+</p>
+
+## 📈 Biểu đồ đánh giá các lớp trên tập Test sau khi huấn luyện
+
+<p align="center">
+  <img src="images/Charts/evaluatedclass.jpg" width="600"/>
+</p>
+
+## 📈 Biểu đồ đánh giá Metrics trên tập test sau khi huấn luyện
+
+<p align="center">
+  <img src="images/Charts/evaluatedmetricstest.jpg" width="300"/>
+</p>
+
+---
 
 # 🛠️ BACKEND FASTAPI - YOLOv12 Nano (Backend)
 
