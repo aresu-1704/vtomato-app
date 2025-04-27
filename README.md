@@ -62,13 +62,13 @@ Mô hình mạng học sâu được xây dựng trên 1 tập dữ liệu về 
   <img src="images/Charts/evaluatedmetrics.jpg" width="800"/>
 </p>
 
-## 📈 Biểu đồ đánh giá các lớp trên tập Test sau khi huấn luyện
+## 🎯 Đánh giá các lớp trên tập Test sau khi huấn luyện
 
 <p align="center">
   <img src="images/Charts/evaluatedclass.jpg" width="600"/>
 </p>
 
-## 📈 Biểu đồ đánh giá Metrics trên tập test sau khi huấn luyện
+## 🎯 Đánh giá Metrics trên tập test sau khi huấn luyện
 
 <p align="center">
   <img src="images/Charts/evaluatedmetricstest.jpg" width="300"/>
