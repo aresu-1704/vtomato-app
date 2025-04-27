@@ -35,7 +35,7 @@ Mô hình mạng học sâu được xây dựng trên 1 tập dữ liệu về 
 ## 📊 Sơ đồ phân bố nhãn
 
 <p align="center">
-  <img src="images/Dataset/classdistibution.jpg" width="1200"/>
+  <img src="images/Dataset/classdistibution.jpg" width="2000"/>
 </p>
 
 ## 🖼️ Ảnh mẫu
