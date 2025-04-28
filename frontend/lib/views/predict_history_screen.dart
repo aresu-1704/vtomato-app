@@ -14,12 +14,11 @@ class PredictHistoryScreen extends StatefulWidget {
 }
 
 class _PredictHistoryScreenState extends State<PredictHistoryScreen> {
-  late PredictsHistoryViewModel _viewModel;
+  late PredictsHistoryViewModel _viewModel = PredictsHistoryViewModel();
 
   @override
   void initState() {
     super.initState();
-    _viewModel = PredictsHistoryViewModel();
   }
 
   Widget _buildHistoryCard(DiseaseHistory history) {
@@ -87,38 +86,38 @@ class _PredictHistoryScreenState extends State<PredictHistoryScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: _viewModel.isLoading
-          ? Center(
-        child: CircularProgressIndicator(color: Colors.green[700]),
-      )
-          : _viewModel.historyList.isEmpty
+        ? Center(
+          child: CircularProgressIndicator(color: Colors.green[700]),
+        )
+        : _viewModel.historyList.isEmpty
           ? const Center(
-        child: Text(
-          'Chưa có lịch sử dự đoán nào.',
-          style: TextStyle(fontSize: 16, color: Colors.black54),
-        ),
-      )
+            child: Text(
+              'Chưa có lịch sử dự đoán nào.',
+              style: TextStyle(fontSize: 16, color: Colors.black54),
+            ),
+            )
           : ListView.builder(
-        itemCount: _viewModel.historyList.length,
-        itemBuilder: (context, index) {
-          final history = _viewModel.historyList[index];
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => HistoryDetailScreen(
-                    image: history.image,
-                    timestamp: history.timestamp,
-                    diseaseInfo: history.detectedDiseases,
-                    resultClassCount: history.detectedDiseases.length,
-                  ),
-                ),
+            itemCount: _viewModel.historyList.length,
+            itemBuilder: (context, index) {
+              final history = _viewModel.historyList[index];
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HistoryDetailScreen(
+                        image: history.image,
+                        timestamp: history.timestamp,
+                        diseaseInfo: history.detectedDiseases,
+                        resultClassCount: history.detectedDiseases.length,
+                      ),
+                    ),
+                  );
+                },
+                child: _buildHistoryCard(history),
               );
             },
-            child: _buildHistoryCard(history),
-          );
-        },
-      ),
+          ),
     );
   }
 }

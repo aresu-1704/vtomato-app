@@ -1,8 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:tomato_detect_app/services/auth_service.dart';
 
 class NewPasswordViewModel {
   String? passwordError;
   String? confirmPasswordError;
+
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
+  bool obscurePassword = true;
+  bool obscureConfirm = true;
+
+  bool isLoading = false;
 
   bool validatePasswords(String password, String confirmPassword) {
     passwordError = null;
@@ -19,9 +28,17 @@ class NewPasswordViewModel {
     return passwordError == null && confirmPasswordError == null;
   }
 
-  Future<bool> resetPassword(String email, String password) async {
+  Future<bool> resetPassword(String email, String password, Function onSetState) async {
     final authService = AuthService();
+
+    isLoading = true;
+    onSetState();
+
     bool? isSuccess = await authService.resetPassword(email, password);
+
+    isLoading = false;
+    onSetState();
+
     return isSuccess ?? false;
   }
 }

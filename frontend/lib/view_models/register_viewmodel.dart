@@ -10,6 +10,8 @@ class RegisterViewModel {
   final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
   final RegExp phoneRegex = RegExp(r'^(0|\+84)[0-9]{9,10}$');
 
+  bool isLoading = false;
+
   bool isValidForm() {
     if (phoneController.text.isEmpty || !phoneRegex.hasMatch(phoneController.text)) {
       return false;
@@ -30,9 +32,10 @@ class RegisterViewModel {
     return true;
   }
 
-  Future<int?> registerNewAccount(Function(bool) onLoadingChange) async {
+  Future<int?> registerNewAccount(Function onSetState) async {
     if (isValidForm()) {
-      onLoadingChange(true);
+      isLoading = true;
+      onSetState();
 
       final email = emailController.text.trim();
       final password = passwordController.text;
@@ -48,5 +51,10 @@ class RegisterViewModel {
         return 0;
       }
     }
+  }
+
+  void setState(bool isLoading, Function onSetState){
+    this.isLoading = isLoading;
+    onSetState();
   }
 }

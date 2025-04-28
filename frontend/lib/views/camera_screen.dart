@@ -14,17 +14,14 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  bool _isLoading = false;
-  bool _isTakePicture = false;
-  bool _isCameraInitialized = false;
   late CameraViewModel _viewModel;
 
   @override
   void initState() {
     super.initState();
     _viewModel = CameraViewModel();
-    _viewModel.loadHistory(_onLoadingChange, widget.UserId);
-    _viewModel.initCamera(_onCameraInitializedChange);
+    _viewModel.loadHistory(_onSetState, widget.UserId);
+    _viewModel.initCamera(_onSetState);
   }
 
   @override
@@ -33,21 +30,13 @@ class _CameraScreenState extends State<CameraScreen> {
     super.dispose();
   }
 
-  void _onTakePictureChange(bool takePicture){
-    setState(() => _isTakePicture = takePicture);
-  }
-
-  void _onLoadingChange(bool loading){
-    setState(() => _isLoading = loading);
-  }
-
-  void _onCameraInitializedChange(bool cameraInitialized){
-    setState(() => _isCameraInitialized = cameraInitialized);
+  void _onSetState(){
+    setState(() { });
   }
 
   Future<void> _takePicture() async {
     try {
-      final imageBytes = await _viewModel.takePicture(_onTakePictureChange);
+      final imageBytes = await _viewModel.takePicture(_onSetState);
       if(imageBytes != null) {
         Navigator.push(
           context,
@@ -99,7 +88,7 @@ class _CameraScreenState extends State<CameraScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFFEF7ED),
       body: SafeArea(
-        child: _isLoading
+        child: _viewModel.isLoading
             ? Center(
           child: CircularProgressIndicator(
             color: Colors.green[700],
@@ -125,7 +114,7 @@ class _CameraScreenState extends State<CameraScreen> {
                   borderRadius: BorderRadius.circular(16),
                   color: Colors.black,
                 ),
-                child: _isCameraInitialized
+                child: _viewModel.isCameraInitialized
                     ? ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Stack(
@@ -152,7 +141,7 @@ class _CameraScreenState extends State<CameraScreen> {
             const SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: _isTakePicture || !_isCameraInitialized
+              child: _viewModel.isTakePicture || !_viewModel.isCameraInitialized
                 ? Container(
                 width: 60,
                 height: 60,
@@ -194,7 +183,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                    onTap: _isTakePicture || !_isCameraInitialized
+                    onTap: _viewModel.isTakePicture || !_viewModel.isCameraInitialized
                     ? null
                     : _pickImageFromGallery,
                     child: Column(
@@ -209,7 +198,7 @@ class _CameraScreenState extends State<CameraScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: _isTakePicture || !_isCameraInitialized
+                    onTap: _viewModel.isTakePicture || !_viewModel.isCameraInitialized
                       ? null
                       : () {
                       Navigator.push(

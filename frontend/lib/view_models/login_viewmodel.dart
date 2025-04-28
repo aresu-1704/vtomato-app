@@ -14,11 +14,12 @@ class LoginViewModel {
     passwordController.text = prefs.getString('password') ?? '';
   }
 
-  Future<int?> login(Function(bool) onLoadingChanged) async {
+  Future<int?> login(Function onSetState) async {
     final email = emailController.text.trim();
     final password = passwordController.text;
 
-    onLoadingChanged(true);
+    isLoading = true;
+    onSetState();
 
     final authService = AuthService();
     final userId = await authService.login(email, password);
@@ -34,6 +35,11 @@ class LoginViewModel {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('email', email);
     await prefs.setString('password', password);
+  }
+
+  void setState(bool isLoading, Function onSetState){
+    this.isLoading = isLoading;
+    onSetState();
   }
 
   void dispose() {

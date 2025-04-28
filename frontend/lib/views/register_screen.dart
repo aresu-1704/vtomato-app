@@ -10,14 +10,13 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final RegisterViewModel _viewModel = RegisterViewModel();
-  bool _isLoading = false;
 
-  void _onLoadingChange(bool loading) {
-    setState(() => _isLoading = loading);
+  void _onSetState(){
+    setState(() { });
   }
 
   Future<void> _register() async {
-    final result = await _viewModel.registerNewAccount(_onLoadingChange);
+    final result = await _viewModel.registerNewAccount(_onSetState);
 
     if (result! == 1) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -31,6 +30,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
       });
     } else {
+      _viewModel.setState(false, _onSetState);
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Email đã tồn tại.')
         )
@@ -117,7 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: _isLoading
+                  onPressed: _viewModel.isLoading
                     ? null
                     : () => {
                       FocusScope.of(context).unfocus(),
@@ -128,7 +129,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   ),
-                  child: _isLoading
+                  child: _viewModel.isLoading
                     ? const CircularProgressIndicator(color: Colors.white)
                     : const Text(
                       'ĐĂNG KÝ',

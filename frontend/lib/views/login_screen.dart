@@ -13,23 +13,22 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final viewModel = LoginViewModel();
-  bool isLoading = false;
+  final LoginViewModel _viewModel = LoginViewModel();
 
   @override
   void initState() {
     super.initState();
-    viewModel.loadUserData();
+    _viewModel.loadUserData();
   }
 
   @override
   void dispose() {
-    viewModel.dispose();
+    _viewModel.dispose();
     super.dispose();
   }
 
-  void _onLoadingChange(bool loading) {
-    setState(() => isLoading = loading);
+  void _onSetState(){
+    setState(() { });
   }
 
   @override
@@ -56,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 32),
 
               _buildTextField(
-                controller: viewModel.emailController,
+                controller: _viewModel.emailController,
                 hint: 'Địa chỉ Email',
                 icon: Icons.email_outlined,
                 validatorMsg: 'Email không được để trống',
@@ -64,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 16),
 
               _buildTextField(
-                controller: viewModel.passwordController,
+                controller: _viewModel.passwordController,
                 hint: 'Mật khẩu',
                 icon: Icons.lock_outline,
                 obscure: true,
@@ -74,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: isLoading
+                  onPressed: _viewModel.isLoading
                     ? null
                     : () {
                     Navigator.push(context,
@@ -90,12 +89,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: isLoading
+                  onPressed: _viewModel.isLoading
                     ? null
                     : () async {
                       if (_formKey.currentState!.validate()) {
                         FocusScope.of(context).unfocus();
-                        final userId = await viewModel.login(_onLoadingChange);
+                        final userId = await _viewModel.login(_onSetState);
 
                         if (userId == -2) {
                           _showSnackBar('Bạn đã đăng nhập quá nhiều lần, vui lòng thử lại sau.');
@@ -112,14 +111,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           _showSnackBar('Sai tài khoản hoặc mật khẩu.');
                         }
 
-                        _onLoadingChange(false);
+                        _viewModel.setState(false, _onSetState);
                       }
                     },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green[700],
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   ),
-                  child: isLoading
+                  child: _viewModel.isLoading
                       ? const CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   )
@@ -133,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   const Text('Không có tài khoản ?'),
                   TextButton(
-                    onPressed: isLoading
+                    onPressed: _viewModel.isLoading
                       ? null
                       : () {
                       Navigator.push(

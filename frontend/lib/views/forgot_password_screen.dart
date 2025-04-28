@@ -12,9 +12,8 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController emailController = TextEditingController();
-  final ForgotPasswordViewModel viewModel = ForgotPasswordViewModel();
+  final ForgotPasswordViewModel _viewModel = ForgotPasswordViewModel();
   final _formKey = GlobalKey<FormState>();
-  bool _isLoading = false;
 
   Future<void> _sendOTPToEmail() async {
     if (!_formKey.currentState!.validate()) return;
@@ -25,12 +24,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             content: Text('Đang gửi OTP đến Email của bạn...')
         )
     );
-
-    setState(() => _isLoading = true);
-
-    final result = await viewModel.sendOTP(emailController.text.trim());
-
-    setState(() => _isLoading = false);
+    
+    final result = await _viewModel.sendOTP(
+        emailController.text.trim(),
+        _onSetState
+    );
 
     if (!mounted) return;
 
@@ -54,6 +52,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  void _onSetState(){
+    setState(() { });
   }
 
   @override
@@ -129,24 +131,25 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: _isLoading ? null : _sendOTPToEmail,
+                  onPressed: _viewModel.isLoading ? null : _sendOTPToEmail,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green[700],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: _isLoading
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text(
-                      "NHẬN MÃ",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 15),
-                      ),
+                  child: _viewModel.isLoading
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : const Text(
+                    "NHẬN MÃ",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 15
                     ),
                   ),
+                ),
+              ),
             ],
           ),
         ),

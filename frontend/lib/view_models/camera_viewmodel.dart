@@ -7,36 +7,44 @@ import 'package:image/image.dart' as img;
 class CameraViewModel {
   late CameraController cameraController;
   final ImagePicker _picker = ImagePicker();
+  bool isLoading = false;
+  bool isTakePicture = false;
+  bool isCameraInitialized = false;
 
-  Future<void> loadHistory(Function(bool) onLoadingChange, int userID) async {
-    onLoadingChange(true);
+  Future<void> loadHistory(Function onSetState, int userID) async {
+    isLoading = true;
+    onSetState();
 
     await PredictHistoryReposotory
         .fetchHistory(userID)
         .timeout(Duration(seconds: 10));
 
-    onLoadingChange(false);
+    isLoading = false;
+    onSetState();
   }
 
-  Future<void> initCamera(Function(bool) onCameraInitializedChange) async {
+  Future<void> initCamera(Function onSetState) async {
     final cameras = await availableCameras();
     cameraController = CameraController(
       cameras.first,
       ResolutionPreset.medium,
     );
     await cameraController.initialize();
-    onCameraInitializedChange(true);
+    isCameraInitialized = true;
+    onSetState();
   }
 
-  Future<Uint8List?> takePicture(Function(bool) onTakePictureChange) async {
-      onTakePictureChange(true);
+  Future<Uint8List?> takePicture(Function onSetState) async {
+      isTakePicture = true;
+      onSetState();
 
       XFile picture = await cameraController.takePicture();
       final imageBytes = await picture.readAsBytes();
 
       cameraController.setFlashMode(FlashMode.off);
 
-      onTakePictureChange(false);
+      isTakePicture = false;
+      onSetState();
 
       return imageBytes;
   }
