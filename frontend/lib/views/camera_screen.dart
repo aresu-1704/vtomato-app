@@ -30,6 +30,13 @@ class _CameraScreenState extends State<CameraScreen> {
     super.dispose();
   }
 
+  void _stopCamera() {
+    _viewModel.dispose();
+  }
+
+  void _reInitCamera() {
+    _viewModel.initCamera(_onSetState);
+  }
   void _onSetState(){
     setState(() { });
   }
@@ -38,16 +45,21 @@ class _CameraScreenState extends State<CameraScreen> {
     try {
       final imageBytes = await _viewModel.takePicture(_onSetState);
       if(imageBytes != null) {
-        Navigator.push(
+        _stopCamera();
+        bool? status = await Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) =>
-                PredictResultScreen(
-                  image: imageBytes,
-                  userID: widget.UserId,
-                ),
+              PredictResultScreen(
+                image: imageBytes,
+                userID: widget.UserId,
+              ),
           ),
         );
+
+        if (status == null){
+          _reInitCamera();
+        }
       }
     } catch (_){
       ScaffoldMessenger.of(context).showSnackBar(
@@ -60,16 +72,21 @@ class _CameraScreenState extends State<CameraScreen> {
     try {
       final imageBytes = await _viewModel.pickImageFromGallery();
       if(imageBytes != null) {
-        Navigator.push(
+        _stopCamera();
+        bool? status = await Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) =>
-                PredictResultScreen(
-                  image: imageBytes,
-                  userID: widget.UserId,
-                ),
+              PredictResultScreen(
+                image: imageBytes,
+                userID: widget.UserId,
+              ),
           ),
         );
+
+        if (status == null){
+          _reInitCamera();
+        }
       }
       else{
         ScaffoldMessenger.of(context).showSnackBar(
@@ -80,6 +97,20 @@ class _CameraScreenState extends State<CameraScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Lỗi khi chọn ảnh, thử lại.")),
       );
+    }
+  }
+
+  Future<void> _initHistoryScreen() async {
+    _stopCamera();
+    bool? status = await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>
+            PredictHistoryScreen(userID: widget.UserId)
+        )
+    );
+
+    if (status == null){
+      _reInitCamera();
     }
   }
 
@@ -201,12 +232,7 @@ class _CameraScreenState extends State<CameraScreen> {
                     onTap: _viewModel.isTakePicture || !_viewModel.isCameraInitialized
                       ? null
                       : () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) =>
-                          PredictHistoryScreen(userID: widget.UserId)
-                        )
-                      );
+                      _initHistoryScreen();
                     },
                     child: Column(
                       children: const [

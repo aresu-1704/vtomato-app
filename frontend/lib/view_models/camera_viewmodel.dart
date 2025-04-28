@@ -72,5 +72,6 @@ class CameraViewModel {
   void dispose() {
     cameraController.setFlashMode(FlashMode.off);
     cameraController.dispose();
+    isCameraInitialized = false;
   }
 }
