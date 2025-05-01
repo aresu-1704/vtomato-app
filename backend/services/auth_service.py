@@ -1,5 +1,5 @@
-import models.entitys.login_info as LoginInfo
-from models.entitys.login_info import LoginInfo
+import models.entities.login_info as LoginInfo
+from models.entities.login_info import LoginInfo
 from utils.hash_password import hash_password
 from utils.send_otp.send_OTP_to_email import send_otp, verify_otp
 

@@ -1,4 +1,4 @@
-from models.entitys.disease_history import DiseaseHistory
+from models.entities.disease_history import DiseaseHistory
 import os
 from datetime import datetime
 import base64

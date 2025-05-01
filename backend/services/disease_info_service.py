@@ -1,5 +1,5 @@
-import models.entitys.disease_info as DiseaseInfo
-from models.entitys.disease_info import DiseaseInfo
+import models.entities.disease_info as DiseaseInfo
+from models.entities.disease_info import DiseaseInfo
 from typing import List, Dict
 
 class DiseaseService:

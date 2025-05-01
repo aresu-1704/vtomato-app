@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="Add README and Refractor File's Name">
-      <change beforePath="$PROJECT_DIR$/.DATABASE_SCHEMAS/postgreSQL_database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/.DATABASE_SCHEMAS/postgreSQL_database.sql" afterDir="false" />
+    <list default="true" id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="Fix Database Error, Fix Redis Start Error">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/auth_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/otp_storage/start_redis.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/otp_storage/start_redis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/dump.rdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/check_label.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/check_label.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/class_distribution.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/class_distribution.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/evaluate_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/evaluate_model.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +76,9 @@
     &quot;Python.asas.executor&quot;: &quot;Run&quot;,
     &quot;Python.asd.executor&quot;: &quot;Run&quot;,
     &quot;Python.asdada.executor&quot;: &quot;Run&quot;,
+    &quot;Python.asdasdasda.executor&quot;: &quot;Run&quot;,
     &quot;Python.check_label.executor&quot;: &quot;Run&quot;,
+    &quot;Python.class_distribution.executor&quot;: &quot;Run&quot;,
     &quot;Python.data_check.executor&quot;: &quot;Run&quot;,
     &quot;Python.draw_log.executor&quot;: &quot;Run&quot;,
     &quot;Python.evaluate_model.executor&quot;: &quot;Run&quot;,
@@ -244,7 +246,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745567926067</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Fix Database Error, Fix Redis Start Error">
+      <option name="closed" value="true" />
+      <created>1745598821877</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1745598821877</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -258,6 +268,7 @@
     <MESSAGE value="requirement.txt for deploy with no GPU to render" />
     <MESSAGE value="Replace SQLServer to PostgreSQL" />
     <MESSAGE value="Add README and Refractor File's Name" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add README and Refractor File's Name" />
+    <MESSAGE value="Fix Database Error, Fix Redis Start Error" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Database Error, Fix Redis Start Error" />
   </component>
 </project>
