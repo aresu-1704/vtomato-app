@@ -1,5 +1,4 @@
 from PIL import ImageFont, ImageDraw, Image
-import random
 import torch
 from ultralytics import YOLO
 import io

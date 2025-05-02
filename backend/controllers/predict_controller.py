@@ -1,5 +1,6 @@
-from fastapi import APIRouter
 import base64
+import asyncio
+from fastapi import APIRouter
 from services.predict_service import PredictService
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
@@ -41,7 +42,7 @@ async def predict_image(request: PredictRequest):
         data = request.Image
         try:
             image_bytes = base64.b64decode(data)
-            result = await predict_service.predict(image_bytes)
+            result = await asyncio.to_thread(predict_service.predict, image_bytes)
             return JSONResponse(
                 content=result,
                 headers={"Content-Type": "application/json; charset=utf-8"}
