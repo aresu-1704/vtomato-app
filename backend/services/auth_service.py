@@ -17,7 +17,7 @@ class LoginServices:
             store_password = account_pass["PasswordHash"]
             salt = account_pass["Salt"]
 
-            input_password = hash_password.hash_password(Password, salt)
+            input_password = await hash_password.hash_password(Password, salt)
 
             if store_password == input_password:
                 return account_pass['UserID']
@@ -43,7 +43,7 @@ class LoginServices:
             salt = await hash_password.generate_salt(16)
             new_hashPassword = await hash_password.hash_password(New_Password, salt)
 
-            result = self._loginInfo.ResetPassword(Email=Email, New_Password=new_hashPassword, Salt=salt)
+            result =await self._loginInfo.ResetPassword(Email=Email, New_Password=new_hashPassword, Salt=salt)
 
             if result == "Email not found or account is not active.":
                 return False

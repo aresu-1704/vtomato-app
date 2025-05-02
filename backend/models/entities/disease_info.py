@@ -9,7 +9,7 @@ class DiseaseInfo:
     async def GetDiseaseInfo(self, DiseaseID = -1):
         try:
             query = """
-            SELECT * FROM sp_GetDiseaseInfo(%s);
+            SELECT * FROM sp_GetDiseaseInfo($1);
             """
             result = await self.db.data_query(query, (DiseaseID,))
 

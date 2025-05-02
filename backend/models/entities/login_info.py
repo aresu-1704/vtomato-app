@@ -17,7 +17,7 @@ class LoginInfo:
     async def CreateNewAccount(self, Email, PasswordHash, Salt, PhoneNumber):
         try:
             query = """
-            SELECT sp_createaccount(%s, %s, %s, %s);
+            SELECT sp_createaccount($1, $2, $3, $4);
             """
             params = (Email, PasswordHash, Salt, PhoneNumber)
             result = await self.db.data_query(query, params)
@@ -32,10 +32,10 @@ class LoginInfo:
     async def FindAccount(self, Email):
         try:
             query = """
-                SELECT * FROM sp_GetPasswordInfoByEmail(%s);
+                SELECT * FROM sp_GetPasswordInfoByEmail($1);
                 """
             params = (Email,)
-            result = self.db.data_query(query, params)
+            result = await self.db.data_query(query, params)
 
             if result:
                 userID, password_hash, salt = result[0]
@@ -53,7 +53,7 @@ class LoginInfo:
     async def ResetPassword(self, Email, NewPasswordHash, Salt):
         try:
             query = """
-            SELECT sp_resetpassword(%s, %s, %s);
+            SELECT sp_resetpassword($1, $2, $3);
             """
             params = (Email, NewPasswordHash, Salt)
             result = await self.db.data_query(query, params)
@@ -68,7 +68,7 @@ class LoginInfo:
     async def FindAccountByEmail(self, Email):
         try:
             query = """
-                SELECT COUNT(*) FROM sp_FindPhoneNumberByEmail(%s);
+                SELECT COUNT(*) FROM sp_FindPhoneNumberByEmail($1);
             """
             params = (Email,)
             result = await self.db.data_query(query, params)

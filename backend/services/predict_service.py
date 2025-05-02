@@ -39,7 +39,7 @@ class PredictService:
             for i, name in enumerate(class_names)
         }
 
-    async def predict(self, image_bytes: bytes) -> dict:
+    def predict(self, image_bytes: bytes) -> dict:
         nonerotate_original_image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
         original_image = nonerotate_original_image.rotate(-90, expand=True)
         original_width, original_height = original_image.size
@@ -80,16 +80,12 @@ class PredictService:
             if int(cls) not in detected_class_indices:
                 detected_class_indices.append(int(cls))
 
-        disease_info_service = DiseaseService()
-        _disease_info =  await disease_info_service.GetDiseaseInfo(detected_class_indices)
-
         if predictions_count == 0:
             return {
                 "status": "no_disease",
                 "message": "No disease detected in the image",
                 "class_count": 0,
                 "class_indices": [],
-                "data": []
             }
 
         buffered = io.BytesIO()
@@ -101,5 +97,4 @@ class PredictService:
             "image": img_str,
             "class_count": predictions_count,
             "class_indices": detected_class_indices,
-            "data": _disease_info
         }

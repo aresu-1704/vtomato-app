@@ -25,7 +25,7 @@ class DiseaseHistoryService:
         return "Save successfully"
 
     async def GetPredictHictoryByID(self, ID=-1):
-        table = self.disease_history_model.GetDiseaseHistoryByID(ID)
+        table = await self.disease_history_model.GetDiseaseHistoryByID(ID)
 
         result = {
             "history": []

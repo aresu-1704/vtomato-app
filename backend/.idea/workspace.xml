@@ -4,22 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="Update notebook's dataset link">
+    <list default="true" id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="Update Async API menthods">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/auth_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/auth_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/disease_history_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/disease_history_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/predict_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/predict_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/entities/disease_history.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/entities/disease_history.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/entities/disease_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/entities/disease_info.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/entities/login_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/entities/login_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/auth_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/disease_history_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/disease_history_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/disease_info_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/disease_info_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/predict_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/predict_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/database/postgreSQL_connection.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/database/postgreSQL_connection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/hash_password/hash_password.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/hash_password/hash_password.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/send_otp/send_OTP_to_email.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/send_otp/send_OTP_to_email.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +34,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="API-predict" />
+        <entry key="$PROJECT_DIR$" value="Update-Async-Request-API" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -65,7 +58,7 @@
       &quot;suffix&quot;: null
     },
     &quot;owner&quot;: &quot;aresu-1704&quot;,
-    &quot;repository&quot;: &quot;Tomato_Leaf_Disease_Detect_YOLOv12&quot;
+    &quot;repository&quot;: &quot;tomato-disease-detect-fastapi&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -272,7 +265,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746108220326</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Update Async API menthods">
+      <option name="closed" value="true" />
+      <created>1746209713561</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1746209713561</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -288,6 +289,7 @@
     <MESSAGE value="Add README and Refractor File's Name" />
     <MESSAGE value="Fix Database Error, Fix Redis Start Error" />
     <MESSAGE value="Update notebook's dataset link" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update notebook's dataset link" />
+    <MESSAGE value="Update Async API menthods" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Async API menthods" />
   </component>
 </project>

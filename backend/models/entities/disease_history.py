@@ -10,7 +10,7 @@ class DiseaseHistory:
     async def SaveDiseaseHistory(self, UserID=-1, ImagePath=None, ListClassIdx=[]):
         try:
             query = """
-            SELECT sp_InsertPredictionHistory(%s, %s);
+            SELECT sp_InsertPredictionHistory($1, $2);
             """
             params = (UserID, ImagePath)
             result = await self.db.data_query(query, params)
@@ -19,7 +19,7 @@ class DiseaseHistory:
 
             tasks = []
             for idx in ListClassIdx:
-                query = "SELECT sp_InsertPredictionDetail(%s, %s);"
+                query = "SELECT sp_InsertPredictionDetail($1, $2);"
                 params = (Prediction_History_ID, idx)
                 tasks.append(self.db.execute_non_query(query, params))
 
@@ -31,7 +31,7 @@ class DiseaseHistory:
     async def GetDiseaseHistoryByID(self, ID=-1):
         try:
             query = """
-            SELECT * FROM sp_GetDiseaseHistoryByID(%s);
+            SELECT * FROM sp_GetDiseaseHistoryByID($1);
             """
             params = (ID,)
             return await self.db.data_query(query, params)
