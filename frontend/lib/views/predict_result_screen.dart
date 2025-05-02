@@ -28,7 +28,13 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
   }
 
   Future<void> _saveHistory() async {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Đang lưu..."))
+    );
     await _viewModel.saveHistory(widget.userID);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Đã lưu lịch sử !"))
+    );
     Navigator.pop(context);
   }
 
@@ -43,7 +49,7 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
         ),
         centerTitle: true,
         backgroundColor: Colors.green[700],
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: _viewModel.isLoading
         ? Center(
