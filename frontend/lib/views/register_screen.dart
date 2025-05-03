@@ -18,7 +18,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future<void> _register() async {
     final result = await _viewModel.registerNewAccount(_onSetState);
 
-    if (result! == 1) {
+    if (!mounted) return;
+
+    if (result! == "Connection Error") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Không thể kết nối đến máy chủ, vui lòng thử lại sau.')
+        )
+      );
+    } else if (result! == 1) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text('Đăng ký thành công!')

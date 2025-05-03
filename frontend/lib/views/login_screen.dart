@@ -96,7 +96,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         FocusScope.of(context).unfocus();
                         final userId = await _viewModel.login(_onSetState);
 
-                        if (userId == -2) {
+                        if(userId == -3) {
+                          _showSnackBar('Không thể kết nối đến máy chủ, vui lòng thử lại sau.');
+                        } else if (userId == -2) {
                           _showSnackBar('Bạn đã đăng nhập quá nhiều lần, vui lòng thử lại sau.');
                         } else if (userId != null && userId > 0) {
                           _showSnackBar('Đăng nhập thành công');
