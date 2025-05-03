@@ -16,6 +16,7 @@ app = FastAPI()
 limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
 
+
 @app.exception_handler(RateLimitExceeded)
 async def ratelimit_error(request, exc):
     return JSONResponse(

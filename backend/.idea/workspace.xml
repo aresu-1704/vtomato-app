@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="Update Async API menthods">
+      <change afterPath="$PROJECT_DIR$/executor_pool.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/predict_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/predict_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/entities/disease_history.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/entities/disease_history.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/entities/disease_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/entities/disease_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/entities/login_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/entities/login_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/auth_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/disease_history_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/disease_history_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/predict_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/predict_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,34 +65,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Python.Disease_History_Controller.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Predict_Controller.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Predict_Service.executor&quot;: &quot;Run&quot;,
-    &quot;Python.adas.executor&quot;: &quot;Run&quot;,
-    &quot;Python.asas.executor&quot;: &quot;Run&quot;,
-    &quot;Python.asd.executor&quot;: &quot;Run&quot;,
-    &quot;Python.asdada.executor&quot;: &quot;Run&quot;,
-    &quot;Python.asdasdasda.executor&quot;: &quot;Run&quot;,
-    &quot;Python.check_label.executor&quot;: &quot;Run&quot;,
-    &quot;Python.class_distribution.executor&quot;: &quot;Run&quot;,
-    &quot;Python.data_check.executor&quot;: &quot;Run&quot;,
-    &quot;Python.draw_log.executor&quot;: &quot;Run&quot;,
-    &quot;Python.evaluate_model.executor&quot;: &quot;Run&quot;,
-    &quot;Python.haha.executor&quot;: &quot;Run&quot;,
-    &quot;Python.hehe.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;G:/My Drive/DoAnCoSo/developments/tomato-disease-detect-fastapi&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Python.Disease_History_Controller.executor": "Run",
+    "Python.Predict_Controller.executor": "Run",
+    "Python.Predict_Service.executor": "Run",
+    "Python.adas.executor": "Run",
+    "Python.asas.executor": "Run",
+    "Python.asd.executor": "Run",
+    "Python.asdada.executor": "Run",
+    "Python.asdasdasda.executor": "Run",
+    "Python.check_label.executor": "Run",
+    "Python.class_distribution.executor": "Run",
+    "Python.data_check.executor": "Run",
+    "Python.draw_log.executor": "Run",
+    "Python.evaluate_model.executor": "Run",
+    "Python.haha.executor": "Run",
+    "Python.hehe.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.test.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/anly1/Desktop/DoAnCoSo/tomato-disease-detect-fastapi",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\anly1\Desktop\DoAnCoSo\Tomato-Disease-Detect-App-Project\tomato-disease-detect_backend-yolov12\utils" />
@@ -273,7 +269,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746209713561</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Update Async API menthods">
+      <option name="closed" value="true" />
+      <created>1746211679182</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1746211679182</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
