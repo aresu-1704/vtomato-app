@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="Update Async API menthods">
-      <change afterPath="$PROJECT_DIR$/executor_pool.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/predict_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/predict_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="Update Async API menthods" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,7 +28,7 @@
         <entry key="$PROJECT_DIR$" value="Update-Async-Request-API" />
       </map>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -41,22 +36,22 @@
     &quot;assignee&quot;: &quot;aresu-1704&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/aresu-1704/tomato-disease-detect-fastapi.git&quot;,
-    &quot;accountId&quot;: &quot;877ed401-8177-4a7e-bb9c-29bd42d9e96b&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/aresu-1704/tomato-disease-detect.git",
+    "accountId": "877ed401-8177-4a7e-bb9c-29bd42d9e96b"
   },
-  &quot;recentNewPullRequestHead&quot;: {
-    &quot;server&quot;: {
-      &quot;useHttp&quot;: false,
-      &quot;host&quot;: &quot;github.com&quot;,
-      &quot;port&quot;: null,
-      &quot;suffix&quot;: null
+  "recentNewPullRequestHead": {
+    "server": {
+      "useHttp": false,
+      "host": "github.com",
+      "port": null,
+      "suffix": null
     },
-    &quot;owner&quot;: &quot;aresu-1704&quot;,
-    &quot;repository&quot;: &quot;tomato-disease-detect-fastapi&quot;
+    "owner": "aresu-1704",
+    "repository": "tomato-disease-detect-fastapi"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -65,34 +60,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Python.Disease_History_Controller.executor": "Run",
-    "Python.Predict_Controller.executor": "Run",
-    "Python.Predict_Service.executor": "Run",
-    "Python.adas.executor": "Run",
-    "Python.asas.executor": "Run",
-    "Python.asd.executor": "Run",
-    "Python.asdada.executor": "Run",
-    "Python.asdasdasda.executor": "Run",
-    "Python.check_label.executor": "Run",
-    "Python.class_distribution.executor": "Run",
-    "Python.data_check.executor": "Run",
-    "Python.draw_log.executor": "Run",
-    "Python.evaluate_model.executor": "Run",
-    "Python.haha.executor": "Run",
-    "Python.hehe.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.test.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/anly1/Desktop/DoAnCoSo/tomato-disease-detect-fastapi",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Python.Disease_History_Controller.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Predict_Controller.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Predict_Service.executor&quot;: &quot;Run&quot;,
+    &quot;Python.adas.executor&quot;: &quot;Run&quot;,
+    &quot;Python.asas.executor&quot;: &quot;Run&quot;,
+    &quot;Python.asd.executor&quot;: &quot;Run&quot;,
+    &quot;Python.asdada.executor&quot;: &quot;Run&quot;,
+    &quot;Python.asdasdasda.executor&quot;: &quot;Run&quot;,
+    &quot;Python.check_label.executor&quot;: &quot;Run&quot;,
+    &quot;Python.class_distribution.executor&quot;: &quot;Run&quot;,
+    &quot;Python.data_check.executor&quot;: &quot;Run&quot;,
+    &quot;Python.draw_log.executor&quot;: &quot;Run&quot;,
+    &quot;Python.evaluate_model.executor&quot;: &quot;Run&quot;,
+    &quot;Python.haha.executor&quot;: &quot;Run&quot;,
+    &quot;Python.hehe.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/anly1/Desktop/DoAnCoSo/tomato-disease-detect-fastapi&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\anly1\Desktop\DoAnCoSo\Tomato-Disease-Detect-App-Project\tomato-disease-detect_backend-yolov12\utils" />

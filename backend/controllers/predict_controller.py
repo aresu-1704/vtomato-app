@@ -2,11 +2,8 @@ import base64
 import asyncio
 
 from fastapi import APIRouter
-<<<<<<< HEAD
-=======
-
 from services.disease_info_service import DiseaseService
->>>>>>> b0fd1ccfd1d9e921f1c96935b1a090ae96edc45e
+
 from services.predict_service import PredictService
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
