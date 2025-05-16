@@ -11,7 +11,11 @@ from controllers.disease_history_controller import router as disease_history_rou
 
 from utils.otp_storage.start_redis import start_redis
 
-app = FastAPI()
+app = FastAPI(
+    title="Tomato Disease Detection API",
+    description="API phục vụ ứng dụng nhận diện bệnh cây cà chua từ hình ảnh lá cây và xác định lá bệnh.",
+    version="1.0.0"
+)
 
 limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
