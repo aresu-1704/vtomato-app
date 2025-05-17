@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
-import 'package:tomato_detect_app/services/predict_history_repository_service.dart';
+import 'package:tomato_detect_app/repositories/disease_history_repository.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
 
@@ -15,7 +15,7 @@ class CameraViewModel {
     isLoading = true;
     onSetState();
 
-    await PredictHistoryReposotory
+    await DiseaseHistoryRepository
         .fetchHistory(userID)
         .timeout(Duration(seconds: 10));
 

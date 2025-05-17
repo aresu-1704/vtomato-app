@@ -10,12 +10,13 @@ from fastapi.responses import JSONResponse
 
 from app.executor_pool import executor
 
+
 router = APIRouter()
 
 class PredictRequest(BaseModel):
     Image: str
 
-predict_service = PredictService(
+_predict_service = PredictService(
     model_path="ai_models/yolov12n/weights/best.pt",
     class_names=[
         "Early Blight",
@@ -41,18 +42,17 @@ predict_service = PredictService(
     }
 )
 
-disease_info_service = DiseaseService()
-
 @router.post("/predict-image")
 async def predict_image(request: PredictRequest):
     try:
         data = request.Image
         try:
+            _disease_info_service = DiseaseService()
             image_bytes = base64.b64decode(data)
             loop = asyncio.get_running_loop()
-            result = await loop.run_in_executor(executor, predict_service.predict, image_bytes)
-            disease_info_list = await disease_info_service.GetDiseaseInfo(result["class_indices"])
-            
+            result = await loop.run_in_executor(executor, _predict_service.predict, image_bytes)
+            disease_info_list = await _disease_info_service.get_disease_info(result["class_indices"])
+
             result_with_disease_info = {
                 "status": result["status"],
                 "image": result["image"],

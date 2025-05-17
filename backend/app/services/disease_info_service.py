@@ -1,26 +1,26 @@
-from app import models as DiseaseInfo
 import asyncio
-from app.models.disease_info import DiseaseInfo
 from typing import List, Dict
+from app.repositories.disease_info_repository import DiseaseInfoRepository
+
 
 class DiseaseService:
     def __init__(self):
-        self._diseaseInfo = DiseaseInfo()
+        self._disease_info_repository = DiseaseInfoRepository()
 
-    async def GetDiseaseInfo(self, DiseaseIDList) -> List[Dict[str, str]]:
+    async def get_disease_info(self, DiseaseIDList) -> List[Dict[str, str]]:
         try:
             diseases = []
-            tasks = [self._diseaseInfo.GetDiseaseInfo(cls_idx) for cls_idx in DiseaseIDList]
+            tasks = [self._disease_info_repository.get_disease_info(cls_idx) for cls_idx in DiseaseIDList]
 
             results = await asyncio.gather(*tasks)
 
             for result in results:
                 diseases.append({
-                    "DiseaseName": result["DiseaseName"],
-                    "Cause": result["Cause"],
-                    "Symptoms": result["Symptoms"],
-                    "Conditions": result["Conditions"],
-                    "Treatment": result["Treatment"]
+                    "DiseaseName": result["disease_name"],
+                    "Cause": result["cause"],
+                    "Symptoms": result["symptoms"],
+                    "Conditions": result["conditions"],
+                    "Treatment": result["treatment"]
                 })
 
             return diseases

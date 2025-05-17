@@ -10,7 +10,6 @@ class PredictService:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"[🔧 PredictService] Using device: {self.device}")
 
-        # Load YOLO models
         self.model = YOLO(model_path)
         self.model.to(self.device)
         self.model.eval()

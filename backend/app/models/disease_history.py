@@ -1,41 +1,14 @@
-import asyncio
-from app.utils.database import postgreSQL_connection as dtb
+from pydantic import BaseModel
+from typing import Optional, List
+from datetime import datetime
 
 
-class DiseaseHistory:
-    def __init__(self):
-        self.db = dtb.DatabaseConnect(
-            connect_string="postgresql://tomato_user:TomatoPassword123!@localhost:5432/tomato_disease_app"
-        )
+class DiseasePredictionDetail(BaseModel):
+    class_index: int
 
-    async def SaveDiseaseHistory(self, UserID=-1, ImagePath=None, ListClassIdx=[]):
-        try:
-            query = """
-            SELECT sp_InsertPredictionHistory($1, $2);
-            """
-            params = (UserID, ImagePath)
-            result = await self.db.data_query(query, params)
-
-            Prediction_History_ID = result[0][0]
-
-            tasks = []
-            for idx in ListClassIdx:
-                query = "SELECT sp_InsertPredictionDetail($1, $2);"
-                params = (Prediction_History_ID, idx)
-                tasks.append(self.db.execute_non_query(query, params))
-
-            await asyncio.gather(*tasks)
-
-        except Exception as e:
-            print(f"Error: {str(e)}")
-
-    async def GetDiseaseHistoryByID(self, ID=-1):
-        try:
-            query = """
-            SELECT * FROM sp_GetDiseaseHistoryByID($1);
-            """
-            params = (ID,)
-            return await self.db.data_query(query, params)
-        except Exception as e:
-            print(f"Error: {str(e)}")
-            return None
+class DiseaseHistoryModel(BaseModel):
+    history_id: int
+    user_id: int
+    image_path: str
+    predicted_at: datetime
+    details: Optional[List[DiseasePredictionDetail]] = None

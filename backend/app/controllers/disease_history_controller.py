@@ -5,6 +5,7 @@ from typing import List
 from app.services.disease_history_service import DiseaseHistoryService
 from fastapi.responses import JSONResponse
 
+
 router = APIRouter()
 
 class SaveRequest(BaseModel):
@@ -19,7 +20,7 @@ async def save_history(request: SaveRequest):
     try:
         image_data = request.Image
         image_byte = base64.b64decode((image_data))
-        result = await disease_history_service.SaveHistory(request.UserID, image_byte, request.ClassIdxList)
+        result = await disease_history_service.save_history(request.UserID, image_byte, request.ClassIdxList)
         message = {
             "Message": result,
             "Reload_Status": True
@@ -41,7 +42,7 @@ async def save_history(request: SaveRequest):
 @router.get("/get-by-id/{user_id}")
 async def get_by_id(user_id: int):
     try:
-        result = await disease_history_service.GetPredictHictoryByID(user_id)
+        result = await disease_history_service.get_predict_history_by_id(user_id)
         return JSONResponse(
             content=result,
             headers={"Content-Type": "application/json; charset=utf-8"}

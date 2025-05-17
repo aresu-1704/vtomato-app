@@ -4,6 +4,7 @@ from app.services.auth_service import LoginServices
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 
+
 router = APIRouter()
 login_services = LoginServices()
 limiter = Limiter(key_func=get_remote_address)
@@ -31,7 +32,7 @@ class VerifyOTP(BaseModel):
 @router.post("/login")
 @limiter.limit("5/minute")
 async def login(request: Request, body: LoginRequest):
-    userID = await login_services.VerifyLogin(body.Email, body.Password)
+    userID = await login_services.verify_login(body.Email, body.Password)
 
     if userID is not None:
         return {
@@ -43,7 +44,7 @@ async def login(request: Request, body: LoginRequest):
 
 @router.post("/register")
 async def register(request: RegisterRequest):
-    is_registered = await login_services.RegisterNewAccount(request.Email, request.PhoneNumber, request.Password)
+    is_registered = await login_services.register_account(request.Email, request.PhoneNumber, request.Password)
 
     if is_registered:
         return {"message": "Account registered successfully"}
@@ -53,7 +54,7 @@ async def register(request: RegisterRequest):
 
 @router.post("/reset-password")
 async def reset_password(request: ResetPasswordRequest):
-    is_reset = await login_services.ResetPassword(request.Email, request.NewPassword)
+    is_reset = await login_services.reset_password(request.Email, request.NewPassword)
 
     if is_reset:
         return {"message": "Password reset successful"}
@@ -63,14 +64,14 @@ async def reset_password(request: ResetPasswordRequest):
 @router.post("/send-otp")
 @limiter.limit("5/minutes")
 async def send_otp(request: Request, body: FindAccount):
-    result = await login_services.SendOTPToEmail(body.Email)
+    result = await login_services.send_otp_to_email(body.Email)
     return {
         "Message": result,
     }
 
 @router.post("/verify-otp")
 async def verify_otp(request: VerifyOTP):
-    result = await login_services.VerifyOTP(request.Email, request.OTP)
+    result = await login_services.verify_login(request.Email, request.OTP)
     return {
         "Message": result,
     }

@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:tomato_detect_app/models/DiseaseInfo.dart';
 import 'package:tomato_detect_app/services/predict_service.dart';
 import 'package:tomato_detect_app/services/disease_history_service.dart';
-import 'package:tomato_detect_app/services/predict_history_repository_service.dart';
+import 'package:tomato_detect_app/repositories/disease_history_repository.dart';
 
 class PredictResultViewModel {
   final PredictService _predictService = PredictService();
@@ -46,7 +46,7 @@ class PredictResultViewModel {
     isLoading = true;
 
     if (reloadStatus) {
-      await PredictHistoryReposotory.fetchHistory(userID);
+      await DiseaseHistoryRepository.fetchHistory(userID);
     }
 
     await Future.delayed(const Duration(seconds: 1));

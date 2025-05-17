@@ -1,67 +1,71 @@
-from app import models as LoginInfo
-from app.models.login_info import LoginInfo
+from app.repositories.login_repository import LoginRepository
 from app.utils.hash_password import hash_password
 from app.utils.send_otp.send_OTP_to_email import send_otp, verify_otp
 
 
 class LoginServices:
     def __init__(self):
-        self._loginInfo = LoginInfo()
+        self._login_repository = LoginRepository();
 
-    async def VerifyLogin(self, Email, Password):
-        account_pass = await self._loginInfo.FindAccount(Email)
+    async def verify_login(self, email: str, password: str):
+        try:
+            account = await self._login_repository.get_password_info_by_email(email)
 
-        if account_pass == None:
-            return None
-        else:
-            store_password = account_pass["PasswordHash"]
-            salt = account_pass["Salt"]
-
-            input_password = await hash_password.hash_password(Password, salt)
-
-            if store_password == input_password:
-                return account_pass['UserID']
-            else:
+            if not account:
                 return None
 
-    async def RegisterNewAccount(self, Email, PhoneNumber, Input_Password):
+            stored_hash = account["PasswordHash"]
+            salt = account["Salt"]
+            input_hash = await hash_password.hash_password(password, salt)
+
+            if stored_hash == input_hash:
+                return account["UserID"]
+            return None
+        except Exception as e:
+            raise Exception(f"Login verification failed: {e}")
+
+    async def register_account(self, email: str, phone_number: str, password: str):
         try:
             salt = await hash_password.generate_salt(16)
-            password = await hash_password.hash_password(Input_Password, salt)
+            hashed_password = await hash_password.hash_password(password, salt)
 
-            result = await self._loginInfo.CreateNewAccount(Email=Email, PasswordHash=password, Salt=salt, PhoneNumber=PhoneNumber)
+            result = await self._login_repository.create_account(
+                Email=email,
+                PasswordHash=hashed_password,
+                Salt=salt,
+                PhoneNumber=phone_number
+            )
 
-            if result == "Email already exists.":
-                return False
-            else:
-                return True
+            return result != "Email already exists."
         except Exception as e:
-            return f"Error: {str(e)}"
+            raise Exception(f"Account registration failed: {e}")
 
-    async def ResetPassword(self, Email, New_Password):
+    async def reset_password(self, email: str, new_password: str):
         try:
             salt = await hash_password.generate_salt(16)
-            new_hashPassword = await hash_password.hash_password(New_Password, salt)
+            new_hash = await hash_password.hash_password(new_password, salt)
 
-            result =await self._loginInfo.ResetPassword(Email=Email, New_Password=new_hashPassword, Salt=salt)
+            result = await self._login_repository.reset_password(
+                Email=email,
+                New_Password=new_hash,
+                Salt=salt
+            )
 
-            if result == "Email not found or account is not active.":
-                return False
-            else:
-                return True
+            return result != "Email not found or account is not active."
         except Exception as e:
-            return f"Error: {str(e)}"
+            raise Exception(f"Password reset failed: {e}")
 
-    async def SendOTPToEmail(self, Email):
-        result = await self._loginInfo.FindAccountByEmail(Email)
+    async def send_otp_to_email(self, email: str):
+        try:
+            account = await self._login_repository.email_exists(email)
+            if not account:
+                return 0  # email chưa tồn tại
+            return await send_otp(email)
+        except Exception as e:
+            raise Exception(f"Sending OTP failed: {e}")
 
-        if result == False:
-            return 0
-        else:
-            status = await send_otp(Email)
-            if status is not None:
-                return status
-
-    async def VerifyOTP(self, PhoneNumber, OTP):
-        return await verify_otp(PhoneNumber, OTP)
-
+    async def verify_otp(self, phone_number: str, otp: str):
+        try:
+            return await verify_otp(phone_number, otp)
+        except Exception as e:
+            raise Exception(f"OTP verification failed: {e}")
