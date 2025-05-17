@@ -26,6 +26,14 @@ Hỗ trợ nông dân và kỹ thuật viên nông nghiệp **phát hiện sớm
 
 ## 🤖 Mô hình mạng học sâu:
 
+  Mô hình được huấn luyện sử dụng kiến trúc **YOLOv12 Nano** cho bài toán phát hiện vùng lá bị bệnh, kết hợp với mạng **CNN** để phân loại chính xác loại bệnh.
+  Quá trình huấn luyện và đánh giá mô hình được thực hiện trên **Kaggle Notebook**.
+  
+### 📔 Xem chi tiết quá trình huấn luyện tại đây:
+
+  Chi tiết quá trình huấn luyện và đánh giá mô hình tại Kaggle:  
+👉 [YOLOv12 Tomato Disease Detection - Kaggle Notebook](https://www.kaggle.com/code/aresusayhi/yolo12)
+
 ---
 
 # 🌱 TỔNG QUAN TẬP DỮ LIỆU
