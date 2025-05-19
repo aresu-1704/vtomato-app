@@ -28,13 +28,13 @@ class NewPasswordViewModel {
     return passwordError == null && confirmPasswordError == null;
   }
 
-  Future<bool> resetPassword(String email, String password, Function onSetState) async {
+  Future<bool> resetPassword(int userID, String password, Function onSetState) async {
     final authService = AuthService();
 
     isLoading = true;
     onSetState();
 
-    bool? isSuccess = await authService.resetPassword(email, password);
+    bool? isSuccess = await authService.resetPassword(userID, password);
 
     isLoading = false;
     onSetState();

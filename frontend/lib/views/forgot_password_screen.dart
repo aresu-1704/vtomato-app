@@ -19,6 +19,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     if (!_formKey.currentState!.validate()) return;
     FocusScope.of(context).unfocus();
 
+    _showSnackBar("Đang tìm kiếm tài khoản...");
     final result = await _viewModel.sendOTP(
         emailController.text.trim(),
         _onSetState
@@ -26,25 +27,27 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
     if (!mounted) return;
 
-    switch (result) {
-      case 1:
-        _showSnackBar("Đang gửi OTP đến Email của bạn...");
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => VerifyOtpScreen(email: emailController.text.trim()),
-          ),
-        );
-        break;
-      case 0:
-        _showSnackBar('Tài khoản không tồn tại.');
-        break;
-      case -2:
-        _showSnackBar('Không thể kết nối đến máy chủ, vui lòng thử lại sau.');
-        break;
-      default:
-        _showSnackBar('Vui lòng thử lại sau.');
-        break;
+    if (result! > 0) {
+      _showSnackBar("Đang gửi OTP đến Email của bạn...");
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => VerifyOtpScreen(userID: result! ,email: emailController.text.trim()),
+        ),
+      );
+    }
+    else {
+      switch (result) {
+        case 0:
+          _showSnackBar('Tài khoản không tồn tại.');
+          break;
+        case -2:
+          _showSnackBar('Không thể kết nối đến máy chủ, vui lòng thử lại sau.');
+          break;
+        default:
+          _showSnackBar('Vui lòng thử lại sau.');
+          break;
+      }
     }
   }
 

@@ -29,9 +29,9 @@ async def ratelimit_error(request, exc):
         content={"detail": "Rate limit exceeded. Try again later."}
     )
 
-app.include_router(login_router, prefix="/auth", tags=["Authentication"])
-app.include_router(predict_router, prefix="/predict", tags=["Predict Disease"])
-app.include_router(disease_history_router, prefix="/disease-history", tags=["Disease History"])
+app.include_router(login_router, prefix="/auth", tags=["Xác thực"])
+app.include_router(predict_router, prefix="/predict", tags=["Chẩn đoán bệnh"])
+app.include_router(disease_history_router, prefix="/disease-history", tags=["Lịch sử dự đoán"])
 
 if __name__ == "__main__":
     import uvicorn

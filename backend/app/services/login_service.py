@@ -30,25 +30,25 @@ class LoginServices:
             hashed_password = await hash_password.hash_password(password, salt)
 
             result = await self._login_repository.create_account(
-                Email=email,
-                PasswordHash=hashed_password,
-                Salt=salt,
-                PhoneNumber=phone_number
+                email=email,
+                password_hash=hashed_password,
+                salt=salt,
+                phone_number=phone_number
             )
 
             return result != "Email already exists."
         except Exception as e:
             raise Exception(f"Account registration failed: {e}")
 
-    async def reset_password(self, email: str, new_password: str):
+    async def reset_password(self, user_id: int, new_password: str):
         try:
             salt = await hash_password.generate_salt(16)
             new_hash = await hash_password.hash_password(new_password, salt)
 
             result = await self._login_repository.reset_password(
-                Email=email,
-                New_Password=new_hash,
-                Salt=salt
+                user_id=user_id,
+                new_password_hash=new_hash,
+                salt=salt
             )
 
             return result != "Email not found or account is not active."
@@ -57,15 +57,15 @@ class LoginServices:
 
     async def send_otp_to_email(self, email: str):
         try:
-            account = await self._login_repository.email_exists(email)
-            if not account:
-                return 0  # email chưa tồn tại
-            return await send_otp(email)
+            user_id = await self._login_repository.email_exists(email)
+            if not user_id:
+                return 0
+            return await send_otp(email, user_id)
         except Exception as e:
             raise Exception(f"Sending OTP failed: {e}")
 
-    async def verify_otp(self, phone_number: str, otp: str):
+    async def verify_otp(self, user_id: int, otp: str):
         try:
-            return await verify_otp(phone_number, otp)
+            return await verify_otp(user_id, otp)
         except Exception as e:
             raise Exception(f"OTP verification failed: {e}")

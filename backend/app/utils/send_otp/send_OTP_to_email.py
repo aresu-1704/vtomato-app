@@ -20,12 +20,12 @@ EMAIL_PASSWORD = "ldbtbfokmbsczmhl"
 async def generate_otp():
     return random.randint(10000, 99999)
 
-async def send_otp(email_address):
-    if redis_client.exists(email_address):
-        return 1
+async def send_otp(email_address, user_id):
+    if redis_client.exists(user_id):
+        return user_id
 
     otp = await generate_otp()
-    redis_client.setex(email_address, 300, otp)
+    redis_client.setex(user_id, 300, otp)
 
     subject = "Mã OTP khôi phục tài khoản:"
     body = f"Mã xác minh của bạn là: {otp}"
@@ -43,15 +43,16 @@ async def send_otp(email_address):
         server.login(EMAIL_USERNAME, EMAIL_PASSWORD)
         server.sendmail(EMAIL_SENDER, email_address, msg.as_string())
         server.quit()
-        return 1
+        return user_id
     except Exception as e:
-        return None
+        return 0
 
-async def verify_otp(email_address, otp):
-    stored_otp = redis_client.get(email_address)
+async def verify_otp(user_id, otp):
+    stored_otp = redis_client.get(user_id)
     if stored_otp is None:
         return "OTP has expired or does not exist."
     if int(stored_otp) == otp:
+        redis_client.delete(user_id)
         return "OTP verified successfully!"
     else:
         return "Invalid OTP."

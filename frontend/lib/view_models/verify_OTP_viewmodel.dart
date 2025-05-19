@@ -26,12 +26,12 @@ class VerifyOtpViewModel {
     });
   }
 
-  Future<int?> verifyOTP(String email) async {
+  Future<int?> verifyOTP(int userID) async {
     String otp = otpControllers.map((c) => c.text).join();
     if (otp.length != 5) {
       return -1;
     }
-    return await _authService.verifyOTP(email, int.parse(otp));
+    return await _authService.verifyOTP(userID, int.parse(otp));
   }
 
   Future<int?> resendOTP(String email) async {

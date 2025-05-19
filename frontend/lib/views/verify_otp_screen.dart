@@ -6,9 +6,10 @@ import 'forgot_password_screen.dart';
 import 'new_password_screen.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
+  final int userID;
   final String email;
 
-  const VerifyOtpScreen({Key? key, required this.email}) : super(key: key);
+  const VerifyOtpScreen({Key? key, required this.userID, required this.email}) : super(key: key);
 
   @override
   State<VerifyOtpScreen> createState() => _VerifyOtpScreenState();
@@ -38,13 +39,13 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       return;
     }
 
-    final result = await _viewModel.verifyOTP(widget.email);
+    final result = await _viewModel.verifyOTP(widget.userID);
 
     if (result == 1) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => NewPasswordScreen(email: widget.email),
+          builder: (context) => NewPasswordScreen(userID: widget.userID),
         ),
       );
     } else if (result == 0) {
@@ -149,31 +150,31 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                   const Text("Chưa nhận được OTP?"),
                   TextButton(
                     onPressed: _viewModel.isResendEnabled
-                        ? () async {
-                      final resend = await _viewModel.resendOTP(widget.email);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            resend == 1 ? 'Mã OTP đã được gửi lại.' : 'Gửi lại thất bại.',
+                      ? () async {
+                        final resend = await _viewModel.resendOTP(widget.email);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              resend == 1 ? 'Mã OTP đã được gửi lại.' : 'Gửi lại thất bại.',
+                            ),
+                          ),
+                        );
+                      }
+                      : null,
+                        child: Text(
+                          _viewModel.isResendEnabled
+                              ? "Gửi lại"
+                              : "Gửi lại sau ${_viewModel.secondsRemaining}s",
+                          style: TextStyle(
+                            color: _viewModel.isResendEnabled
+                                ? const Color(0xFF002F21)
+                                : Colors.grey,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      );
-                    }
-                        : null,
-                    child: Text(
-                      _viewModel.isResendEnabled
-                          ? "Gửi lại"
-                          : "Gửi lại sau ${_viewModel.secondsRemaining}s",
-                      style: TextStyle(
-                        color: _viewModel.isResendEnabled
-                            ? const Color(0xFF002F21)
-                            : Colors.grey,
-                        fontWeight: FontWeight.bold,
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
               const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

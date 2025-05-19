@@ -39,7 +39,7 @@ async def save_history(request: SaveRequest):
             headers={"Content-Type": "application/json; charset=utf-8"}
         )
 
-@router.get("/get-by-id/{user_id}")
+@router.get("/{user_id}")
 async def get_by_id(user_id: int):
     try:
         result = await disease_history_service.get_predict_history_by_id(user_id)

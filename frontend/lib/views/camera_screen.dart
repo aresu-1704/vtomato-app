@@ -120,45 +120,45 @@ class _CameraScreenState extends State<CameraScreen> {
       backgroundColor: const Color(0xFFFEF7ED),
       body: SafeArea(
         child: _viewModel.isLoading
-            ? Center(
-          child: CircularProgressIndicator(
-            color: Colors.green[700],
-          ),
-        )
-            : Column(
-          children: [
-            const SizedBox(height: 8),
-            Text(
-              "Quét ảnh lá cây cà chua\nchẩn đoán bệnh",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 25,
-                color: Colors.green[800],
-                fontWeight: FontWeight.bold,
-              ),
+          ? Center(
+            child: CircularProgressIndicator(
+              color: Colors.green[700],
             ),
-            const SizedBox(height: 12),
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: Colors.black,
+          )
+          : Column(
+            children: [
+              const SizedBox(height: 8),
+              Text(
+                "Quét ảnh lá cây cà chua\nchẩn đoán bệnh",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.green[800],
+                  fontWeight: FontWeight.bold,
                 ),
-                child: _viewModel.isCameraInitialized
-                    ? ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Stack(
-                    children: [
-                      CameraPreview(_viewModel.cameraController),
-                    ],
+              ),
+              const SizedBox(height: 12),
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Colors.black,
                   ),
-                )
-                    : const Center(
-                  child: CircularProgressIndicator(),
+                  child: _viewModel.isCameraInitialized
+                  ? ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Stack(
+                      children: [
+                        CameraPreview(_viewModel.cameraController),
+                      ],
+                    ),
+                  )
+                  : const Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 ),
               ),
-            ),
             const SizedBox(height: 12),
             const Text(
               "Lưu ý: Dự đoán không phải là chính xác 100%,\nchỉ dùng làm tài liệu tham khảo",
@@ -184,11 +184,11 @@ class _CameraScreenState extends State<CameraScreen> {
                   width: 24,
                   height: 24,
                   child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      strokeWidth: 5
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    strokeWidth: 5
+                    )
                   )
                 )
-              )
                 : GestureDetector(
                   onTap: _takePicture,
                   child: Container(

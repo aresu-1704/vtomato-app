@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
-from app.services.auth_service import LoginServices
+from app.services.login_service import LoginServices
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 
@@ -19,14 +19,13 @@ class RegisterRequest(BaseModel):
     Password: str
 
 class ResetPasswordRequest(BaseModel):
-    Email: str
     NewPassword: str
 
 class FindAccount(BaseModel):
     Email: str
 
 class VerifyOTP(BaseModel):
-    Email: str
+    user_id: int
     OTP: int
 
 @router.post("/login")
@@ -52,9 +51,9 @@ async def register(request: RegisterRequest):
         raise HTTPException(status_code=400, detail="Email already exists or error during registration")
 
 
-@router.post("/reset-password")
-async def reset_password(request: ResetPasswordRequest):
-    is_reset = await login_services.reset_password(request.Email, request.NewPassword)
+@router.put("/{user_id}")
+async def reset_password(user_id: int, request: ResetPasswordRequest):
+    is_reset = await login_services.reset_password(user_id, request.NewPassword)
 
     if is_reset:
         return {"message": "Password reset successful"}
@@ -66,12 +65,12 @@ async def reset_password(request: ResetPasswordRequest):
 async def send_otp(request: Request, body: FindAccount):
     result = await login_services.send_otp_to_email(body.Email)
     return {
-        "Message": result,
+        "UserID": result,
     }
 
 @router.post("/verify-otp")
 async def verify_otp(request: VerifyOTP):
-    result = await login_services.verify_login(request.Email, request.OTP)
+    result = await login_services.verify_otp(request.user_id, request.OTP)
     return {
         "Message": result,
     }

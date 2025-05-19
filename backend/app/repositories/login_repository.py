@@ -48,16 +48,16 @@ class LoginRepository(ILoginRepository):
             return None
 
     @override
-    async def reset_password(self, email, new_password_hash, salt):
+    async def reset_password(self, user_id, new_password_hash, salt):
         try:
             query = """
                SELECT sp_resetpassword($1, $2, $3);
             """
-            params = (email, new_password_hash, salt)
+            params = (user_id, new_password_hash, salt)
             result = await self.db.data_query(query, params)
 
             if result:
-                return result[0][0]  # Kết quả trả về từ stored procedure
+                return result[0][0]
             else:
                 return "Unknown error occurred."
         except Exception as e:
@@ -67,14 +67,15 @@ class LoginRepository(ILoginRepository):
     async def email_exists(self, email):
         try:
             query = """
-                SELECT COUNT(*) FROM sp_FindPhoneNumberByEmail($1);
+                SELECT * FROM sp_getuseridbyemail($1);
             """
             params = (email,)
             result = await self.db.data_query(query, params)
 
-            if result and result[0][0] > 0:
-                return True
+            if result:
+                user_id = result[0][0]
+                return user_id
             else:
-                return False
+                return None
         except Exception as e:
             return f"Error: {str(e)}"

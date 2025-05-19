@@ -3,9 +3,9 @@ import 'package:tomato_detect_app/view_models/new_password_viewmodel.dart';
 import 'login_screen.dart';
 
 class NewPasswordScreen extends StatefulWidget {
-  final String email;
+  final int userID;
 
-  const NewPasswordScreen({Key? key, required this.email}) : super(key: key);
+  const NewPasswordScreen({Key? key, required this.userID}) : super(key: key);
 
   @override
   State<NewPasswordScreen> createState() => _NewPasswordScreenState();
@@ -21,7 +21,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
     String confirm = _viewModel.confirmPasswordController.text;
 
     if (_viewModel.validatePasswords(password, confirm)) {
-      bool isResetSuccess = await _viewModel.resetPassword(widget.email, password, _onSetState);
+      bool isResetSuccess = await _viewModel.resetPassword(widget.userID, password, _onSetState);
 
       if (isResetSuccess) {
         Navigator.pop(context);
@@ -150,21 +150,26 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: _viewModel.isLoading
-              ? const SizedBox(
-                height: 20,
-                width: 20,
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                  strokeWidth: 2,
-                ),
-              )
-              : const Text(
-                "Khôi phục mật khẩu",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontSize: 20
+              child: SizedBox(
+                height: 28,
+                child: Center(
+                  child: _viewModel.isLoading
+                  ? const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    ),
+                  )
+                  : const Text(
+                    "Khôi phục mật khẩu",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 20
+                    ),
+                  ),
                 ),
               ),
             ),

@@ -29,7 +29,7 @@ class DiseaseHistoryService {
   }
 
   Future<List<DiseaseHistory>> getHistoryByUser(int userID) async {
-    final url = Uri.parse('${ApiConstants.baseUrl}/disease-history/get-by-id/$userID');
+    final url = Uri.parse('${ApiConstants.baseUrl}/disease-history/$userID');
 
     try {
       final response = await http.get(

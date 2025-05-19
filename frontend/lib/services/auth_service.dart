@@ -84,29 +84,30 @@ class AuthService {
 
       if (response.statusCode == 200) {
         final message = jsonDecode(response.body);
-        return message['Message'];
+        return message['UserID'];
       }
       else if (response.statusCode == 401) {
         return -1;
       }
     }
-    on SocketException{
-      return -2;
-    }
+    // on SocketException{
+    //   return -2;
+    // }
+
     catch (ex) {
       print('Lỗi: $ex');
       return null;
     }
   }
 
-  Future<int?> verifyOTP(String email, int otp) async {
+  Future<int?> verifyOTP(int userID, int otp) async {
     final url = Uri.parse('${ApiConstants.baseUrl}/auth/verify-otp');
 
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        "Email": email,
+        "user_id": userID,
         "OTP": otp
       }),
     );
@@ -124,19 +125,17 @@ class AuthService {
       }
     }
     else if (response.statusCode == 401){
-      final data = jsonDecode(response.body);
       return -1;
     }
   }
 
-  Future<bool?> resetPassword(String email, String password) async {
-    final url = Uri.parse('${ApiConstants.baseUrl}/auth/reset-password');
+  Future<bool?> resetPassword(int userID, String password) async {
+    final url = Uri.parse('${ApiConstants.baseUrl}/auth/$userID');
 
-    final response = await http.post(
+    final response = await http.put(
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        "Email": email,
         "NewPassword": password,
       }),
     );
