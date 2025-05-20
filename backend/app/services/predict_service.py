@@ -18,7 +18,7 @@ class PredictService:
         self.descriptions = descriptions or {}
         self.input_size = input_size
 
-        self.font = ImageFont.truetype("fonts/roboto.ttf", 20)
+        self.font = ImageFont.truetype("app/fonts/roboto.ttf", 20)
 
         fixed_colors = [
             (255, 255, 0),

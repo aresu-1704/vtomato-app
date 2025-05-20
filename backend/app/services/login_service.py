@@ -1,6 +1,6 @@
-from app.repositories.login_repository import LoginRepository
-from app.utils.hash_password import hash_password
-from app.utils.send_otp.send_OTP_to_email import send_otp, verify_otp
+from app.repositories import LoginRepository
+from app.utils import hash_password
+from app.utils import send_otp, verify_otp
 
 
 class LoginServices:

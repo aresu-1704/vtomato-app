@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from app.models.disease_info import DiseaseInfoModel
+
 
 class IDiseaseInfoRepository(ABC):
     @abstractmethod

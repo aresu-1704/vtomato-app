@@ -3,7 +3,7 @@ from typing import List, Dict
 from app.repositories.disease_info_repository import DiseaseInfoRepository
 
 
-class DiseaseService:
+class DiseaseInfoService:
     def __init__(self):
         self._disease_info_repository = DiseaseInfoRepository()
 

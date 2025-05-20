@@ -1,12 +1,12 @@
 from typing_extensions import override
 
-from app.utils.database import postgreSQL_connection as dtb
-from app.repositories.idisease_info_repository import IDiseaseInfoRepository
+from app.utils import DatabaseConnect
+from .idisease_info_repository import IDiseaseInfoRepository
 
 
 class DiseaseInfoRepository(IDiseaseInfoRepository):
     def __init__(self):
-        self.db = dtb.DatabaseConnect(
+        self.db = DatabaseConnect(
             connect_string="postgresql://tomato_user:TomatoPassword123!@localhost:5432/tomato_disease_app"
         )
 

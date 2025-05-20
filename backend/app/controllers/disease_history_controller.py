@@ -2,8 +2,9 @@ from fastapi import APIRouter
 import base64
 from pydantic import BaseModel
 from typing import List
-from app.services.disease_history_service import DiseaseHistoryService
 from fastapi.responses import JSONResponse
+
+from app.services import DiseaseHistoryService
 
 
 router = APIRouter()

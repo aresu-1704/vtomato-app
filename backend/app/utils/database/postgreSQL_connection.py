@@ -4,7 +4,7 @@ from typing import List, Tuple, Optional, Union
 class DatabaseConnect:
     def __init__(self, connect_string: str):
         self.connect_string = connect_string
-        self.pool = None  # Sử dụng pool kết nối để tái sử dụng connection
+        self.pool = None
 
     async def connect(self):
         if self.pool is None:

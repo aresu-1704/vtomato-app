@@ -3,13 +3,13 @@ from typing import List, Optional
 
 from typing_extensions import override
 
-from app.utils.database import postgreSQL_connection as dtb
-from app.models.disease_history import DiseaseHistoryModel
-from app.repositories.idisease_history_repository import IDiseaseHistoryRepository
+from app.utils import DatabaseConnect
+from app.models import DiseaseHistoryModel
+from .idisease_history_repository import IDiseaseHistoryRepository
 
 class DiseaseHistoryRepository(IDiseaseHistoryRepository):
     def __init__(self):
-        self.db = dtb.DatabaseConnect(
+        self.db = DatabaseConnect(
             connect_string="postgresql://tomato_user:TomatoPassword123!@localhost:5432/tomato_disease_app"
         )
 

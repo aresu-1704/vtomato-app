@@ -1,14 +1,12 @@
 import base64
 import asyncio
-
 from fastapi import APIRouter
-from app.services.disease_info_service import DiseaseService
-
-from app.services.predict_service import PredictService
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
-
 from app.executor_pool import executor
+
+from app.services import PredictService
+from app.services import DiseaseInfoService
 
 
 router = APIRouter()
@@ -17,7 +15,7 @@ class PredictRequest(BaseModel):
     Image: str
 
 _predict_service = PredictService(
-    model_path="ai_models/yolov12n/weights/best.pt",
+    model_path="app/ai_models/yolov12n/weights/best.pt",
     class_names=[
         "Early Blight",
         "Healthy",
@@ -47,7 +45,7 @@ async def predict_image(request: PredictRequest):
     try:
         data = request.Image
         try:
-            _disease_info_service = DiseaseService()
+            _disease_info_service = DiseaseInfoService()
             image_bytes = base64.b64decode(data)
             loop = asyncio.get_running_loop()
             result = await loop.run_in_executor(executor, _predict_service.predict, image_bytes)

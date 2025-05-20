@@ -5,11 +5,11 @@ from slowapi.util import get_remote_address
 from slowapi import Limiter
 from slowapi.errors import RateLimitExceeded
 
-from controllers.auth_controller import router as login_router
-from controllers.predict_controller import router as predict_router
-from controllers.disease_history_controller import router as disease_history_router
+from app import login_router
+from app import predict_router
+from app import disease_history_router
 
-from utils.otp_storage.start_redis import start_redis
+from app.utils import start_redis
 
 
 app = FastAPI(
@@ -35,5 +35,5 @@ app.include_router(disease_history_router, prefix="/disease-history", tags=["Lá»
 
 if __name__ == "__main__":
     import uvicorn
-    start_redis('utils/otp_storage/redis-server.exe')
+    start_redis('app/utils/otp_storage/redis-server.exe')
     uvicorn.run(app, host="0.0.0.0", port=8000)

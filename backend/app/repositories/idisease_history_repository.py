@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
-from app.models.disease_history import DiseaseHistoryModel
+
+from app.models import DiseaseHistoryModel
 
 class IDiseaseHistoryRepository(ABC):
     @abstractmethod

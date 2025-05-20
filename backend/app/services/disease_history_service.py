@@ -3,7 +3,7 @@ import base64
 from datetime import datetime
 from typing import List, Dict, Any
 
-from app.repositories.disease_history_repository import DiseaseHistoryRepository
+from app.repositories import DiseaseHistoryRepository
 
 
 class DiseaseHistoryService:

@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class ILoginRepository(ABC):
 
     @abstractmethod
