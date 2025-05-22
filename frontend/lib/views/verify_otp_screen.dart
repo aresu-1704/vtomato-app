@@ -52,7 +52,12 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('OTP không đúng.')),
       );
-    } else {
+    } else if (result == 2) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Mã OTP hết hiệu lực, vui lòng gửi lại.')),
+      );
+    }
+    else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Đã xảy ra lỗi, vui lòng thử lại.')),
       );

@@ -120,6 +120,9 @@ class AuthService {
       else if (message['Message'] == "OTP verified successfully!"){
         return 1;
       }
+      else if (message['Message'] == "OTP has expired or does not exist."){
+        return 2;
+      }
       else {
         return -1;
       }
