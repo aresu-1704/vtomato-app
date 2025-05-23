@@ -90,9 +90,9 @@ class AuthService {
         return -1;
       }
     }
-    // on SocketException{
-    //   return -2;
-    // }
+    on SocketException{
+      return -2;
+    }
 
     catch (ex) {
       print('Lỗi: $ex');

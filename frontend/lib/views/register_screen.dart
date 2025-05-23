@@ -10,39 +10,41 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final RegisterViewModel _viewModel = RegisterViewModel();
+  final _formKey = GlobalKey<FormState>();
 
-  void _onSetState(){
-    setState(() { });
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
+
+  void _onSetState() {
+    setState(() {});
   }
 
   Future<void> _register() async {
+    // Validate form
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
     final result = await _viewModel.registerNewAccount(_onSetState);
 
     if (!mounted) return;
 
-    if (result! == "Connection Error") {
+    if (result == "Connection Error") {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Không thể kết nối đến máy chủ, vui lòng thử lại sau.')
-        )
+          const SnackBar(content: Text(
+              'Không thể kết nối đến máy chủ, vui lòng thử lại sau.'))
       );
-    } else if (result! == 1) {
+    } else if (result == 1) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Đăng ký thành công!')
-        )
+          const SnackBar(content: Text('Đăng ký thành công!'))
       );
       Future.delayed(const Duration(seconds: 1), () {
-        Navigator.pop(
-          context,
-        );
+        Navigator.pop(context);
       });
     } else {
       _viewModel.setState(false, _onSetState);
-
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Email đã tồn tại.')
-        )
+          const SnackBar(content: Text('Email đã tồn tại.'))
       );
     }
   }
@@ -54,16 +56,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 58),
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
-              Image.asset('assets/images/tomato_icon.png', width: 200, height: 200),
+              Image.asset(
+                  'assets/images/tomato_icon.png', width: 200, height: 200),
               const SizedBox(height: 15),
               Text(
-                'ĐĂNG KÝ TÀI KHOẢN',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green[800])
+                  'ĐĂNG KÝ TÀI KHOẢN',
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green[800])
               ),
               const SizedBox(height: 18),
 
@@ -73,7 +77,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 hintText: 'Số điện thoại',
                 icon: Icons.phone,
                 validator: (value) {
-                  if (value == null || value.trim().isEmpty)
+                  if (value == null || value
+                      .trim()
+                      .isEmpty)
                     return 'Số điện thoại không được để trống';
                   if (!_viewModel.phoneRegex.hasMatch(value))
                     return 'Số điện thoại không hợp lệ';
@@ -88,8 +94,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 hintText: 'Email',
                 icon: Icons.email,
                 validator: (value) {
-                  if (value == null || value.trim().isEmpty) return 'Email không được để trống';
-                  if (!_viewModel.emailRegex.hasMatch(value)) return 'Email không hợp lệ';
+                  if (value == null || value
+                      .trim()
+                      .isEmpty) return 'Email không được để trống';
+                  if (!_viewModel.emailRegex.hasMatch(value))
+                    return 'Email không hợp lệ';
                   return null;
                 },
               ),
@@ -101,6 +110,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 hintText: 'Mật khẩu',
                 icon: Icons.lock,
                 isPassword: true,
+                obscureText: _obscurePassword,
+                toggleObscure: () {
+                  setState(() {
+                    _obscurePassword = !_obscurePassword;
+                  });
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) return 'Mật khẩu không được để trống';
                   if (value.length < 8) return 'Mật khẩu phải từ 8 ký tự';
@@ -115,6 +130,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 hintText: 'Xác nhận mật khẩu',
                 icon: Icons.lock,
                 isPassword: true,
+                obscureText: _obscureConfirmPassword,
+                toggleObscure: () {
+                  setState(() {
+                    _obscureConfirmPassword = !_obscureConfirmPassword;
+                  });
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) return 'Vui lòng xác nhận mật khẩu';
                   if (value != _viewModel.passwordController.text) return 'Mật khẩu không khớp';
@@ -127,28 +148,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _viewModel.isLoading
-                    ? null
-                    : () => {
-                      FocusScope.of(context).unfocus(),
-                      _register()
-                    },
+                  ? null
+                  : () =>
+                  {
+                    FocusScope.of(context).unfocus(),
+                    _register()
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green[700],
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
                   ),
                   child: _viewModel.isLoading
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text(
-                      'ĐĂNG KÝ',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold
-                      )
-                    ),
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : const Text(
+                    'ĐĂNG KÝ',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold
+                    )
                   ),
                 ),
+              ),
               const SizedBox(height: 10),
 
               Row(
@@ -161,7 +184,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         context,
                       );
                     },
-                    child: const Text('Đăng nhập', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF002F21))),
+                    child: const Text('Đăng nhập', style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Color(0xFF002F21))),
                   ),
                 ],
               ),
@@ -179,10 +203,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     required IconData icon,
     required String? Function(String?) validator,
     bool isPassword = false,
+    bool obscureText = false,
+    VoidCallback? toggleObscure,
   }) {
     return TextFormField(
       controller: controller,
-      obscureText: isPassword,
+      obscureText: obscureText,
       validator: validator,
       cursorColor: Colors.green.shade700,
       decoration: InputDecoration(
@@ -207,6 +233,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: Colors.red, width: 2),
         ),
+        suffixIcon: isPassword
+        ? IconButton(
+          icon: Icon(obscureText ? Icons.visibility : Icons.visibility_off),
+          onPressed: toggleObscure,
+        )
+        : null,
       ),
     );
   }
