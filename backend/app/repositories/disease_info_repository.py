@@ -3,11 +3,13 @@ from typing_extensions import override
 from app.utils import DatabaseConnect
 from .idisease_info_repository import IDiseaseInfoRepository
 
+from config import settings
+
 
 class DiseaseInfoRepository(IDiseaseInfoRepository):
     def __init__(self):
         self.db = DatabaseConnect(
-            connect_string="postgresql://tomato_user:TomatoPassword123!@localhost:5432/tomato_disease_app"
+            connect_string=settings.DATABASE_URL
         )
 
     @override

@@ -1,5 +1,5 @@
 from app.repositories import LoginRepository
-from app.utils import hash_password
+from app.utils import hash_password, generate_salt
 from app.utils import send_otp, verify_otp
 
 
@@ -16,7 +16,7 @@ class LoginServices:
 
             stored_hash = account["PasswordHash"]
             salt = account["Salt"]
-            input_hash = await hash_password.hash_password(password, salt)
+            input_hash = await hash_password(password, salt)
 
             if stored_hash == input_hash:
                 return account["UserID"]
@@ -26,8 +26,8 @@ class LoginServices:
 
     async def register_account(self, email: str, phone_number: str, password: str):
         try:
-            salt = await hash_password.generate_salt(16)
-            hashed_password = await hash_password.hash_password(password, salt)
+            salt = await generate_salt(16)
+            hashed_password = await hash_password(password, salt)
 
             result = await self._login_repository.create_account(
                 email=email,
@@ -42,8 +42,8 @@ class LoginServices:
 
     async def reset_password(self, user_id: int, new_password: str):
         try:
-            salt = await hash_password.generate_salt(16)
-            new_hash = await hash_password.hash_password(new_password, salt)
+            salt = await generate_salt(16)
+            new_hash = await hash_password(new_password, salt)
 
             result = await self._login_repository.reset_password(
                 user_id=user_id,

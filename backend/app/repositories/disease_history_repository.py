@@ -7,10 +7,13 @@ from app.utils import DatabaseConnect
 from app.models import DiseaseHistoryModel
 from .idisease_history_repository import IDiseaseHistoryRepository
 
+from config import settings
+
+
 class DiseaseHistoryRepository(IDiseaseHistoryRepository):
     def __init__(self):
         self.db = DatabaseConnect(
-            connect_string="postgresql://tomato_user:TomatoPassword123!@localhost:5432/tomato_disease_app"
+            connect_string=settings.DATABASE_URL
         )
 
     @override

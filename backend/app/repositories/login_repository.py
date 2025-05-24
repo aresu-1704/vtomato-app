@@ -3,11 +3,12 @@ from typing_extensions import override
 from .ilogin_repository import ILoginRepository
 from app.utils.database import DatabaseConnect
 
+from config import settings
 
 class LoginRepository(ILoginRepository):
     def __init__(self):
         self.db = DatabaseConnect(
-            connect_string="postgresql://tomato_user:TomatoPassword123!@localhost:5432/tomato_disease_app"
+            connect_string=settings.DATABASE_URL
         )
 
     @override
