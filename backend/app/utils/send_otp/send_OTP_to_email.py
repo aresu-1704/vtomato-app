@@ -3,7 +3,7 @@ import redis
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-
+from config import settings
 
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
@@ -11,11 +11,6 @@ REDIS_DB = 0
 
 redis_client = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)
 
-EMAIL_SENDER = "anly1704@gmail.com"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USERNAME = "anly1704@gmail.com"
-EMAIL_PASSWORD = "ldbtbfokmbsczmhl"
 
 async def generate_otp():
     return random.randint(10000, 99999)
@@ -31,17 +26,17 @@ async def send_otp(email_address, user_id):
     body = f"Mã xác minh của bạn là: {otp}"
 
     msg = MIMEMultipart()
-    msg["From"] = EMAIL_SENDER
+    msg["From"] = settings.EMAIL_SENDER
     msg["To"] = email_address
     msg["Subject"] = subject
 
     msg.attach(MIMEText(body, "plain"))
 
     try:
-        server = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT)
+        server = smtplib.SMTP(settings.EMAIL_HOST, settings.EMAIL_PORT)
         server.starttls()
-        server.login(EMAIL_USERNAME, EMAIL_PASSWORD)
-        server.sendmail(EMAIL_SENDER, email_address, msg.as_string())
+        server.login(settings.EMAIL_USERNAME, settings.EMAIL_PASSWORD)
+        server.sendmail(settings.EMAIL_SENDER, email_address, msg.as_string())
         server.quit()
         return user_id
     except Exception as e:
