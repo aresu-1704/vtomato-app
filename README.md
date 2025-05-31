@@ -32,7 +32,7 @@ Hỗ trợ nông dân và kỹ thuật viên nông nghiệp **phát hiện sớm
 ### 📔 Xem chi tiết quá trình huấn luyện tại đây:
 
   Chi tiết quá trình huấn luyện và đánh giá mô hình tại Kaggle:  
-👉 [YOLOv12 Tomato Disease Detection - Kaggle Notebook](https://www.kaggle.com/code/aresusayhi/yolo12)
+👉 [YOLOv12 Tomato Disease Detection - Kaggle Notebook](https://www.kaggle.com/code/aresusayhi/tomato-leafs-detection-yolo12)
 
 ---
 
