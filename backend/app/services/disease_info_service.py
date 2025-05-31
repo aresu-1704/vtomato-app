@@ -1,12 +1,16 @@
 import asyncio
 from typing import List, Dict
+from typing_extensions import override
+
 from app.repositories.disease_info_repository import DiseaseInfoRepository
+from app.services.idisease_info_service import IDiseaseInfoService
 
 
-class DiseaseInfoService:
+class DiseaseInfoService(IDiseaseInfoService):
     def __init__(self):
         self._disease_info_repository = DiseaseInfoRepository()
 
+    @override
     async def get_disease_info(self, DiseaseIDList) -> List[Dict[str, str]]:
         try:
             diseases = []

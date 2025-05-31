@@ -1,12 +1,17 @@
+from typing_extensions import override
+
 from app.repositories import LoginRepository
+from app.services.ilogin_service import ILoginService
+
 from app.utils import hash_password, generate_salt
 from app.utils import send_otp, verify_otp
 
 
-class LoginServices:
+class LoginService(ILoginService):
     def __init__(self):
         self._login_repository = LoginRepository();
 
+    @override
     async def verify_login(self, email: str, password: str):
         try:
             account = await self._login_repository.get_password_info_by_email(email)
@@ -24,6 +29,7 @@ class LoginServices:
         except Exception as e:
             raise Exception(f"Login verification failed: {e}")
 
+    @override
     async def register_account(self, email: str, phone_number: str, password: str):
         try:
             salt = await generate_salt(16)
@@ -40,6 +46,7 @@ class LoginServices:
         except Exception as e:
             raise Exception(f"Account registration failed: {e}")
 
+    @override
     async def reset_password(self, user_id: int, new_password: str):
         try:
             salt = await generate_salt(16)
@@ -55,6 +62,7 @@ class LoginServices:
         except Exception as e:
             raise Exception(f"Password reset failed: {e}")
 
+    @override
     async def send_otp_to_email(self, email: str):
         try:
             user_id = await self._login_repository.email_exists(email)
@@ -64,6 +72,7 @@ class LoginServices:
         except Exception as e:
             raise Exception(f"Sending OTP failed: {e}")
 
+    @override
     async def verify_otp(self, user_id: int, otp: str):
         try:
             return await verify_otp(user_id, otp)

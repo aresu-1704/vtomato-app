@@ -2,14 +2,17 @@ import os
 import base64
 from datetime import datetime
 from typing import List, Dict, Any
+from typing_extensions import override
 
 from app.repositories import DiseaseHistoryRepository
+from app.services.idisease_history_service import IDiseaseHistoryService
 
 
-class DiseaseHistoryService:
+class DiseaseHistoryService(IDiseaseHistoryService):
     def __init__(self):
         self._disease_history_repository = DiseaseHistoryRepository()
 
+    @override
     async def save_history(self, user_id: int, image_bytes: bytes, class_idx_list: List[int]) -> str:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"predict_{timestamp}_user{user_id}.jpg"
@@ -30,6 +33,7 @@ class DiseaseHistoryService:
 
         return "Save successfully"
 
+    @override
     async def get_predict_history_by_id(self, history_id: int) -> Dict[str, Any]:
         raw_data = await self._disease_history_repository.get_disease_history_by_id(history_id)
 

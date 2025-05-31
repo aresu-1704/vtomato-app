@@ -1,11 +1,15 @@
-from PIL import ImageFont, ImageDraw, Image
 import torch
-from ultralytics import YOLO
 import io
 import base64
 
+from PIL import ImageFont, ImageDraw, Image
+from ultralytics import YOLO
+from typing_extensions import override
 
-class PredictService:
+from app.services.ipredict_service import IPredictService
+
+
+class PredictService(IPredictService):
     def __init__(self, model_path: str, class_names: list[str], descriptions: dict[str, str] = None, input_size: int = 640):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"[🔧 PredictService] Using device: {self.device}")
@@ -36,6 +40,7 @@ class PredictService:
             for i, name in enumerate(class_names)
         }
 
+    @override
     def predict(self, image_bytes: bytes) -> dict:
         nonerotate_original_image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
         original_image = nonerotate_original_image.rotate(-90, expand=True)

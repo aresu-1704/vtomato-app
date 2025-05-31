@@ -1,14 +1,14 @@
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 
-from app.services import LoginServices
+from app.services import LoginService
 
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 
 
 router = APIRouter()
-login_services = LoginServices()
+login_services = LoginService()
 limiter = Limiter(key_func=get_remote_address)
 
 class LoginRequest(BaseModel):
