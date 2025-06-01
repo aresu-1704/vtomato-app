@@ -4,89 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="Update Async API menthods">
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.DATABASE_SCHEMAS/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Tomato_Leaf_Disease_Detect_YOLOv12.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Tomato_Leaf_Disease_Detect_YOLOv12.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ai_models/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ai_models/yolov12n/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ai_models/yolov12n/weights/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/fonts/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/media/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/media/image_history/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/repositories/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/database/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/hash_password/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/otp_storage/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/send_otp/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/android/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/debug/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/java/com/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/java/com/tomatodetectapp/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/java/com/tomatodetectapp/tomato_detect_app/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/java/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/drawable-v21/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/drawable/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/mipmap-hdpi/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/mipmap-mdpi/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/mipmap-xhdpi/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/mipmap-xxhdpi/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/mipmap-xxxhdpi/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/values-night/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/values/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/profile/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/gradle/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/android/gradle/wrapper/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/assets/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/assets/images/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/ios/Flutter/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner.xcodeproj/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner.xcodeproj/project.xcworkspace/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner.xcodeproj/xcshareddata/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner.xcodeproj/xcshareddata/xcschemes/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner.xcworkspace/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner.xcworkspace/xcshareddata/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner/Assets.xcassets/AppIcon.appiconset/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner/Assets.xcassets/LaunchImage.imageset/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner/Assets.xcassets/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner/Base.lproj/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/ios/RunnerTests/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/ios/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/lib/constants/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/lib/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/lib/models/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/lib/repositories/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/lib/services/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/lib/view_models/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/lib/views/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/test/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../images/API/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../images/Charts/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../images/Dataset/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../images/UI/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../images/desktop.ini" beforeDir="false" />
+    <list default="true" id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="Clean desktop.ini leftover in folder">
+      <change beforePath="$PROJECT_DIR$/../frontend/lib/constants/api_constant.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/lib/constants/api_constant.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +130,7 @@
       <option name="presentableId" value="Default" />
       <updated>1744619729248</updated>
       <workItem from="1748760590923" duration="1201000" />
-      <workItem from="1748763232784" duration="1611000" />
+      <workItem from="1748763232784" duration="1705000" />
     </task>
     <task id="LOCAL-00001" summary="Create README.md&#10;&#10;Add dataset">
       <option name="closed" value="true" />
@@ -365,7 +284,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746211679182</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Clean desktop.ini leftover in folder">
+      <option name="closed" value="true" />
+      <created>1748764910565</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1748764910565</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -388,7 +315,8 @@
     <MESSAGE value="Fix Database Error, Fix Redis Start Error" />
     <MESSAGE value="Update notebook's dataset link" />
     <MESSAGE value="Update Async API menthods" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Async API menthods" />
+    <MESSAGE value="Clean desktop.ini leftover in folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clean desktop.ini leftover in folder" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/backend$main.coverage" NAME="main Coverage Results" MODIFIED="1748763642283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
