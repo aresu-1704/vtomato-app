@@ -4,7 +4,90 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="Update Async API menthods" />
+    <list default="true" id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="Update Async API menthods">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.DATABASE_SCHEMAS/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Tomato_Leaf_Disease_Detect_YOLOv12.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Tomato_Leaf_Disease_Detect_YOLOv12.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ai_models/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ai_models/yolov12n/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ai_models/yolov12n/weights/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/fonts/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/media/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/media/image_history/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/database/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/hash_password/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/otp_storage/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/send_otp/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/android/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/debug/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/java/com/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/java/com/tomatodetectapp/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/java/com/tomatodetectapp/tomato_detect_app/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/java/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/drawable-v21/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/drawable/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/mipmap-hdpi/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/mipmap-mdpi/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/mipmap-xhdpi/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/mipmap-xxhdpi/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/mipmap-xxxhdpi/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/values-night/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/main/res/values/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/app/src/profile/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/gradle/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/android/gradle/wrapper/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/assets/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/assets/images/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/ios/Flutter/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner.xcodeproj/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner.xcodeproj/project.xcworkspace/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner.xcodeproj/xcshareddata/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner.xcodeproj/xcshareddata/xcschemes/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner.xcworkspace/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner.xcworkspace/xcshareddata/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner/Assets.xcassets/AppIcon.appiconset/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner/Assets.xcassets/LaunchImage.imageset/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner/Assets.xcassets/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner/Base.lproj/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/ios/Runner/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/ios/RunnerTests/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/ios/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/lib/constants/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/lib/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/lib/models/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/lib/repositories/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/lib/services/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/lib/view_models/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/lib/views/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/test/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/API/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/Charts/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/Dataset/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/UI/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/desktop.ini" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,22 +119,22 @@
     &quot;assignee&quot;: &quot;aresu-1704&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/aresu-1704/tomato-disease-detect.git",
-    "accountId": "877ed401-8177-4a7e-bb9c-29bd42d9e96b"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/aresu-1704/tomato-disease-detect.git&quot;,
+    &quot;accountId&quot;: &quot;877ed401-8177-4a7e-bb9c-29bd42d9e96b&quot;
   },
-  "recentNewPullRequestHead": {
-    "server": {
-      "useHttp": false,
-      "host": "github.com",
-      "port": null,
-      "suffix": null
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
     },
-    "owner": "aresu-1704",
-    "repository": "tomato-disease-detect-fastapi"
+    &quot;owner&quot;: &quot;aresu-1704&quot;,
+    &quot;repository&quot;: &quot;tomato-disease-detect-fastapi&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -60,34 +143,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Python.Disease_History_Controller.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Predict_Controller.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Predict_Service.executor&quot;: &quot;Run&quot;,
-    &quot;Python.adas.executor&quot;: &quot;Run&quot;,
-    &quot;Python.asas.executor&quot;: &quot;Run&quot;,
-    &quot;Python.asd.executor&quot;: &quot;Run&quot;,
-    &quot;Python.asdada.executor&quot;: &quot;Run&quot;,
-    &quot;Python.asdasdasda.executor&quot;: &quot;Run&quot;,
-    &quot;Python.check_label.executor&quot;: &quot;Run&quot;,
-    &quot;Python.class_distribution.executor&quot;: &quot;Run&quot;,
-    &quot;Python.data_check.executor&quot;: &quot;Run&quot;,
-    &quot;Python.draw_log.executor&quot;: &quot;Run&quot;,
-    &quot;Python.evaluate_model.executor&quot;: &quot;Run&quot;,
-    &quot;Python.haha.executor&quot;: &quot;Run&quot;,
-    &quot;Python.hehe.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/anly1/Desktop/DoAnCoSo/tomato-disease-detect-fastapi&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Python.Disease_History_Controller.executor": "Run",
+    "Python.Predict_Controller.executor": "Run",
+    "Python.Predict_Service.executor": "Run",
+    "Python.adas.executor": "Run",
+    "Python.asas.executor": "Run",
+    "Python.asd.executor": "Run",
+    "Python.asdada.executor": "Run",
+    "Python.asdasdasda.executor": "Run",
+    "Python.check_label.executor": "Run",
+    "Python.class_distribution.executor": "Run",
+    "Python.data_check.executor": "Run",
+    "Python.draw_log.executor": "Run",
+    "Python.evaluate_model.executor": "Run",
+    "Python.haha.executor": "Run",
+    "Python.hehe.executor": "Run",
+    "Python.hwsgh.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.test.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/anly1/Desktop/DoAnCoSo/tomato-disease-detect-fastapi",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\anly1\Desktop\DoAnCoSo\Tomato-Disease-Detect-App-Project\tomato-disease-detect_backend-yolov12\utils" />
@@ -107,7 +197,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-fb887030ada0-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.21565.199" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-PY-251.25410.159" />
+        <option value="bundled-python-sdk-e0ed3721d81e-36ea0e71a18c-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.25410.159" />
       </set>
     </attachedChunks>
   </component>
@@ -119,6 +210,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1744619729248</updated>
+      <workItem from="1748760590923" duration="1201000" />
+      <workItem from="1748763232784" duration="1611000" />
     </task>
     <task id="LOCAL-00001" summary="Create README.md&#10;&#10;Add dataset">
       <option name="closed" value="true" />
@@ -275,7 +368,13 @@
     <option name="localTasksCounter" value="20" />
     <servers />
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
   <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
     <MESSAGE value="Add requirements.txt" />
     <MESSAGE value="Create README.md&#10;&#10;Add dataset" />
     <MESSAGE value="Create API to Predict with Web Socket" />
@@ -290,5 +389,9 @@
     <MESSAGE value="Update notebook's dataset link" />
     <MESSAGE value="Update Async API menthods" />
     <option name="LAST_COMMIT_MESSAGE" value="Update Async API menthods" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/backend$main.coverage" NAME="main Coverage Results" MODIFIED="1748763642283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/backend$hwsgh.coverage" NAME="hwsgh Coverage Results" MODIFIED="1748764280596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app/src" />
   </component>
 </project>
