@@ -2,3 +2,4 @@ ngrok/
 backend/media/
 backend/.env
 backend/app/src
+backend/dump.rdb
