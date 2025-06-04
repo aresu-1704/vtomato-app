@@ -15,9 +15,9 @@ def start_redis(redis_path):
     if not is_redis_running():
         try:
             subprocess.Popen([redis_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            print("Redis started.")
+            print("Redis đã khởi động.")
             time.sleep(1)
         except Exception as e:
-            print(f"Failed to start Redis: {e}")
+            print(f"Lỗi khi khởi động Redis: {e}")
     else:
-        print("Redis is already running.")
+        print("Redis đang chạy trước đó.")

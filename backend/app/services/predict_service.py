@@ -12,7 +12,7 @@ from app.services.ipredict_service import IPredictService
 class PredictService(IPredictService):
     def __init__(self, model_path: str, class_names: list[str], descriptions: dict[str, str] = None, input_size: int = 640):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        print(f"[🔧 PredictService] Using device: {self.device}")
+        print(f"[Mô hình dự đoán] Công cụ đang dùng: {self.device}")
 
         self.model = YOLO(model_path)
         self.model.to(self.device)
