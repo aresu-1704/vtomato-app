@@ -1,4 +1,4 @@
-# 🍅 ỨNG DỤNG NHẬN DIỆN BỆNH TRÊN CÂY CÀ CHUA BẰNG HÌNH ẢNH (ỨNG DỤNG MẠNG HỌC SÂU YOLOv12)
+# 🍅 ỨNG DỤNG NHẬN DIỆN BỆNH TRÊN CÂY CÀ CHUA BẰNG HÌNH ẢNH (ỨNG DỤNG MẠNG HỌC SÂU YOLO)
 
 Ứng dụng nhận diện bệnh cây cà chua được xây dựng bằng Flutter, kết nối với backend YOLOv12 Nano (FastAPI) để quét ảnh lá cây và dự đoán bệnh.
 
@@ -9,8 +9,8 @@ Hệ thống nhận diện bệnh trên cây cà chua gồm **2 thành phần ch
 - 📱 **Ứng dụng di động Flutter (Frontend):**  
   Giúp người dùng dễ dàng chụp ảnh lá cây, gửi ảnh lên server và hiển thị kết quả dự đoán. Giao diện thân thiện, dễ sử dụng cho cả nông dân và kỹ thuật viên.
 
-- 🧠 **Hệ thống phân tích bệnh (Backend - FastAPI + YOLOv12 Nano):**  
-  Nhận ảnh từ người dùng, chạy mô hình học sâu (YOLOv12 Nano) để xác định lá bệnh và phân loại loại bệnh (mốc sương, xoăn lá, đốm vi khuẩn, v.v.).
+- 🧠 **Hệ thống phân tích bệnh (Backend - FastAPI + YOLO Nano):**  
+  Nhận ảnh từ người dùng, chạy mô hình học sâu (YOLO Nano) để xác định lá bệnh và phân loại loại bệnh (mốc sương, xoăn lá, đốm vi khuẩn, v.v.).
 
 ### ✅ Các tính năng nổi bật:
 
@@ -31,56 +31,8 @@ Hỗ trợ nông dân và kỹ thuật viên nông nghiệp **phát hiện sớm
   
 ### 📔 Xem chi tiết quá trình huấn luyện tại đây:
 
-  Chi tiết quá trình huấn luyện và đánh giá mô hình tại Kaggle:  
-👉 [YOLOv12 Tomato Disease Detection - Kaggle Notebook](https://www.kaggle.com/code/aresusayhi/tomato-leafs-detection-yolo12)
-
----
-
-# 🌱 TỔNG QUAN TẬP DỮ LIỆU
-
-Mô hình mạng học sâu được xây dựng trên 1 tập dữ liệu về **8 bệnh** trên cây **Cà chua** phổ biến tại Việt Nam gồm 4000 ảnh được gán nhãn.
-
-## 📊 Sơ đồ phân bố nhãn
-
-<p align="center">
-  <img src="images/Dataset/classdistibution.jpg" width="2000"/>
-</p>
-
-## 🖼️ Ảnh mẫu
-
-<p align="center">
-  <img src="images/Dataset/labelexample.jpg" width="800"/>
-</p>
-
----
-
-# 🌟 ĐÁNH GIÁ MÔ HÌNH YOLOv12 NANO CHO BÀI TOÁN
-
-Đánh giá mô hình mạng học sâu YOLOv12 sau 200 Epoch huấn luyện.
-
-## 📈 Biểu đồ Loss qua các Epoch huấn luyện
-
-<p align="center">
-  <img src="images/Charts/trainandvalidloss.jpg" width="800"/>
-</p>
-
-## 📈 Biểu đồ đánh giá Metrics qua các Epoch huấn luyện
-
-<p align="center">
-  <img src="images/Charts/evaluatedmetrics.jpg" width="800"/>
-</p>
-
-## 🎯 Đánh giá các lớp trên tập Test sau khi huấn luyện
-
-<p align="center">
-  <img src="images/Charts/evaluatedclass.jpg" width="600"/>
-</p>
-
-## 🎯 Đánh giá Metrics trên tập test sau khi huấn luyện
-
-<p align="center">
-  <img src="images/Charts/evaluatedmetricstest.jpg" width="300"/>
-</p>
+  Chi tiết quá trình huấn luyện và đánh giá mô hình tại đây:  
+👉 [YOLO Tomato Disease Detection](https://github.com/aresu-1704/object-detection-in-tomato-disease-leaves.git)
 
 ---
 
@@ -88,9 +40,9 @@ Mô hình mạng học sâu được xây dựng trên 1 tập dữ liệu về 
 
 ---
 
-# 🛠️ BACKEND FASTAPI - YOLOv12 Nano (Backend)
+# 🛠️ BACKEND FASTAPI - YOLO (Backend)
 
-Đây là backend API được xây dựng bằng [FastAPI](https://fastapi.tiangolo.com/) cho hệ thống **Nhận diện bệnh cây Cà Chua** bằng mô hình **YOLOv12 Nano**.
+Đây là backend API được xây dựng bằng [FastAPI](https://fastapi.tiangolo.com/) cho hệ thống **Nhận diện bệnh cây Cà Chua** bằng mô hình **YOLO**.
 
 ## 🚀 Tính năng chính
 
