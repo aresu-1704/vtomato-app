@@ -1,6 +1,6 @@
 # 🍅 ỨNG DỤNG NHẬN DIỆN BỆNH TRÊN CÂY CÀ CHUA BẰNG HÌNH ẢNH (ỨNG DỤNG MẠNG HỌC SÂU YOLO)
 
-Ứng dụng nhận diện bệnh cây cà chua được xây dựng bằng Flutter, kết nối với backend YOLOv12 Nano (FastAPI) để quét ảnh lá cây và dự đoán bệnh.
+Ứng dụng nhận diện bệnh cây cà chua được xây dựng bằng Flutter, kết nối với backend YOLO (FastAPI) để quét ảnh lá cây và dự đoán bệnh.
 
 ## 📌 Mô tả
 
@@ -9,13 +9,13 @@ Hệ thống nhận diện bệnh trên cây cà chua gồm **2 thành phần ch
 - 📱 **Ứng dụng di động Flutter (Frontend):**  
   Giúp người dùng dễ dàng chụp ảnh lá cây, gửi ảnh lên server và hiển thị kết quả dự đoán. Giao diện thân thiện, dễ sử dụng cho cả nông dân và kỹ thuật viên.
 
-- 🧠 **Hệ thống phân tích bệnh (Backend - FastAPI + YOLO Nano):**  
-  Nhận ảnh từ người dùng, chạy mô hình học sâu (YOLO Nano) để xác định lá bệnh và phân loại loại bệnh (mốc sương, xoăn lá, đốm vi khuẩn, v.v.).
+- 🧠 **Hệ thống phân tích bệnh (Backend - FastAPI + YOLO):**  
+  Nhận ảnh từ người dùng, chạy mô hình học sâu (YOLO) để xác định lá bệnh và phân loại loại bệnh (mốc sương, xoăn lá, đốm vi khuẩn, v.v.).
 
 ### ✅ Các tính năng nổi bật:
 
 - **Chụp ảnh hoặc chọn ảnh lá cây từ thư viện.**
-- **Tự động khoanh vùng vùng bệnh bằng mô hình YOLOv12.**
+- **Tự động khoanh vùng vùng bệnh bằng mô hình YOLO.**
 - **Dự đoán loại bệnh chính xác bằng AI.**
 - **Hiển thị kết quả trực quan và dễ hiểu.**
 - **Lưu lịch sử ảnh.**
@@ -26,7 +26,7 @@ Hỗ trợ nông dân và kỹ thuật viên nông nghiệp **phát hiện sớm
 
 ## 🤖 Mô hình mạng học sâu:
 
-  Mô hình được huấn luyện sử dụng kiến trúc **YOLOv12 Nano** cho bài toán phát hiện vùng lá bị bệnh, kết hợp với mạng **CNN** để phân loại chính xác loại bệnh.
+  Mô hình được huấn luyện sử dụng kiến trúc **YOLO** cho bài toán phát hiện vùng lá bị bệnh.
   Quá trình huấn luyện và đánh giá mô hình được thực hiện trên **Kaggle Notebook**.
   
 ### 📔 Xem chi tiết quá trình huấn luyện tại đây:
