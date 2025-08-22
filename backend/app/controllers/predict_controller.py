@@ -15,7 +15,7 @@ class PredictRequest(BaseModel):
     Image: str
 
 _predict_service = PredictService(
-    model_path="app/ai_models/yolov12n/weights/best.pt",
+    model_path="app/ai_models/yolov10n_vt.pt",
     class_names=[
         "Early Blight",
         "Healthy",

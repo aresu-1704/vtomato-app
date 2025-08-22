@@ -6,8 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="33552efd-96f5-40ae-bd4f-f08dfb4d3c09" name="Changes" comment="Change FastAPI startup method in configuration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/lib/constants/api_constant.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/lib/constants/api_constant.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ai_models/yolov10n/weights/best.pt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ai_models/yolov11n/weights/best.pt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ai_models/yolov12n/weights/best.pt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ai_models/yolov8n/weights/best.pt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ai_models/yolov9n/weights/best.pt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/predict_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/predict_controller.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +145,6 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-PY-251.25410.159" />
         <option value="bundled-python-sdk-e0ed3721d81e-36ea0e71a18c-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.25410.159" />
       </set>
     </attachedChunks>
