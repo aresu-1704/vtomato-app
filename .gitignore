@@ -1,14 +1,11 @@
-# Bỏ thư mục ngrok
-ngrok/
-
 # Bỏ thư mục chứa media upload (ảnh, file...), thường được sinh ra runtime
-backend/media/
+App/backend/media/
 
 # Bỏ file .env chứa biến môi trường
-backend/.env
+App/backend/.env
 
 # Bỏ mã nguồn xử lý trong app/src
-backend/app/src
+App/backend/app/src
 
 # Bỏ file dump Redis
-backend/dump.rdb
+App/backend/dump.rdb
