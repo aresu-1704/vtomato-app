@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:tomato_detect_app/utils/toast_helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
+import 'package:animate_do/animate_do.dart';
 
 class CameraScreen extends StatefulWidget {
   final String UserId;
@@ -194,137 +195,278 @@ class _CameraScreenState extends State<CameraScreen> {
                 ? Center(
                   child: CircularProgressIndicator(color: Colors.green[700]),
                 )
-                : Column(
+                : Stack(
                   children: [
-                    const SizedBox(height: 8),
-                    Text(
-                      "Quét ảnh lá cây cà chua\nchẩn đoán bệnh",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.green[800],
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: Colors.black,
-                        ),
-                        child:
-                            isCameraInitialized
-                                ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(16),
-                                  child: Stack(
-                                    children: [CameraPreview(cameraController)],
-                                  ),
-                                )
-                                : const Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    const Text(
-                      "Lưu ý: Dự đoán không phải là chính xác 100%,\nchỉ dùng làm tài liệu tham khảo",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32),
+                    // Full screen camera preview
+                    Positioned.fill(
                       child:
-                          isTakePicture || !isCameraInitialized
-                              ? Container(
-                                width: 60,
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  color: Colors.green[700],
-                                  shape: BoxShape.circle,
-                                ),
-                                child: SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white,
-                                    ),
-                                    strokeWidth: 5,
-                                  ),
-                                ),
+                          isCameraInitialized
+                              ? ClipRRect(
+                                borderRadius: BorderRadius.circular(0),
+                                child: CameraPreview(cameraController),
                               )
-                              : GestureDetector(
-                                onTap: _takePicture,
-                                child: Container(
-                                  width: 60,
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                    color: Colors.green[700],
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(
-                                    Icons.camera_alt,
+                              : Container(
+                                color: Colors.black,
+                                child: const Center(
+                                  child: CircularProgressIndicator(
                                     color: Colors.white,
                                   ),
                                 ),
                               ),
                     ),
-                    const SizedBox(height: 16),
 
-                    Container(
-                      color: Colors.green[700],
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 20,
+                    // Top title overlay with gradient background
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: FadeInDown(
+                        duration: const Duration(milliseconds: 600),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(0.6),
+                                Colors.transparent,
+                              ],
+                            ),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16,
+                            horizontal: 16,
+                          ),
+                          child: Text(
+                            "Quét ảnh lá cây cà chua\nchẩn đoán bệnh",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 22,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 10,
+                                  color: Colors.black.withOpacity(0.5),
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          GestureDetector(
-                            onTap:
-                                isTakePicture || !isCameraInitialized
-                                    ? null
-                                    : _pickImageFromGallery,
-                            child: Column(
-                              children: const [
-                                Icon(
-                                  Icons.add_photo_alternate,
+                    ),
+
+                    // Bottom overlay with capture button & bottom bar
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: FadeInUp(
+                        duration: const Duration(milliseconds: 600),
+                        child: Column(
+                          children: [
+                            // Warning text
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                  colors: [
+                                    Colors.black.withOpacity(0.6),
+                                    Colors.transparent,
+                                  ],
+                                ),
+                              ),
+                              child: const Text(
+                                "Lưu ý: Dự đoán không phải là chính xác 100%,\nchỉ dùng làm tài liệu tham khảo",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 12,
                                   color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  shadows: [
+                                    Shadow(
+                                      blurRadius: 4,
+                                      color: Colors.black,
+                                      offset: Offset(0, 1),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(height: 4),
-                                Text(
-                                  "Thêm ảnh",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap:
-                                isTakePicture || !isCameraInitialized
-                                    ? null
-                                    : () {
-                                      _initHistoryScreen();
-                                    },
-                            child: Column(
-                              children: const [
-                                Icon(Icons.history, color: Colors.white),
-                                SizedBox(height: 4),
-                                Text(
-                                  "Lịch sử chẩn đoán",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
+
+                            const SizedBox(height: 12),
+
+                            // Capture button
+                            Pulse(
+                              duration: const Duration(seconds: 2),
+                              infinite: !isTakePicture && isCameraInitialized,
+                              child:
+                                  isTakePicture || !isCameraInitialized
+                                      ? Container(
+                                        width: 70,
+                                        height: 70,
+                                        decoration: BoxDecoration(
+                                          color: Colors.green[700],
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.green.withOpacity(
+                                                0.5,
+                                              ),
+                                              blurRadius: 15,
+                                              spreadRadius: 3,
+                                            ),
+                                          ],
+                                        ),
+                                        child: const SizedBox(
+                                          width: 30,
+                                          height: 30,
+                                          child: Center(
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                    Colors.white,
+                                                  ),
+                                              strokeWidth: 3,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                      : GestureDetector(
+                                        onTap: _takePicture,
+                                        child: Container(
+                                          width: 70,
+                                          height: 70,
+                                          decoration: BoxDecoration(
+                                            color: Colors.green[700],
+                                            shape: BoxShape.circle,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.green.withOpacity(
+                                                  0.5,
+                                                ),
+                                                blurRadius: 15,
+                                                spreadRadius: 3,
+                                              ),
+                                            ],
+                                          ),
+                                          child: const Icon(
+                                            Icons.camera_alt,
+                                            color: Colors.white,
+                                            size: 32,
+                                          ),
+                                        ),
+                                      ),
                             ),
-                          ),
-                        ],
+
+                            const SizedBox(height: 16),
+
+                            // Bottom navigation bar
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.green[700],
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.3),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, -2),
+                                  ),
+                                ],
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 16,
+                                horizontal: 20,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  // Gallery button
+                                  BounceInUp(
+                                    delay: const Duration(milliseconds: 200),
+                                    child: GestureDetector(
+                                      onTap:
+                                          isTakePicture || !isCameraInitialized
+                                              ? null
+                                              : _pickImageFromGallery,
+                                      child: Opacity(
+                                        opacity:
+                                            isTakePicture ||
+                                                    !isCameraInitialized
+                                                ? 0.5
+                                                : 1.0,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: const [
+                                            Icon(
+                                              Icons.add_photo_alternate,
+                                              color: Colors.white,
+                                              size: 28,
+                                            ),
+                                            SizedBox(height: 6),
+                                            Text(
+                                              "Thêm ảnh",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  // History button
+                                  BounceInUp(
+                                    delay: const Duration(milliseconds: 400),
+                                    child: GestureDetector(
+                                      onTap:
+                                          isTakePicture || !isCameraInitialized
+                                              ? null
+                                              : () {
+                                                _initHistoryScreen();
+                                              },
+                                      child: Opacity(
+                                        opacity:
+                                            isTakePicture ||
+                                                    !isCameraInitialized
+                                                ? 0.5
+                                                : 1.0,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: const [
+                                            Icon(
+                                              Icons.history,
+                                              color: Colors.white,
+                                              size: 28,
+                                            ),
+                                            SizedBox(height: 6),
+                                            Text(
+                                              "Lịch sử chẩn đoán",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

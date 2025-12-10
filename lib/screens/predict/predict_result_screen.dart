@@ -4,6 +4,7 @@ import 'package:tomato_detect_app/utils/toast_helper.dart';
 import 'package:tomato_detect_app/models/disease_info_model.dart';
 import 'package:tomato_detect_app/services/predict_service.dart';
 import 'package:tomato_detect_app/services/disease_history_service.dart';
+import 'package:animate_do/animate_do.dart';
 
 class PredictResultScreen extends StatefulWidget {
   final Uint8List image;
@@ -121,13 +122,37 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         centerTitle: true,
+        elevation: 4,
         backgroundColor: Colors.green[700],
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body:
           isLoading
               ? Center(
-                child: CircularProgressIndicator(color: Colors.green[700]),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Pulse(
+                      infinite: true,
+                      child: Icon(
+                        Icons.biotech_rounded,
+                        size: 80,
+                        color: Colors.green[700],
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      'Đang phân tích ảnh...',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.green[800],
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    CircularProgressIndicator(color: Colors.green[700]),
+                  ],
+                ),
               )
               : Column(
                 children: [
@@ -136,44 +161,71 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
                     flex: 7,
                     child:
                         resultClassCount == 0
-                            ? const Center(
-                              child: Text(
-                                'Cây cà chua của bạn\n hoàn toàn khỏe mạnh\n🍅🍅🍅🍅🍅🍅🍅🍅',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold,
+                            ? Center(
+                              child: FadeIn(
+                                duration: const Duration(milliseconds: 800),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.check_circle_outline,
+                                      size: 100,
+                                      color: Colors.green[600],
+                                    ),
+                                    const SizedBox(height: 20),
+                                    const Text(
+                                      'Cây cà chua của bạn\nhoàn toàn khỏe mạnh\n🍅🍅🍅🍅🍅🍅🍅🍅',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.bold,
+                                        height: 1.4,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             )
-                            : Container(
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 28,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                color: Colors.black,
-                              ),
-                              child:
-                                  resultImage != null
-                                      ? ClipRRect(
-                                        borderRadius: BorderRadius.circular(16),
-                                        child: Image.memory(
-                                          resultImage!,
-                                          fit: BoxFit.contain,
-                                        ),
-                                      )
-                                      : const Center(
-                                        child: Text(
-                                          'Không có ảnh hoặc lỗi trong quá trình xử lý.',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.red,
-                                            fontWeight: FontWeight.bold,
+                            : ZoomIn(
+                              duration: const Duration(milliseconds: 600),
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 28,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: Colors.black,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.green.withOpacity(0.3),
+                                      blurRadius: 15,
+                                      spreadRadius: 2,
+                                    ),
+                                  ],
+                                ),
+                                child:
+                                    resultImage != null
+                                        ? ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
+                                          child: Image.memory(
+                                            resultImage!,
+                                            fit: BoxFit.contain,
+                                          ),
+                                        )
+                                        : const Center(
+                                          child: Text(
+                                            'Không có ảnh hoặc lỗi trong quá trình xử lý.',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
-                                      ),
+                              ),
                             ),
                   ),
                   const SizedBox(height: 12),
@@ -186,70 +238,76 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
                           itemCount: resultDiseaseInfo.length,
                           itemBuilder: (context, index) {
                             final disease = resultDiseaseInfo[index];
-                            return Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                            return FadeInUp(
+                              duration: const Duration(milliseconds: 500),
+                              delay: Duration(
+                                milliseconds: 200 + (index * 150),
                               ),
-                              elevation: 3,
-                              margin: const EdgeInsets.only(bottom: 12),
-                              color: Colors.blue[50],
-                              child: Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Bệnh ${disease.diseaseName.toLowerCase()} cà chua',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.green[800],
-                                      ),
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                elevation: 4,
+                                margin: const EdgeInsets.only(bottom: 12),
+                                shadowColor: Colors.green.withOpacity(0.3),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Colors.blue[50]!,
+                                        Colors.green.withOpacity(0.1),
+                                      ],
                                     ),
-                                    const SizedBox(height: 6),
-                                    Text.rich(
-                                      TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: '🦠 Nguyên nhân:\n',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(14),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Bệnh ${disease.diseaseName.toLowerCase()} cà chua',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green[800],
                                           ),
-                                          TextSpan(
-                                            text: '${disease.cause}\n\n',
-                                          ),
-                                          TextSpan(
-                                            text: '🩺 Triệu chứng:\n',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text: '${disease.symptoms}\n\n',
-                                          ),
-                                          TextSpan(
-                                            text: '🌦️ Điều kiện phát sinh:\n',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text: '${disease.conditions}\n\n',
-                                          ),
-                                          TextSpan(
-                                            text: '💊 Cách điều trị:\n',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text: '${disease.treatment}\n',
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Divider(
+                                          color: Colors.green[200],
+                                          thickness: 1,
+                                        ),
+                                        const SizedBox(height: 8),
+                                        _buildInfoRow(
+                                          icon: Icons.coronavirus_outlined,
+                                          title: 'Nguyên nhân:',
+                                          content: disease.cause,
+                                        ),
+                                        const SizedBox(height: 12),
+                                        _buildInfoRow(
+                                          icon: Icons.medical_services_outlined,
+                                          title: 'Triệu chứng:',
+                                          content: disease.symptoms,
+                                        ),
+                                        const SizedBox(height: 12),
+                                        _buildInfoRow(
+                                          icon: Icons.wb_cloudy_outlined,
+                                          title: 'Điều kiện phát sinh:',
+                                          content: disease.conditions,
+                                        ),
+                                        const SizedBox(height: 12),
+                                        _buildInfoRow(
+                                          icon: Icons.healing_outlined,
+                                          title: 'Cách điều trị:',
+                                          content: disease.treatment,
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             );
@@ -258,37 +316,113 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
                       ),
                     ),
                   if (resultClassCount != null && resultClassCount! > 0)
-                    Container(
-                      color: Colors.green[700],
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 20,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          GestureDetector(
-                            onTap: isLoading ? null : _saveHistory,
-                            child: Column(
-                              children: const [
-                                Icon(
-                                  Icons.save_as_rounded,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(height: 4),
-                                Text(
-                                  "Lưu lịch sử nhận diện",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
+                    FadeInUp(
+                      duration: const Duration(milliseconds: 600),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.green[700],
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 10,
+                              offset: const Offset(0, -3),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 16,
+                          horizontal: 20,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Pulse(
+                              infinite: true,
+                              duration: const Duration(seconds: 2),
+                              child: GestureDetector(
+                                onTap: isLoading ? null : _saveHistory,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24,
+                                    vertical: 12,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        blurRadius: 8,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.save_as_rounded,
+                                        color: Colors.green[700],
+                                        size: 24,
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Text(
+                                        "Lưu lịch sử nhận diện",
+                                        style: TextStyle(
+                                          color: Colors.green[700],
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   // Bottom buttons
                 ],
               ),
+    );
+  }
+
+  Widget _buildInfoRow({
+    required IconData icon,
+    required String title,
+    required String content,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: 20, color: Colors.green[700]),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                content,
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: Colors.black87,
+                  height: 1.4,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

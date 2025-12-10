@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tomato_detect_app/services/auth_service.dart';
 import 'package:tomato_detect_app/utils/toast_helper.dart';
 import 'login_screen.dart';
+import 'package:animate_do/animate_do.dart';
 
 class NewPasswordScreen extends StatefulWidget {
   final int userID;
@@ -15,6 +16,8 @@ class NewPasswordScreen extends StatefulWidget {
 class _NewPasswordScreenState extends State<NewPasswordScreen> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final FocusNode _passwordFocus = FocusNode();
+  final FocusNode _confirmPasswordFocus = FocusNode();
   String? passwordError;
   String? confirmPasswordError;
   bool obscurePassword = true;
@@ -25,6 +28,8 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
   void dispose() {
     passwordController.dispose();
     confirmPasswordController.dispose();
+    _passwordFocus.dispose();
+    _confirmPasswordFocus.dispose();
     super.dispose();
   }
 
@@ -95,39 +100,57 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
     required String? errorText,
     required bool obscureText,
     required void Function() toggleObscure,
+    required FocusNode focusNode,
   }) {
-    return TextField(
-      controller: controller,
-      obscureText: obscureText,
-      cursorColor: errorText != null ? Colors.red : Colors.green.shade700,
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: TextStyle(
-          color: errorText != null ? Colors.red : Colors.green.shade700,
-        ),
-        errorText: errorText,
-        suffixIcon: IconButton(
-          icon: Icon(
-            obscureText ? Icons.visibility_off : Icons.visibility,
-            color: errorText != null ? Colors.red : Colors.green.shade700,
+    return AnimatedBuilder(
+      animation: focusNode,
+      builder: (context, child) {
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          transform: Matrix4.identity()..scale(focusNode.hasFocus ? 1.02 : 1.0),
+          child: TextField(
+            controller: controller,
+            focusNode: focusNode,
+            obscureText: obscureText,
+            cursorColor: errorText != null ? Colors.red : Colors.green.shade700,
+            decoration: InputDecoration(
+              labelText: label,
+              labelStyle: TextStyle(
+                color: errorText != null ? Colors.red : Colors.green.shade700,
+              ),
+              errorText: errorText,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  obscureText ? Icons.visibility_off : Icons.visibility,
+                  color: errorText != null ? Colors.red : Colors.green.shade700,
+                ),
+                onPressed: toggleObscure,
+              ),
+              filled: true,
+              fillColor:
+                  focusNode.hasFocus
+                      ? Colors.green.withOpacity(0.05)
+                      : Colors.white,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(
+                  color: errorText != null ? Colors.red : Colors.green.shade700,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(
+                  color: errorText != null ? Colors.red : Colors.green.shade700,
+                  width: 2,
+                ),
+              ),
+            ),
           ),
-          onPressed: toggleObscure,
-        ),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-            color: errorText != null ? Colors.red : Colors.green.shade700,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-            color: errorText != null ? Colors.red : Colors.green.shade700,
-            width: 2,
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -147,11 +170,13 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
             );
           },
         ),
-        title: Text(
-          "TẠO MẬT KHẨU MỚI",
-          style: TextStyle(
-            color: Colors.green[800],
-            fontWeight: FontWeight.bold,
+        title: FadeIn(
+          child: Text(
+            "TẠO MẬT KHẨU MỚI",
+            style: TextStyle(
+              color: Colors.green[800],
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         centerTitle: true,
@@ -162,68 +187,86 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 16),
-            const Text(
-              "Vui lòng tạo mật khẩu mới để khôi phục tài khoản của bạn",
-              style: TextStyle(color: Colors.black54),
-              textAlign: TextAlign.center,
+            FadeInDown(
+              duration: const Duration(milliseconds: 600),
+              child: const Text(
+                "Vui lòng tạo mật khẩu mới để khôi phục tài khoản của bạn",
+                style: TextStyle(color: Colors.black54),
+                textAlign: TextAlign.center,
+              ),
             ),
             const SizedBox(height: 32),
             // Mật khẩu mới
-            _buildTextField(
-              controller: passwordController,
-              label: "MẬT KHẨU MỚI",
-              errorText: passwordError,
-              obscureText: obscurePassword,
-              toggleObscure: () {
-                setState(() {
-                  obscurePassword = !obscurePassword;
-                });
-              },
+            FadeInLeft(
+              duration: const Duration(milliseconds: 500),
+              delay: const Duration(milliseconds: 200),
+              child: _buildTextField(
+                controller: passwordController,
+                label: "MẬT KHẨU MỚI",
+                errorText: passwordError,
+                obscureText: obscurePassword,
+                focusNode: _passwordFocus,
+                toggleObscure: () {
+                  setState(() {
+                    obscurePassword = !obscurePassword;
+                  });
+                },
+              ),
             ),
             const SizedBox(height: 16),
             // Xác nhận mật khẩu
-            _buildTextField(
-              controller: confirmPasswordController,
-              label: "XÁC NHẬN MẬT KHẨU",
-              errorText: confirmPasswordError,
-              obscureText: obscureConfirm,
-              toggleObscure: () {
-                setState(() {
-                  obscureConfirm = !obscureConfirm;
-                });
-              },
+            FadeInRight(
+              duration: const Duration(milliseconds: 500),
+              delay: const Duration(milliseconds: 400),
+              child: _buildTextField(
+                controller: confirmPasswordController,
+                label: "XÁC NHẬN MẬT KHẨU",
+                errorText: confirmPasswordError,
+                obscureText: obscureConfirm,
+                focusNode: _confirmPasswordFocus,
+                toggleObscure: () {
+                  setState(() {
+                    obscureConfirm = !obscureConfirm;
+                  });
+                },
+              ),
             ),
             const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: isLoading ? null : _validateAndSubmit,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green[700],
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+            FadeInUp(
+              duration: const Duration(milliseconds: 600),
+              delay: const Duration(milliseconds: 600),
+              child: ElevatedButton(
+                onPressed: isLoading ? null : _validateAndSubmit,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green[700],
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  elevation: 4,
                 ),
-              ),
-              child: SizedBox(
-                height: 28,
-                child: Center(
-                  child:
-                      isLoading
-                          ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2,
+                child: SizedBox(
+                  height: 28,
+                  child: Center(
+                    child:
+                        isLoading
+                            ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            )
+                            : const Text(
+                              "Khôi phục mật khẩu",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
                             ),
-                          )
-                          : const Text(
-                            "Khôi phục mật khẩu",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                          ),
+                  ),
                 ),
               ),
             ),
