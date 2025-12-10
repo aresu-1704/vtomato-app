@@ -1,3 +1,0 @@
-from .login_repository import LoginRepository
-from .disease_info_repository import DiseaseInfoRepository
-from .disease_history_repository import DiseaseHistoryRepository
