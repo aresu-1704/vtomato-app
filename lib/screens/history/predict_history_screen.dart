@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tomato_detect_app/models/disease_history_model.dart';
 import 'package:tomato_detect_app/screens/history/history_detail_screen.dart';
-import 'package:tomato_detect_app/screens/history/predicts_history_viewmodel.dart';
+import 'package:tomato_detect_app/services/disease_history_service.dart';
 
 class PredictHistoryScreen extends StatefulWidget {
   final int userID;
@@ -13,7 +13,9 @@ class PredictHistoryScreen extends StatefulWidget {
 }
 
 class _PredictHistoryScreenState extends State<PredictHistoryScreen> {
-  final PredictsHistoryViewModel _viewModel = PredictsHistoryViewModel();
+  final DiseaseHistoryService _service = DiseaseHistoryService();
+  bool isLoading = true;
+  List<DiseaseHistoryModel> historyList = [];
 
   @override
   void initState() {
@@ -22,8 +24,20 @@ class _PredictHistoryScreenState extends State<PredictHistoryScreen> {
   }
 
   Future<void> _loadData() async {
-    await _viewModel.loadHistory(widget.userID);
-    setState(() {});
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      historyList = await _service.getHistoryByUser(widget.userID);
+    } catch (e) {
+      // handle error if needed
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
   }
 
   Widget _buildHistoryCard(DiseaseHistoryModel history) {
@@ -99,11 +113,11 @@ class _PredictHistoryScreenState extends State<PredictHistoryScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body:
-          _viewModel.isLoading
+          isLoading
               ? Center(
                 child: CircularProgressIndicator(color: Colors.green[700]),
               )
-              : _viewModel.historyList.isEmpty
+              : historyList.isEmpty
               ? const Center(
                 child: Text(
                   'Chưa có lịch sử dự đoán nào.',
@@ -111,9 +125,9 @@ class _PredictHistoryScreenState extends State<PredictHistoryScreen> {
                 ),
               )
               : ListView.builder(
-                itemCount: _viewModel.historyList.length,
+                itemCount: historyList.length,
                 itemBuilder: (context, index) {
-                  final history = _viewModel.historyList[index];
+                  final history = historyList[index];
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(

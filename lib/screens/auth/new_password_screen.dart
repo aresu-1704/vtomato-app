@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tomato_detect_app/screens/auth/new_password_viewmodel.dart';
+import 'package:tomato_detect_app/services/auth_service.dart';
+import 'package:tomato_detect_app/utils/toast_helper.dart';
 import 'login_screen.dart';
 
 class NewPasswordScreen extends StatefulWidget {
@@ -12,37 +13,84 @@ class NewPasswordScreen extends StatefulWidget {
 }
 
 class _NewPasswordScreenState extends State<NewPasswordScreen> {
-  final _viewModel = NewPasswordViewModel();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  String? passwordError;
+  String? confirmPasswordError;
+  bool obscurePassword = true;
+  bool obscureConfirm = true;
+  bool isLoading = false;
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  bool validatePasswords(String password, String confirmPassword) {
+    setState(() {
+      passwordError = null;
+      confirmPasswordError = null;
+    });
+
+    bool isValid = true;
+    if (password.length < 8) {
+      setState(() {
+        passwordError = "Mật khẩu phải có ít nhất 8 ký tự.";
+      });
+      isValid = false;
+    }
+
+    if (password != confirmPassword) {
+      setState(() {
+        confirmPasswordError = "Mật khẩu xác nhận không khớp.";
+      });
+      isValid = false;
+    }
+
+    return isValid;
+  }
 
   Future<void> _validateAndSubmit() async {
     FocusScope.of(context).unfocus();
 
-    String password = _viewModel.passwordController.text;
-    String confirm = _viewModel.confirmPasswordController.text;
+    String password = passwordController.text;
+    String confirm = confirmPasswordController.text;
 
-    if (_viewModel.validatePasswords(password, confirm)) {
-      bool isResetSuccess = await _viewModel.resetPassword(
-        widget.userID,
-        password,
-        _onSetState,
-      );
+    if (validatePasswords(password, confirm)) {
+      setState(() {
+        isLoading = true;
+      });
 
-      if (isResetSuccess) {
-        Navigator.pop(context);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Khôi phục mật khẩu thất bại, vui lòng thử lại!'),
-          ),
+      try {
+        final authService = AuthService();
+        bool? isResetSuccess = await authService.resetPassword(
+          widget.userID,
+          password,
         );
-      }
-    } else {
-      setState(() {});
-    }
-  }
 
-  void _onSetState() {
-    setState(() {});
+        if (!mounted) return;
+
+        if (isResetSuccess == true) {
+          ToastHelper.showSuccess(context, 'Khôi phục mật khẩu thành công!');
+          Navigator.pop(context);
+        } else {
+          ToastHelper.showError(
+            context,
+            'Khôi phục mật khẩu thất bại, vui lòng thử lại!',
+          );
+        }
+      } catch (e) {
+        if (mounted) ToastHelper.showError(context, 'Lỗi: $e');
+      } finally {
+        if (mounted) {
+          setState(() {
+            isLoading = false;
+          });
+        }
+      }
+    }
   }
 
   Widget _buildTextField({
@@ -126,32 +174,32 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
             const SizedBox(height: 32),
             // Mật khẩu mới
             _buildTextField(
-              controller: _viewModel.passwordController,
+              controller: passwordController,
               label: "MẬT KHẨU MỚI",
-              errorText: _viewModel.passwordError,
-              obscureText: _viewModel.obscurePassword,
+              errorText: passwordError,
+              obscureText: obscurePassword,
               toggleObscure: () {
                 setState(() {
-                  _viewModel.obscurePassword = !_viewModel.obscurePassword;
+                  obscurePassword = !obscurePassword;
                 });
               },
             ),
             const SizedBox(height: 16),
             // Xác nhận mật khẩu
             _buildTextField(
-              controller: _viewModel.confirmPasswordController,
+              controller: confirmPasswordController,
               label: "XÁC NHẬN MẬT KHẨU",
-              errorText: _viewModel.confirmPasswordError,
-              obscureText: _viewModel.obscureConfirm,
+              errorText: confirmPasswordError,
+              obscureText: obscureConfirm,
               toggleObscure: () {
                 setState(() {
-                  _viewModel.obscureConfirm = !_viewModel.obscureConfirm;
+                  obscureConfirm = !obscureConfirm;
                 });
               },
             ),
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: _viewModel.isLoading ? null : _validateAndSubmit,
+              onPressed: isLoading ? null : _validateAndSubmit,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[700],
                 padding: const EdgeInsets.symmetric(vertical: 14),
@@ -163,7 +211,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                 height: 28,
                 child: Center(
                   child:
-                      _viewModel.isLoading
+                      isLoading
                           ? const SizedBox(
                             height: 20,
                             width: 20,

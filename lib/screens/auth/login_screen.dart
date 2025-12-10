@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tomato_detect_app/screens/auth/login_viewmodel.dart';
+import 'package:tomato_detect_app/services/auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'forgot_password_screen.dart';
 import 'register_screen.dart';
 import '../home/camera_screen.dart';
@@ -14,22 +15,50 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final LoginViewModel _viewModel = LoginViewModel();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _viewModel.loadUserData();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _emailController.text = prefs.getString('email') ?? '';
+      _passwordController.text = prefs.getString('password') ?? '';
+    });
   }
 
   @override
   void dispose() {
-    _viewModel.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
-  void _onSetState() {
-    setState(() {});
+  Future<int?> _login() async {
+    setState(() => _isLoading = true);
+    final authService = AuthService();
+    final result = await authService.login(
+      _emailController.text,
+      _passwordController.text,
+    );
+
+    // Auto-save credentials on successful login (optional but good UX given loadUserData exists)
+    if (result != null && result > 0) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('email', _emailController.text);
+      await prefs.setString('password', _passwordController.text);
+    }
+
+    // Note: ensure loading remains true until the UI navigates or shows error
+    // in the original code, it was set to false at the end of the button handler.
+    // We will handle resetting loading in the button handler loop.
+    return result;
   }
 
   @override
@@ -60,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 32),
 
               _buildTextField(
-                controller: _viewModel.emailController,
+                controller: _emailController,
                 hint: 'Địa chỉ Email',
                 icon: Icons.email_outlined,
                 validatorMsg: 'Email không được để trống',
@@ -68,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 16),
 
               _buildTextField(
-                controller: _viewModel.passwordController,
+                controller: _passwordController,
                 hint: 'Mật khẩu',
                 icon: Icons.lock_outline,
                 obscure: true,
@@ -79,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed:
-                      _viewModel.isLoading
+                      _isLoading
                           ? null
                           : () {
                             Navigator.push(
@@ -103,14 +132,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 48,
                 child: ElevatedButton(
                   onPressed:
-                      _viewModel.isLoading
+                      _isLoading
                           ? null
                           : () async {
                             if (_formKey.currentState!.validate()) {
                               FocusScope.of(context).unfocus();
-                              final userId = await _viewModel.login(
-                                _onSetState,
-                              );
+
+                              // Trigger login
+                              final userId = await _login();
+
+                              if (!mounted) return;
 
                               if (userId == -3) {
                                 _showSnackBar(
@@ -125,6 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 await Future.delayed(
                                   const Duration(seconds: 1),
                                 );
+                                if (!mounted) return;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -137,7 +169,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 _showSnackBar('Sai tài khoản hoặc mật khẩu.');
                               }
 
-                              _viewModel.setState(false, _onSetState);
+                              if (mounted) {
+                                setState(() => _isLoading = false);
+                              }
                             }
                           },
                   style: ElevatedButton.styleFrom(
@@ -147,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   child:
-                      _viewModel.isLoading
+                      _isLoading
                           ? const CircularProgressIndicator(
                             valueColor: AlwaysStoppedAnimation<Color>(
                               Colors.white,
@@ -170,7 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text('Không có tài khoản ?'),
                   TextButton(
                     onPressed:
-                        _viewModel.isLoading
+                        _isLoading
                             ? null
                             : () {
                               Navigator.push(
@@ -201,13 +235,13 @@ class _LoginScreenState extends State<LoginScreen> {
   void _showSnackBar(String text) {
     // Determine type based on text content (simple heuristic)
     if (text.contains('thành công')) {
-      ToastHelper.showSuccess(text);
+      ToastHelper.showSuccess(context, text);
     } else if (text.contains('Lỗi') ||
         text.contains('Sai') ||
         text.contains('Không thể')) {
-      ToastHelper.showError(text);
+      ToastHelper.showError(context, text);
     } else {
-      ToastHelper.showInfo(text);
+      ToastHelper.showInfo(context, text);
     }
   }
 

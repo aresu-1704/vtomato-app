@@ -3,7 +3,10 @@ import 'package:camera/camera.dart';
 import 'package:tomato_detect_app/screens/history/predict_history_screen.dart';
 import 'package:tomato_detect_app/screens/predict/predict_result_screen.dart';
 import 'package:flutter/services.dart';
-import 'package:tomato_detect_app/screens/home/camera_viewmodel.dart';
+import 'package:tomato_detect_app/utils/toast_helper.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:image/image.dart' as img;
+import 'dart:typed_data';
 
 class CameraScreen extends StatefulWidget {
   final int UserId;
@@ -14,39 +17,70 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  late CameraViewModel _viewModel;
+  late CameraController cameraController;
+  final ImagePicker _picker = ImagePicker();
+  bool isLoading = false;
+  bool isTakePicture = false;
+  bool isCameraInitialized = false;
 
   @override
   void initState() {
     super.initState();
-    _viewModel = CameraViewModel();
-    // History is now loaded on demand in PredictHistoryScreen
-    _viewModel.initCamera(_onSetState);
+    initCamera();
+  }
+
+  Future<void> initCamera() async {
+    final cameras = await availableCameras();
+    cameraController = CameraController(cameras.first, ResolutionPreset.medium);
+    await cameraController.initialize();
+    if (mounted) {
+      setState(() {
+        isCameraInitialized = true;
+      });
+    }
   }
 
   @override
   void dispose() {
-    _viewModel.dispose();
+    if (isCameraInitialized) {
+      cameraController.setFlashMode(FlashMode.off);
+      cameraController.dispose();
+    }
     super.dispose();
   }
 
   void _stopCamera() {
-    _viewModel.dispose();
+    if (isCameraInitialized) {
+      cameraController.setFlashMode(FlashMode.off);
+      cameraController.dispose();
+      setState(() {
+        isCameraInitialized = false;
+      });
+    }
   }
 
   void _reInitCamera() {
-    _viewModel.initCamera(_onSetState);
-  }
-
-  void _onSetState() {
-    setState(() {});
+    initCamera();
   }
 
   Future<void> _takePicture() async {
+    setState(() {
+      isTakePicture = true;
+    });
+
     try {
-      final imageBytes = await _viewModel.takePicture(_onSetState);
+      XFile picture = await cameraController.takePicture();
+      final imageBytes = await picture.readAsBytes();
+      cameraController.setFlashMode(FlashMode.off);
+
+      setState(() {
+        isTakePicture = false;
+      });
+
       if (imageBytes != null) {
         _stopCamera();
+        if (!mounted) return;
+
         bool? status = await Navigator.push(
           context,
           MaterialPageRoute(
@@ -63,23 +97,45 @@ class _CameraScreenState extends State<CameraScreen> {
         }
       }
     } catch (_) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Lỗi khi chụp ảnh, thử lại.")),
-      );
+      if (mounted) ToastHelper.showError(context, "Lỗi khi chụp ảnh, thử lại.");
+      setState(() {
+        isTakePicture = false;
+      });
     }
   }
 
   Future<void> _pickImageFromGallery() async {
     try {
-      final imageBytes = await _viewModel.pickImageFromGallery();
-      if (imageBytes != null) {
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+      if (!mounted) return;
+
+      if (image != null) {
+        final Uint8List rawBytes = await image.readAsBytes();
+
+        if (!mounted) return;
+
+        img.Image? originalImage = img.decodeImage(rawBytes);
+
+        if (originalImage == null) {
+          ToastHelper.showError(context, "Không thể đọc ảnh.");
+          return;
+        }
+
+        img.Image rotatedImage = img.copyRotate(originalImage, angle: -90);
+        final Uint8List rotatedBytes = Uint8List.fromList(
+          img.encodeJpg(rotatedImage),
+        );
+
         _stopCamera();
+        if (!mounted) return;
+
         bool? status = await Navigator.push(
           context,
           MaterialPageRoute(
             builder:
                 (context) => PredictResultScreen(
-                  image: imageBytes,
+                  image: rotatedBytes,
                   userID: widget.UserId,
                 ),
           ),
@@ -89,14 +145,10 @@ class _CameraScreenState extends State<CameraScreen> {
           _reInitCamera();
         }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Không có ảnh nào được chọn.")),
-        );
+        ToastHelper.showInfo(context, "Không có ảnh nào được chọn.");
       }
     } catch (_) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Lỗi khi chọn ảnh, thử lại.")),
-      );
+      if (mounted) ToastHelper.showError(context, "Lỗi khi chọn ảnh, thử lại.");
     }
   }
 
@@ -120,7 +172,7 @@ class _CameraScreenState extends State<CameraScreen> {
       backgroundColor: const Color(0xFFFEF7ED),
       body: SafeArea(
         child:
-            _viewModel.isLoading
+            isLoading
                 ? Center(
                   child: CircularProgressIndicator(color: Colors.green[700]),
                 )
@@ -145,15 +197,11 @@ class _CameraScreenState extends State<CameraScreen> {
                           color: Colors.black,
                         ),
                         child:
-                            _viewModel.isCameraInitialized
+                            isCameraInitialized
                                 ? ClipRRect(
                                   borderRadius: BorderRadius.circular(16),
                                   child: Stack(
-                                    children: [
-                                      CameraPreview(
-                                        _viewModel.cameraController,
-                                      ),
-                                    ],
+                                    children: [CameraPreview(cameraController)],
                                   ),
                                 )
                                 : const Center(
@@ -175,8 +223,7 @@ class _CameraScreenState extends State<CameraScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 32),
                       child:
-                          _viewModel.isTakePicture ||
-                                  !_viewModel.isCameraInitialized
+                          isTakePicture || !isCameraInitialized
                               ? Container(
                                 width: 60,
                                 height: 60,
@@ -224,8 +271,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         children: [
                           GestureDetector(
                             onTap:
-                                _viewModel.isTakePicture ||
-                                        !_viewModel.isCameraInitialized
+                                isTakePicture || !isCameraInitialized
                                     ? null
                                     : _pickImageFromGallery,
                             child: Column(
@@ -244,8 +290,7 @@ class _CameraScreenState extends State<CameraScreen> {
                           ),
                           GestureDetector(
                             onTap:
-                                _viewModel.isTakePicture ||
-                                        !_viewModel.isCameraInitialized
+                                isTakePicture || !isCameraInitialized
                                     ? null
                                     : () {
                                       _initHistoryScreen();

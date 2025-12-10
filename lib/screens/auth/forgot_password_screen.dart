@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tomato_detect_app/screens/auth/forgot_password_viewmodel.dart';
+import 'package:tomato_detect_app/services/auth_service.dart';
+import 'package:tomato_detect_app/utils/toast_helper.dart';
 import 'login_screen.dart';
 import 'verify_otp_screen.dart';
 
@@ -12,56 +13,65 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController emailController = TextEditingController();
-  final ForgotPasswordViewModel _viewModel = ForgotPasswordViewModel();
+  final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
 
   Future<void> _sendOTPToEmail() async {
     if (!_formKey.currentState!.validate()) return;
     FocusScope.of(context).unfocus();
 
-    _showSnackBar("Đang tìm kiếm tài khoản...");
-    final result = await _viewModel.sendOTP(
-      emailController.text.trim(),
-      _onSetState,
-    );
+    setState(() {
+      isLoading = true;
+    });
 
-    if (!mounted) return;
-
-    if (result! > 0) {
-      _showSnackBar("Đang gửi OTP đến Email của bạn...");
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder:
-              (context) => VerifyOtpScreen(
-                userID: result!,
-                email: emailController.text.trim(),
-              ),
-        ),
+    try {
+      ToastHelper.showInfo(context, "Đang tìm kiếm tài khoản...");
+      final result = await _authService.sendOTPtoemail(
+        emailController.text.trim(),
       );
-    } else {
-      switch (result) {
-        case 0:
-          _showSnackBar('Tài khoản không tồn tại.');
-          break;
-        case -2:
-          _showSnackBar('Không thể kết nối đến máy chủ, vui lòng thử lại sau.');
-          break;
-        default:
-          _showSnackBar('Vui lòng thử lại sau.');
-          break;
+
+      if (!mounted) return;
+
+      if (result != null && result > 0) {
+        ToastHelper.showSuccess(context, "Đang gửi OTP đến Email của bạn...");
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder:
+                (context) => VerifyOtpScreen(
+                  userID: result,
+                  email: emailController.text.trim(),
+                ),
+          ),
+        );
+      } else {
+        switch (result) {
+          case 0:
+            ToastHelper.showError(context, 'Tài khoản không tồn tại.');
+            break;
+          case -2:
+            ToastHelper.showError(
+              context,
+              'Không thể kết nối đến máy chủ, vui lòng thử lại sau.',
+            );
+            break;
+          default:
+            ToastHelper.showError(context, 'Vui lòng thử lại sau.');
+            break;
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ToastHelper.showError(context, 'Lỗi: $e');
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
       }
     }
-  }
-
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
-  }
-
-  void _onSetState() {
-    setState(() {});
   }
 
   @override
@@ -145,7 +155,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: _viewModel.isLoading ? null : _sendOTPToEmail,
+                  onPressed: isLoading ? null : _sendOTPToEmail,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green[700],
                     shape: RoundedRectangleBorder(
@@ -153,7 +163,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     ),
                   ),
                   child:
-                      _viewModel.isLoading
+                      isLoading
                           ? const CircularProgressIndicator(color: Colors.white)
                           : const Text(
                             "NHẬN MÃ",

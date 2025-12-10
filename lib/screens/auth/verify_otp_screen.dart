@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:tomato_detect_app/screens/auth/verify_OTP_viewmodel.dart';
+import 'package:tomato_detect_app/services/auth_service.dart';
+import 'package:tomato_detect_app/utils/toast_helper.dart';
 import 'login_screen.dart';
 import 'forgot_password_screen.dart';
 import 'new_password_screen.dart';
@@ -17,30 +18,57 @@ class VerifyOtpScreen extends StatefulWidget {
 }
 
 class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
-  late VerifyOtpViewModel _viewModel;
+  final AuthService _authService = AuthService();
+  final List<TextEditingController> otpControllers = List.generate(
+    5,
+    (_) => TextEditingController(),
+  );
+  int secondsRemaining = 60;
+  bool isResendEnabled = false;
+  Timer? countdownTimer;
 
   @override
   void initState() {
     super.initState();
-    _viewModel = VerifyOtpViewModel();
-    _viewModel.startCountdown(_updateUI);
+    startCountdown();
   }
 
-  void _updateUI() {
-    setState(() {});
+  void startCountdown() {
+    secondsRemaining = 60;
+    isResendEnabled = false;
+    countdownTimer?.cancel();
+
+    countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) return;
+
+      if (secondsRemaining > 0) {
+        setState(() {
+          secondsRemaining--;
+        });
+      } else {
+        setState(() {
+          isResendEnabled = true;
+        });
+        timer.cancel();
+      }
+    });
+  }
+
+  void stopCountdown() {
+    countdownTimer?.cancel();
   }
 
   Future<void> _verifyOTP() async {
-    String otp = _viewModel.otpControllers.map((c) => c.text).join();
+    String otp = otpControllers.map((c) => c.text).join();
 
     if (otp.length != 5) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Vui lòng nhập đầy đủ 5 chữ số OTP.')),
-      );
+      ToastHelper.showError(context, 'Vui lòng nhập đầy đủ 5 chữ số OTP.');
       return;
     }
 
-    final result = await _viewModel.verifyOTP(widget.userID);
+    final result = await _authService.verifyOTP(widget.userID, int.parse(otp));
+
+    if (!mounted) return;
 
     if (result == 1) {
       Navigator.pushReplacement(
@@ -50,23 +78,32 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
         ),
       );
     } else if (result == 0) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('OTP không đúng.')));
+      ToastHelper.showError(context, 'OTP không đúng.');
     } else if (result == 2) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Mã OTP hết hiệu lực, vui lòng gửi lại.')),
-      );
+      ToastHelper.showError(context, 'Mã OTP hết hiệu lực, vui lòng gửi lại.');
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Đã xảy ra lỗi, vui lòng thử lại.')),
-      );
+      ToastHelper.showError(context, 'Đã xảy ra lỗi, vui lòng thử lại.');
+    }
+  }
+
+  Future<void> _resendOTP(String email) async {
+    final result = await _authService.sendOTPtoemail(email);
+    if (!mounted) return;
+
+    if (result == 1) {
+      startCountdown();
+      ToastHelper.showSuccess(context, 'Mã OTP đã được gửi lại.');
+    } else {
+      ToastHelper.showError(context, 'Gửi lại thất bại.');
     }
   }
 
   @override
   void dispose() {
-    _viewModel.dispose();
+    stopCountdown();
+    for (var controller in otpControllers) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
@@ -123,7 +160,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     width: 50,
                     height: 60,
                     child: TextField(
-                      controller: _viewModel.otpControllers[index],
+                      controller: otpControllers[index],
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
                       maxLength: 1,
@@ -144,7 +181,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       ),
                       onChanged: (value) {
                         if (value.length == 1 &&
-                            index < _viewModel.otpControllers.length - 1) {
+                            index < otpControllers.length - 1) {
                           FocusScope.of(context).nextFocus();
                         } else if (value.isEmpty && index > 0) {
                           FocusScope.of(context).previousFocus();
@@ -161,29 +198,14 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                   const Text("Chưa nhận được OTP?"),
                   TextButton(
                     onPressed:
-                        _viewModel.isResendEnabled
-                            ? () async {
-                              final resend = await _viewModel.resendOTP(
-                                widget.email,
-                              );
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    resend == 1
-                                        ? 'Mã OTP đã được gửi lại.'
-                                        : 'Gửi lại thất bại.',
-                                  ),
-                                ),
-                              );
-                            }
-                            : null,
+                        isResendEnabled ? () => _resendOTP(widget.email) : null,
                     child: Text(
-                      _viewModel.isResendEnabled
+                      isResendEnabled
                           ? "Gửi lại"
-                          : "Gửi lại sau ${_viewModel.secondsRemaining}s",
+                          : "Gửi lại sau ${secondsRemaining}s",
                       style: TextStyle(
                         color:
-                            _viewModel.isResendEnabled
+                            isResendEnabled
                                 ? const Color(0xFF002F21)
                                 : Colors.grey,
                         fontWeight: FontWeight.bold,

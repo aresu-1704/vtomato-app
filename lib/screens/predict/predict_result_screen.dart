@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:tomato_detect_app/utils/toast_helper.dart';
-import 'predict_result_viewmodel.dart';
+import 'package:tomato_detect_app/models/disease_info_model.dart';
+import 'package:tomato_detect_app/services/predict_service.dart';
+import 'package:tomato_detect_app/services/disease_history_service.dart';
 
 class PredictResultScreen extends StatefulWidget {
   final Uint8List image;
@@ -18,29 +20,95 @@ class PredictResultScreen extends StatefulWidget {
 }
 
 class _PredictResultScreenState extends State<PredictResultScreen> {
-  late PredictResultViewModel _viewModel;
+  final PredictService _predictService = PredictService();
+  final DiseaseHistoryService _diseaseHistoryService = DiseaseHistoryService();
+
+  Uint8List? resultImage;
+  int? resultClassCount = 0;
+  List<int> resultClassList = [];
+  List<DiseaseInfoModel> resultDiseaseInfo = [];
+  bool isLoading = true;
+  String? message;
 
   @override
   void initState() {
     super.initState();
-    _viewModel = PredictResultViewModel();
     _handlePrediction();
   }
 
   Future<void> _handlePrediction() async {
-    await _viewModel.handlePrediction(widget.image);
-    setState(() {});
+    // Step 1: Upload image and get annotated result with class_indices
+    final result = await _predictService.uploadImageForPrediction(widget.image);
+
+    if (!mounted) return;
+
+    if (result == null) {
+      setState(() {
+        message = "Có lỗi xảy ra khi xử lý ảnh.";
+        isLoading = false;
+      });
+      return;
+    }
+
+    if (result['status'] == 'success') {
+      List<int> classIndices = List<int>.from(result['class_indices']);
+      List<DiseaseInfoModel> diseaseInfoList = [];
+
+      // Step 2: Get disease info if diseases detected
+      if (classIndices.isNotEmpty) {
+        final diseaseInfo = await _predictService.getDiseaseInfo(classIndices);
+        if (diseaseInfo != null) {
+          diseaseInfoList = diseaseInfo;
+        } else {
+          // keep empty but maybe show error
+        }
+      }
+
+      if (mounted) {
+        setState(() {
+          resultImage = result['image'];
+          resultClassCount = result['class_count'];
+          resultClassList = classIndices;
+          resultDiseaseInfo = diseaseInfoList;
+          isLoading = false;
+          if (classIndices.isEmpty) {
+            message = "Không phát hiện bệnh nào.";
+          }
+        });
+      }
+    } else {
+      if (mounted) {
+        setState(() {
+          message = "Có lỗi xảy ra khi xử lý ảnh.";
+          isLoading = false;
+        });
+      }
+    }
   }
 
   Future<void> _saveHistory() async {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text("Đang lưu...")));
-    await _viewModel.saveHistory(widget.userID);
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text("Đã lưu lịch sử !")));
-    Navigator.pop(context);
+    ToastHelper.showInfo(context, "Đang lưu...");
+
+    // Optimistic UI update or just wait? The original code didn't set loading on saveHistory but the VM did.
+    // The VM logic was: save -> isLoading=true -> wait 1s -> isLoading=false.
+    // This seems weird. It should probably be: isLoading=true -> save -> isLoading=false.
+    // However, since we navigate back after save, maybe we don't need complex loading state.
+
+    // Implementing directly:
+    bool reloadStatus = await _diseaseHistoryService.saveDiseaseHistory(
+      resultImage!,
+      widget.userID,
+      resultClassList,
+    );
+
+    if (!mounted) return;
+
+    if (reloadStatus) {
+      ToastHelper.showSuccess(context, "Đã lưu lịch sử !");
+      Navigator.pop(context);
+    } else {
+      ToastHelper.showError(context, "Lưu lịch sử thất bại.");
+    }
   }
 
   @override
@@ -57,7 +125,7 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body:
-          _viewModel.isLoading
+          isLoading
               ? Center(
                 child: CircularProgressIndicator(color: Colors.green[700]),
               )
@@ -67,7 +135,7 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
                   Expanded(
                     flex: 7,
                     child:
-                        _viewModel.resultClassCount == 0
+                        resultClassCount == 0
                             ? const Center(
                               child: Text(
                                 'Cây cà chua của bạn\n hoàn toàn khỏe mạnh\n🍅🍅🍅🍅🍅🍅🍅🍅',
@@ -88,11 +156,11 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
                                 color: Colors.black,
                               ),
                               child:
-                                  _viewModel.resultImage != null
+                                  resultImage != null
                                       ? ClipRRect(
                                         borderRadius: BorderRadius.circular(16),
                                         child: Image.memory(
-                                          _viewModel.resultImage!,
+                                          resultImage!,
                                           fit: BoxFit.contain,
                                         ),
                                       )
@@ -109,16 +177,15 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
                             ),
                   ),
                   const SizedBox(height: 12),
-                  if (_viewModel.resultClassCount != null &&
-                      _viewModel.resultClassCount! > 0)
+                  if (resultClassCount != null && resultClassCount! > 0)
                     Expanded(
                       flex: 5,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: ListView.builder(
-                          itemCount: _viewModel.diseaseInfo.length,
+                          itemCount: resultDiseaseInfo.length,
                           itemBuilder: (context, index) {
-                            final disease = _viewModel.diseaseInfo[index];
+                            final disease = resultDiseaseInfo[index];
                             return Card(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -190,8 +257,7 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
                         ),
                       ),
                     ),
-                  if (_viewModel.resultClassCount != null &&
-                      _viewModel.resultClassCount! > 0)
+                  if (resultClassCount != null && resultClassCount! > 0)
                     Container(
                       color: Colors.green[700],
                       padding: const EdgeInsets.symmetric(
@@ -202,7 +268,7 @@ class _PredictResultScreenState extends State<PredictResultScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           GestureDetector(
-                            onTap: _viewModel.isLoading ? null : _saveHistory,
+                            onTap: isLoading ? null : _saveHistory,
                             child: Column(
                               children: const [
                                 Icon(

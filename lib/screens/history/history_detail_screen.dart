@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tomato_detect_app/models/disease_info_model.dart';
-import 'history_detail_viewmodel.dart';
 
 class HistoryDetailScreen extends StatefulWidget {
   final String imageUrl;
@@ -21,16 +20,7 @@ class HistoryDetailScreen extends StatefulWidget {
 }
 
 class _HistoryDetailScreenState extends State<HistoryDetailScreen> {
-  late HistoryDetailViewModel _viewModel;
-
-  @override
-  void initState() {
-    super.initState();
-    _viewModel = HistoryDetailViewModel(
-      diseaseInfo: widget.diseaseInfo,
-      resultClassCount: widget.resultClassCount,
-    );
-  }
+  bool get hasDiseases => widget.resultClassCount > 0;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +63,7 @@ class _HistoryDetailScreenState extends State<HistoryDetailScreen> {
           ),
           const SizedBox(height: 12),
 
-          if (_viewModel.hasDiseases)
+          if (hasDiseases)
             Expanded(
               flex: 5,
               child: Padding(

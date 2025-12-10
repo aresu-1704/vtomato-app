@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tomato_detect_app/screens/auth/register_viewmodel.dart';
+import 'package:tomato_detect_app/services/auth_service.dart';
 import 'package:tomato_detect_app/utils/toast_helper.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -10,14 +10,28 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final RegisterViewModel _viewModel = RegisterViewModel();
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
+  final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+  final RegExp phoneRegex = RegExp(r'^(0|\+84)[0-9]{9,10}$');
+
+  bool isLoading = false;
 
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
-  void _onSetState() {
-    setState(() {});
+  @override
+  void dispose() {
+    phoneController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
   }
 
   Future<void> _register() async {
@@ -26,22 +40,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return;
     }
 
-    final result = await _viewModel.registerNewAccount(_onSetState);
+    setState(() {
+      isLoading = true;
+    });
 
-    if (!mounted) return;
-
-    if (result == "Connection Error") {
-      ToastHelper.showError(
-        'Không thể kết nối đến máy chủ, vui lòng thử lại sau.',
+    try {
+      final authService = AuthService();
+      final error = await authService.register(
+        emailController.text.trim(),
+        phoneController.text.trim(),
+        passwordController.text,
       );
-    } else if (result == 1) {
-      ToastHelper.showSuccess('Đăng ký thành công!');
-      Future.delayed(const Duration(seconds: 1), () {
-        Navigator.pop(context);
-      });
-    } else {
-      _viewModel.setState(false, _onSetState);
-      ToastHelper.showError('Email đã tồn tại.');
+
+      if (!mounted) return;
+
+      if (error == null) {
+        ToastHelper.showSuccess(context, 'Đăng ký thành công!');
+        Future.delayed(const Duration(seconds: 1), () {
+          Navigator.pop(context);
+        });
+      } else {
+        ToastHelper.showError(context, 'Email đã tồn tại hoặc lỗi khác.');
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ToastHelper.showError(context, 'Lỗi kết nối: $e');
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -73,13 +102,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               // Số điện thoại
               _buildTextFormField(
-                controller: _viewModel.phoneController,
+                controller: phoneController,
                 hintText: 'Số điện thoại',
                 icon: Icons.phone,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty)
                     return 'Số điện thoại không được để trống';
-                  if (!_viewModel.phoneRegex.hasMatch(value))
+                  if (!phoneRegex.hasMatch(value))
                     return 'Số điện thoại không hợp lệ';
                   return null;
                 },
@@ -88,14 +117,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               // Email
               _buildTextFormField(
-                controller: _viewModel.emailController,
+                controller: emailController,
                 hintText: 'Email',
                 icon: Icons.email,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty)
                     return 'Email không được để trống';
-                  if (!_viewModel.emailRegex.hasMatch(value))
-                    return 'Email không hợp lệ';
+                  if (!emailRegex.hasMatch(value)) return 'Email không hợp lệ';
                   return null;
                 },
               ),
@@ -103,7 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               // Mật khẩu
               _buildTextFormField(
-                controller: _viewModel.passwordController,
+                controller: passwordController,
                 hintText: 'Mật khẩu',
                 icon: Icons.lock,
                 isPassword: true,
@@ -124,7 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               // Xác nhận mật khẩu
               _buildTextFormField(
-                controller: _viewModel.confirmPasswordController,
+                controller: confirmPasswordController,
                 hintText: 'Xác nhận mật khẩu',
                 icon: Icons.lock,
                 isPassword: true,
@@ -137,7 +165,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 validator: (value) {
                   if (value == null || value.isEmpty)
                     return 'Vui lòng xác nhận mật khẩu';
-                  if (value != _viewModel.passwordController.text)
+                  if (value != passwordController.text)
                     return 'Mật khẩu không khớp';
                   return null;
                 },
@@ -148,7 +176,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed:
-                      _viewModel.isLoading
+                      isLoading
                           ? null
                           : () => {
                             FocusScope.of(context).unfocus(),
@@ -162,7 +190,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   child:
-                      _viewModel.isLoading
+                      isLoading
                           ? const CircularProgressIndicator(color: Colors.white)
                           : const Text(
                             'ĐĂNG KÝ',
