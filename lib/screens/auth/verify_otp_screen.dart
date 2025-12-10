@@ -66,35 +66,41 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       return;
     }
 
-    final result = await _authService.verifyOTP(widget.userID, int.parse(otp));
+    try {
+      await _authService.verifyOTP(widget.userID, int.parse(otp));
 
-    if (!mounted) return;
+      if (!mounted) return;
 
-    if (result == 1) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => NewPasswordScreen(userID: widget.userID),
         ),
       );
-    } else if (result == 0) {
-      ToastHelper.showError(context, 'OTP không đúng.');
-    } else if (result == 2) {
-      ToastHelper.showError(context, 'Mã OTP hết hiệu lực, vui lòng gửi lại.');
-    } else {
-      ToastHelper.showError(context, 'Đã xảy ra lỗi, vui lòng thử lại.');
+    } catch (e) {
+      if (!mounted) return;
+      String errorMsg = e.toString();
+      if (errorMsg.startsWith("Exception: ")) {
+        errorMsg = errorMsg.substring(11);
+      }
+      ToastHelper.showError(context, errorMsg);
     }
   }
 
   Future<void> _resendOTP(String email) async {
-    final result = await _authService.sendOTPtoemail(email);
-    if (!mounted) return;
+    try {
+      await _authService.sendOTPtoemail(email);
+      if (!mounted) return;
 
-    if (result == 1) {
       startCountdown();
       ToastHelper.showSuccess(context, 'Mã OTP đã được gửi lại.');
-    } else {
-      ToastHelper.showError(context, 'Gửi lại thất bại.');
+    } catch (e) {
+      if (!mounted) return;
+      String errorMsg = e.toString();
+      if (errorMsg.startsWith("Exception: ")) {
+        errorMsg = errorMsg.substring(11);
+      }
+      ToastHelper.showError(context, errorMsg);
     }
   }
 

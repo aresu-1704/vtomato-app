@@ -65,24 +65,20 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
 
       try {
         final authService = AuthService();
-        bool? isResetSuccess = await authService.resetPassword(
-          widget.userID,
-          password,
-        );
+        await authService.resetPassword(widget.userID, password);
 
         if (!mounted) return;
 
-        if (isResetSuccess == true) {
-          ToastHelper.showSuccess(context, 'Khôi phục mật khẩu thành công!');
-          Navigator.pop(context);
-        } else {
-          ToastHelper.showError(
-            context,
-            'Khôi phục mật khẩu thất bại, vui lòng thử lại!',
-          );
-        }
+        ToastHelper.showSuccess(context, 'Khôi phục mật khẩu thành công!');
+        Navigator.pop(context);
       } catch (e) {
-        if (mounted) ToastHelper.showError(context, 'Lỗi: $e');
+        if (mounted) {
+          String errorMsg = e.toString();
+          if (errorMsg.startsWith("Exception: ")) {
+            errorMsg = errorMsg.substring(11);
+          }
+          ToastHelper.showError(context, errorMsg);
+        }
       } finally {
         if (mounted) {
           setState(() {

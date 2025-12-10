@@ -46,7 +46,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     try {
       final authService = AuthService();
-      final error = await authService.register(
+      await authService.register(
         emailController.text.trim(),
         phoneController.text.trim(),
         passwordController.text,
@@ -54,17 +54,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
       if (!mounted) return;
 
-      if (error == null) {
-        ToastHelper.showSuccess(context, 'Đăng ký thành công!');
-        Future.delayed(const Duration(seconds: 1), () {
-          Navigator.pop(context);
-        });
-      } else {
-        ToastHelper.showError(context, 'Email đã tồn tại hoặc lỗi khác.');
-      }
+      ToastHelper.showSuccess(context, 'Đăng ký thành công!');
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.pop(context);
+      });
     } catch (e) {
       if (!mounted) return;
-      ToastHelper.showError(context, 'Lỗi kết nối: $e');
+      String errorMsg = e.toString();
+      if (errorMsg.startsWith("Exception: ")) {
+        errorMsg = errorMsg.substring(11);
+      }
+      ToastHelper.showError(context, errorMsg);
     } finally {
       if (mounted) {
         setState(() {

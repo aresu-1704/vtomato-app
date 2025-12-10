@@ -40,25 +40,13 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  Future<int?> _login() async {
+  Future<String> _login() async {
     setState(() => _isLoading = true);
     final authService = AuthService();
-    final result = await authService.login(
+    return await authService.login(
       _emailController.text,
       _passwordController.text,
     );
-
-    // Auto-save credentials on successful login (optional but good UX given loadUserData exists)
-    if (result != null && result > 0) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('email', _emailController.text);
-      await prefs.setString('password', _passwordController.text);
-    }
-
-    // Note: ensure loading remains true until the UI navigates or shows error
-    // in the original code, it was set to false at the end of the button handler.
-    // We will handle resetting loading in the button handler loop.
-    return result;
   }
 
   @override
@@ -138,20 +126,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (_formKey.currentState!.validate()) {
                               FocusScope.of(context).unfocus();
 
-                              // Trigger login
-                              final userId = await _login();
+                              try {
+                                final userId = await _login();
 
-                              if (!mounted) return;
+                                if (!mounted) return;
 
-                              if (userId == -3) {
-                                _showSnackBar(
-                                  'Không thể kết nối đến máy chủ, vui lòng thử lại sau.',
+                                // Success logic
+                                final prefs =
+                                    await SharedPreferences.getInstance();
+                                await prefs.setString(
+                                  'email',
+                                  _emailController.text,
                                 );
-                              } else if (userId == -2) {
-                                _showSnackBar(
-                                  'Bạn đã đăng nhập quá nhiều lần, vui lòng thử lại sau.',
+                                await prefs.setString(
+                                  'password',
+                                  _passwordController.text,
                                 );
-                              } else if (userId != null && userId > 0) {
+
                                 _showSnackBar('Đăng nhập thành công');
                                 await Future.delayed(
                                   const Duration(seconds: 1),
@@ -165,12 +156,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                             CameraScreen(UserId: userId),
                                   ),
                                 );
-                              } else {
-                                _showSnackBar('Sai tài khoản hoặc mật khẩu.');
-                              }
-
-                              if (mounted) {
-                                setState(() => _isLoading = false);
+                              } catch (e) {
+                                if (mounted) {
+                                  // Clean up the error message (remove "Exception: ")
+                                  String errorMsg = e.toString();
+                                  if (errorMsg.startsWith("Exception: ")) {
+                                    errorMsg = errorMsg.substring(11);
+                                  }
+                                  _showSnackBar(errorMsg);
+                                }
+                              } finally {
+                                if (mounted) {
+                                  setState(() => _isLoading = false);
+                                }
                               }
                             }
                           },

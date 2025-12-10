@@ -4,7 +4,7 @@ import 'package:tomato_detect_app/screens/history/history_detail_screen.dart';
 import 'package:tomato_detect_app/services/disease_history_service.dart';
 
 class PredictHistoryScreen extends StatefulWidget {
-  final int userID;
+  final String userID;
 
   const PredictHistoryScreen({super.key, required this.userID});
 

@@ -7,7 +7,7 @@ import 'package:tomato_detect_app/models/disease_history_model.dart';
 class DiseaseHistoryService {
   Future<bool> saveDiseaseHistory(
     Uint8List imageBytes,
-    int userID,
+    String userID,
     List<int> classList,
   ) async {
     final url = Uri.parse('${ApiConstants.baseUrl}/disease-history/save');
@@ -37,7 +37,7 @@ class DiseaseHistoryService {
     }
   }
 
-  Future<List<DiseaseHistoryModel>> getHistoryByUser(int userID) async {
+  Future<List<DiseaseHistoryModel>> getHistoryByUser(String userID) async {
     final url = Uri.parse('${ApiConstants.baseUrl}/disease-history/$userID');
 
     try {

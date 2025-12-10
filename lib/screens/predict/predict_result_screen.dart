@@ -7,7 +7,7 @@ import 'package:tomato_detect_app/services/disease_history_service.dart';
 
 class PredictResultScreen extends StatefulWidget {
   final Uint8List image;
-  final int userID;
+  final String userID;
 
   const PredictResultScreen({
     super.key,

@@ -27,43 +27,30 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
     try {
       ToastHelper.showInfo(context, "Đang tìm kiếm tài khoản...");
-      final result = await _authService.sendOTPtoemail(
+      final userId = await _authService.sendOTPtoemail(
         emailController.text.trim(),
       );
 
       if (!mounted) return;
 
-      if (result != null && result > 0) {
-        ToastHelper.showSuccess(context, "Đang gửi OTP đến Email của bạn...");
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder:
-                (context) => VerifyOtpScreen(
-                  userID: result,
-                  email: emailController.text.trim(),
-                ),
-          ),
-        );
-      } else {
-        switch (result) {
-          case 0:
-            ToastHelper.showError(context, 'Tài khoản không tồn tại.');
-            break;
-          case -2:
-            ToastHelper.showError(
-              context,
-              'Không thể kết nối đến máy chủ, vui lòng thử lại sau.',
-            );
-            break;
-          default:
-            ToastHelper.showError(context, 'Vui lòng thử lại sau.');
-            break;
-        }
-      }
+      ToastHelper.showSuccess(context, "Đang gửi OTP đến Email của bạn...");
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder:
+              (context) => VerifyOtpScreen(
+                userID: userId,
+                email: emailController.text.trim(),
+              ),
+        ),
+      );
     } catch (e) {
       if (mounted) {
-        ToastHelper.showError(context, 'Lỗi: $e');
+        String errorMsg = e.toString();
+        if (errorMsg.startsWith("Exception: ")) {
+          errorMsg = errorMsg.substring(11);
+        }
+        ToastHelper.showError(context, errorMsg);
       }
     } finally {
       if (mounted) {

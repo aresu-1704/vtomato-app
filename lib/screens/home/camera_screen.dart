@@ -1,4 +1,7 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:camera/camera.dart';
 import 'package:tomato_detect_app/screens/history/predict_history_screen.dart';
 import 'package:tomato_detect_app/screens/predict/predict_result_screen.dart';
@@ -6,10 +9,9 @@ import 'package:flutter/services.dart';
 import 'package:tomato_detect_app/utils/toast_helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
-import 'dart:typed_data';
 
 class CameraScreen extends StatefulWidget {
-  final int UserId;
+  final String UserId;
   const CameraScreen({super.key, required this.UserId});
 
   @override
@@ -77,24 +79,20 @@ class _CameraScreenState extends State<CameraScreen> {
         isTakePicture = false;
       });
 
-      if (imageBytes != null) {
-        _stopCamera();
-        if (!mounted) return;
+      _stopCamera();
+      if (!mounted) return;
 
-        bool? status = await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder:
-                (context) => PredictResultScreen(
-                  image: imageBytes,
-                  userID: widget.UserId,
-                ),
-          ),
-        );
+      bool? status = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder:
+              (context) =>
+                  PredictResultScreen(image: imageBytes, userID: widget.UserId),
+        ),
+      );
 
-        if (status == null) {
-          _reInitCamera();
-        }
+      if (status == null) {
+        _reInitCamera();
       }
     } catch (_) {
       if (mounted) ToastHelper.showError(context, "Lỗi khi chụp ảnh, thử lại.");
