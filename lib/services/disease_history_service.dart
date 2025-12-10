@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
@@ -41,27 +42,33 @@ class DiseaseHistoryService {
     final url = Uri.parse('${ApiConstants.baseUrl}/disease-history/$userID');
 
     try {
-      final response = await http.get(
-        url,
-        headers: {'Content-Type': 'application/json'},
-      );
+      final response = await http
+          .get(url, headers: {'Content-Type': 'application/json'})
+          .timeout(
+            const Duration(seconds: 10),
+            onTimeout: () {
+              throw TimeoutException('API request timeout');
+            },
+          );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         if (data['history'] != null) {
-          return (data['history'] as List)
-              .map((json) => DiseaseHistoryModel.fromJson(json))
-              .toList();
+          final historyList = <DiseaseHistoryModel>[];
+          for (var i = 0; i < (data['history'] as List).length; i++) {
+            try {
+              final item = DiseaseHistoryModel.fromJson(data['history'][i]);
+              historyList.add(item);
+            } catch (_) {}
+          }
+          return historyList;
         } else {
-          print("No 'history' key in response.");
           return [];
         }
       } else {
-        print("Server error: ${response.statusCode} - ${response.body}");
         return [];
       }
-    } catch (e) {
-      print("Exception occurred in getHistoryByUser: $e");
+    } catch (_) {
       return [];
     }
   }

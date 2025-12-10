@@ -44,25 +44,15 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   void dispose() {
-    if (isCameraInitialized) {
-      cameraController.setFlashMode(FlashMode.off);
-      cameraController.dispose();
+    try {
+      if (isCameraInitialized) {
+        cameraController.setFlashMode(FlashMode.off);
+        cameraController.dispose();
+      }
+    } catch (e) {
+      print('Error disposing camera: $e');
     }
     super.dispose();
-  }
-
-  void _stopCamera() {
-    if (isCameraInitialized) {
-      cameraController.setFlashMode(FlashMode.off);
-      cameraController.dispose();
-      setState(() {
-        isCameraInitialized = false;
-      });
-    }
-  }
-
-  void _reInitCamera() {
-    initCamera();
   }
 
   Future<void> _takePicture() async {
@@ -79,10 +69,16 @@ class _CameraScreenState extends State<CameraScreen> {
         isTakePicture = false;
       });
 
-      _stopCamera();
+      // Pause camera instead of stopping
+      if (isCameraInitialized) {
+        try {
+          await cameraController.pausePreview();
+        } catch (_) {}
+      }
+
       if (!mounted) return;
 
-      bool? status = await Navigator.push(
+      await Navigator.push(
         context,
         MaterialPageRoute(
           builder:
@@ -91,8 +87,11 @@ class _CameraScreenState extends State<CameraScreen> {
         ),
       );
 
-      if (status == null) {
-        _reInitCamera();
+      // Resume camera when back
+      if (mounted && isCameraInitialized) {
+        try {
+          await cameraController.resumePreview();
+        } catch (_) {}
       }
     } catch (_) {
       if (mounted) ToastHelper.showError(context, "Lỗi khi chụp ảnh, thử lại.");
@@ -125,10 +124,16 @@ class _CameraScreenState extends State<CameraScreen> {
           img.encodeJpg(rotatedImage),
         );
 
-        _stopCamera();
+        // Pause camera instead of stopping
+        if (isCameraInitialized) {
+          try {
+            await cameraController.pausePreview();
+          } catch (_) {}
+        }
+
         if (!mounted) return;
 
-        bool? status = await Navigator.push(
+        await Navigator.push(
           context,
           MaterialPageRoute(
             builder:
@@ -139,8 +144,11 @@ class _CameraScreenState extends State<CameraScreen> {
           ),
         );
 
-        if (status == null) {
-          _reInitCamera();
+        // Resume camera when back
+        if (mounted && isCameraInitialized) {
+          try {
+            await cameraController.resumePreview();
+          } catch (_) {}
         }
       } else {
         ToastHelper.showInfo(context, "Không có ảnh nào được chọn.");
@@ -151,17 +159,29 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   Future<void> _initHistoryScreen() async {
-    _stopCamera();
-    bool? status = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => PredictHistoryScreen(userID: widget.UserId),
-      ),
-    );
-
-    if (status == null) {
-      _reInitCamera();
+    // Pause camera instead of stopping
+    if (isCameraInitialized) {
+      try {
+        await cameraController.pausePreview();
+      } catch (_) {}
     }
+
+    if (!mounted) return;
+
+    try {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => PredictHistoryScreen(userID: widget.UserId),
+        ),
+      );
+
+      // Resume camera when back
+      if (mounted && isCameraInitialized) {
+        try {
+          await cameraController.resumePreview();
+        } catch (_) {}
+      }
+    } catch (_) {}
   }
 
   @override

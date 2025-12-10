@@ -29,8 +29,7 @@ class _PredictHistoryScreenState extends State<PredictHistoryScreen> {
     });
     try {
       historyList = await _service.getHistoryByUser(widget.userID);
-    } catch (e) {
-      // handle error if needed
+    } catch (_) {
     } finally {
       if (mounted) {
         setState(() {
