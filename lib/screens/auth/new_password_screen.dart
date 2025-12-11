@@ -3,6 +3,8 @@ import 'package:tomato_detect_app/services/auth_service.dart';
 import 'package:tomato_detect_app/utils/toast_helper.dart';
 import 'login_screen.dart';
 import 'package:animate_do/animate_do.dart';
+import '../../widgets/gradient_background.dart';
+import '../../widgets/modern_loading_indicator.dart';
 
 class NewPasswordScreen extends StatefulWidget {
   final int userID;
@@ -157,116 +159,118 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFEF7ED),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const LoginScreen()),
-            );
-          },
-        ),
-        title: FadeIn(
-          child: Text(
-            "TẠO MẬT KHẨU MỚI",
-            style: TextStyle(
-              color: Colors.green[800],
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+      body: GradientBackground(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 16),
-            FadeInDown(
-              duration: const Duration(milliseconds: 600),
-              child: const Text(
-                "Vui lòng tạo mật khẩu mới để khôi phục tài khoản của bạn",
-                style: TextStyle(color: Colors.black54),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const SizedBox(height: 32),
-            // Mật khẩu mới
-            FadeInLeft(
-              duration: const Duration(milliseconds: 500),
-              delay: const Duration(milliseconds: 200),
-              child: _buildTextField(
-                controller: passwordController,
-                label: "MẬT KHẨU MỚI",
-                errorText: passwordError,
-                obscureText: obscurePassword,
-                focusNode: _passwordFocus,
-                toggleObscure: () {
-                  setState(() {
-                    obscurePassword = !obscurePassword;
-                  });
+            AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
+                  );
                 },
               ),
-            ),
-            const SizedBox(height: 16),
-            // Xác nhận mật khẩu
-            FadeInRight(
-              duration: const Duration(milliseconds: 500),
-              delay: const Duration(milliseconds: 400),
-              child: _buildTextField(
-                controller: confirmPasswordController,
-                label: "XÁC NHẬN MẬT KHẨU",
-                errorText: confirmPasswordError,
-                obscureText: obscureConfirm,
-                focusNode: _confirmPasswordFocus,
-                toggleObscure: () {
-                  setState(() {
-                    obscureConfirm = !obscureConfirm;
-                  });
-                },
-              ),
-            ),
-            const SizedBox(height: 24),
-            FadeInUp(
-              duration: const Duration(milliseconds: 600),
-              delay: const Duration(milliseconds: 600),
-              child: ElevatedButton(
-                onPressed: isLoading ? null : _validateAndSubmit,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green[700],
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+              title: FadeIn(
+                child: const Text(
+                  "TẠO MẬT KHẨU MỚI",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
-                  elevation: 4,
                 ),
-                child: SizedBox(
-                  height: 28,
-                  child: Center(
-                    child:
-                        isLoading
-                            ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2,
-                              ),
-                            )
-                            : const Text(
-                              "Khôi phục mật khẩu",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
-                            ),
-                  ),
+              ),
+              centerTitle: true,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SizedBox(height: 16),
+                    FadeInDown(
+                      duration: const Duration(milliseconds: 600),
+                      child: const Text(
+                        "Vui lòng tạo mật khẩu mới để khôi phục tài khoản của bạn",
+                        style: TextStyle(color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    // Mật khẩu mới
+                    FadeInLeft(
+                      duration: const Duration(milliseconds: 500),
+                      delay: const Duration(milliseconds: 200),
+                      child: _buildTextField(
+                        controller: passwordController,
+                        label: "MẬT KHẨU MỚI",
+                        errorText: passwordError,
+                        obscureText: obscurePassword,
+                        focusNode: _passwordFocus,
+                        toggleObscure: () {
+                          setState(() {
+                            obscurePassword = !obscurePassword;
+                          });
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // Xác nhận mật khẩu
+                    FadeInRight(
+                      duration: const Duration(milliseconds: 500),
+                      delay: const Duration(milliseconds: 400),
+                      child: _buildTextField(
+                        controller: confirmPasswordController,
+                        label: "XÁC NHẬN MẬT KHẨU",
+                        errorText: confirmPasswordError,
+                        obscureText: obscureConfirm,
+                        focusNode: _confirmPasswordFocus,
+                        toggleObscure: () {
+                          setState(() {
+                            obscureConfirm = !obscureConfirm;
+                          });
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    FadeInUp(
+                      duration: const Duration(milliseconds: 600),
+                      delay: const Duration(milliseconds: 600),
+                      child: ElevatedButton(
+                        onPressed: isLoading ? null : _validateAndSubmit,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green[700],
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          elevation: 4,
+                        ),
+                        child: SizedBox(
+                          height: 28,
+                          child: Center(
+                            child:
+                                isLoading
+                                    ? const ButtonLoadingIndicator()
+                                    : const Text(
+                                      "Khôi phục mật khẩu",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

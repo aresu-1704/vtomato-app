@@ -8,8 +8,8 @@ import 'package:tomato_detect_app/screens/predict/predict_result_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:tomato_detect_app/utils/toast_helper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image/image.dart' as img;
 import 'package:animate_do/animate_do.dart';
+import 'package:tomato_detect_app/utils/image_utils.dart';
 
 class CameraScreen extends StatefulWidget {
   final String UserId;
@@ -70,6 +70,12 @@ class _CameraScreenState extends State<CameraScreen> {
         isTakePicture = false;
       });
 
+      if (!mounted) return;
+
+      // CRITICAL FIX: Apply orientation fix to camera captures
+      // Camera photos have EXIF rotation that must be baked into pixels
+      final fixedBytes = await ImageUtils.fixOrientation(imageBytes);
+
       // Pause camera instead of stopping
       if (isCameraInitialized) {
         try {
@@ -84,7 +90,7 @@ class _CameraScreenState extends State<CameraScreen> {
         MaterialPageRoute(
           builder:
               (context) =>
-                  PredictResultScreen(image: imageBytes, userID: widget.UserId),
+                  PredictResultScreen(image: fixedBytes, userID: widget.UserId),
         ),
       );
 
@@ -113,17 +119,8 @@ class _CameraScreenState extends State<CameraScreen> {
 
         if (!mounted) return;
 
-        img.Image? originalImage = img.decodeImage(rawBytes);
-
-        if (originalImage == null) {
-          ToastHelper.showError(context, "Không thể đọc ảnh.");
-          return;
-        }
-
-        img.Image rotatedImage = img.copyRotate(originalImage, angle: -90);
-        final Uint8List rotatedBytes = Uint8List.fromList(
-          img.encodeJpg(rotatedImage),
-        );
+        // Fix image orientation using EXIF data
+        final fixedBytes = await ImageUtils.fixOrientation(rawBytes);
 
         // Pause camera instead of stopping
         if (isCameraInitialized) {
@@ -139,7 +136,7 @@ class _CameraScreenState extends State<CameraScreen> {
           MaterialPageRoute(
             builder:
                 (context) => PredictResultScreen(
-                  image: rotatedBytes,
+                  image: fixedBytes,
                   userID: widget.UserId,
                 ),
           ),

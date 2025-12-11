@@ -216,71 +216,80 @@ class _PredictHistoryScreenState extends State<PredictHistoryScreen> {
         backgroundColor: Colors.green[700],
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body:
-          isLoading
-              ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(color: Colors.green[700]),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Đang tải lịch sử...',
-                      style: TextStyle(fontSize: 14, color: Colors.black54),
-                    ),
-                  ],
-                ),
-              )
-              : historyList.isEmpty
-              ? Center(
-                child: FadeIn(
-                  duration: const Duration(milliseconds: 600),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFFEF7ED), Color(0xFFE8F5E9), Color(0xFFFEF7ED)],
+          ),
+        ),
+        child:
+            isLoading
+                ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.history_outlined,
-                        size: 80,
-                        color: Colors.grey[400],
-                      ),
+                      CircularProgressIndicator(color: Colors.green[700]),
                       const SizedBox(height: 16),
                       const Text(
-                        'Chưa có lịch sử dự đoán nào.',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        'Đang tải lịch sử...',
+                        style: TextStyle(fontSize: 14, color: Colors.black54),
                       ),
                     ],
                   ),
-                ),
-              )
-              : ListView.builder(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                itemCount: historyList.length,
-                itemBuilder: (context, index) {
-                  final history = historyList[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder:
-                              (context) => HistoryDetailScreen(
-                                imageUrl: history.imageUrl,
-                                timestamp: history.timestamp,
-                                diseaseInfo: history.detectedDiseases,
-                                resultClassCount:
-                                    history.detectedDiseases.length,
-                              ),
+                )
+                : historyList.isEmpty
+                ? Center(
+                  child: FadeIn(
+                    duration: const Duration(milliseconds: 600),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.history_outlined,
+                          size: 80,
+                          color: Colors.grey[400],
                         ),
-                      );
-                    },
-                    child: _buildHistoryCard(history, index),
-                  );
-                },
-              ),
+                        const SizedBox(height: 16),
+                        const Text(
+                          'Chưa có lịch sử dự đoán nào.',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+                : ListView.builder(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  itemCount: historyList.length,
+                  itemBuilder: (context, index) {
+                    final history = historyList[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) => HistoryDetailScreen(
+                                  imageUrl: history.imageUrl,
+                                  timestamp: history.timestamp,
+                                  diseaseInfo: history.detectedDiseases,
+                                  resultClassCount:
+                                      history.detectedDiseases.length,
+                                ),
+                          ),
+                        );
+                      },
+                      child: _buildHistoryCard(history, index),
+                    );
+                  },
+                ),
+      ),
     );
   }
 }

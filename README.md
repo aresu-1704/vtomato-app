@@ -1,220 +1,171 @@
-# 🍅 ỨNG DỤNG NHẬN DIỆN BỆNH TRÊN CÂY CÀ CHUA BẰNG HÌNH ẢNH (ỨNG DỤNG MẠNG HỌC SÂU YOLO)
+# Tomato Disease Detection App
 
-Ứng dụng nhận diện bệnh cây cà chua được xây dựng bằng Flutter, kết nối với backend YOLO (FastAPI) để quét ảnh lá cây và dự đoán bệnh.
+Ứng dụng mobile phát hiện và chẩn đoán bệnh trên cây cà chua sử dụng công nghệ AI và Deep Learning.
 
-## 📌 Mô tả
+## Mô tả
 
-Hệ thống nhận diện bệnh trên cây cà chua gồm **2 thành phần chính**:
+Ứng dụng giúp nông dân và người trồng cà chua có thể:
+- Chụp ảnh hoặc tải ảnh lá cà chua lên hệ thống
+- Nhận kết quả phân tích bệnh tự động với độ chính xác cao
+- Xem thông tin chi tiết về bệnh được phát hiện (nguyên nhân, triệu chứng, cách điều trị)
+- Lưu lịch sử các lần kiểm tra để theo dõi tình trạng cây trồng
 
-- 📱 **Ứng dụng di động Flutter (Frontend):**  
-  Giúp người dùng dễ dàng chụp ảnh lá cây, gửi ảnh lên server và hiển thị kết quả dự đoán. Giao diện thân thiện, dễ sử dụng cho cả nông dân và kỹ thuật viên.
+## Tính năng chính
 
-- 🧠 **Hệ thống phân tích bệnh (Backend - FastAPI + YOLO):**  
-  Nhận ảnh từ người dùng, chạy mô hình học sâu (YOLO) để xác định lá bệnh và phân loại loại bệnh (mốc sương, xoăn lá, đốm vi khuẩn, v.v.).
+### Xác thực người dùng
+- Đăng ký tài khoản
+- Đăng nhập
+- Quên mật khẩu và khôi phục qua OTP
 
-### ✅ Các tính năng nổi bật:
+### Phát hiện bệnh
+- Chụp ảnh trực tiếp từ camera
+- Tải ảnh từ thư viện
+- Phân tích và nhận diện bệnh bằng AI
+- Hiển thị kết quả với bounding box trên ảnh
+- Thông tin chi tiết về từng loại bệnh
 
-- **Chụp ảnh hoặc chọn ảnh lá cây từ thư viện.**
-- **Tự động khoanh vùng vùng bệnh bằng mô hình YOLO.**
-- **Dự đoán loại bệnh chính xác bằng AI.**
-- **Hiển thị kết quả trực quan và dễ hiểu.**
-- **Lưu lịch sử ảnh.**
+### Quản lý lịch sử
+- Lưu trữ các lần phân tích
+- Xem lại kết quả đã lưu
+- Theo dõi diễn biến bệnh qua thời gian
 
-### 🎯 Mục tiêu dự án:
+## Công nghệ sử dụng
 
-Hỗ trợ nông dân và kỹ thuật viên nông nghiệp **phát hiện sớm** và **xử lý kịp thời** các loại bệnh thường gặp trên cây cà chua, giúp **giảm thiểu thiệt hại mùa vụ**, tăng hiệu quả sản xuất.
+### Frontend (Mobile App)
+- **Framework**: Flutter 3.7.0+
+- **Language**: Dart
+- **State Management**: Stateful Widgets
+- **Dependency Injection**: GetIt
+- **UI/UX**: 
+  - Custom gradient backgrounds
+  - Animate Do cho animations
+  - Shimmer cho loading states
+  - Custom notification system
 
-## 🤖 Mô hình mạng học sâu:
+### Backend API
+- **Framework**: FastAPI (Python)
+- **AI Model**: YOLO (YOLOv10n custom) cho Object Detection
+- **Image Processing**: OpenCV, PIL
+- **Database**: MongoDB
 
-  Mô hình được huấn luyện sử dụng kiến trúc **YOLO** cho bài toán phát hiện vùng lá bị bệnh.
-  Quá trình huấn luyện và đánh giá mô hình được thực hiện trên **Kaggle Notebook**.
-  
-### 📔 Xem chi tiết quá trình huấn luyện tại đây:
+### Các package chính
+- `http`: Giao tiếp với API
+- `image_picker`: Chọn ảnh từ gallery/camera
+- `camera`: Chụp ảnh trực tiếp
+- `shared_preferences`: Lưu trữ local
+- `get_it`: Service locator pattern
+- `animate_do`: Animations
+- `shimmer`: Loading effects
 
-  Chi tiết quá trình huấn luyện và đánh giá mô hình tại đây:  
-👉 [YOLO Tomato Disease Detection](https://github.com/aresu-1704/object-detection-in-tomato-disease-leaves.git)
+## Cấu trúc dự án
 
----
-
-### 🧱 Kiến trúc hệ thống:
-
----
-
-# 🛠️ BACKEND FASTAPI - YOLO (Backend)
-
-Đây là backend API được xây dựng bằng [FastAPI](https://fastapi.tiangolo.com/) cho hệ thống **Nhận diện bệnh cây Cà Chua** bằng mô hình **YOLO**.
-
-## 🚀 Tính năng chính
-
-### 🔐 Authentication
-- `POST /auth/login`: Đăng nhập
-- `POST /auth/register`: Đăng ký tài khoản
-- `POST /auth/reset-password`: Đặt lại mật khẩu
-- `POST /auth/send-otp`: Gửi mã OTP
-- `POST /auth/verify-otp`: Xác minh mã OTP
-
-### 🔬 Dự đoán bệnh cây cà chua
-- `POST /predict/predict-image`: Tải ảnh lên để dự đoán bệnh lá cà chua
-
-### 🧾 Lịch sử dự đoán
-- `POST /disease-history/save`: Lưu lại lịch sử dự đoán bệnh
-- `GET /disease-history/get-by-id/{user_id}`: Lấy lịch sử dự đoán theo `user_id`
-
----
-
-## 🧠 Mô hình sử dụng
-- **YOLOv12 Nano**: phát hiện lá bị bệnh cây cà chua (bounding box)
-- Sau khi cắt vùng chứa lá bệnh, sử dụng CNN để phân loại loại bệnh cụ thể
-
----
-
-## 🧰 Công nghệ
-- `FastAPI` – backend framework
-- `YOLOv12 Nano` – phát hiện lá bệnh
-- `CNN` – phân loại bệnh
-- `Pydantic`, `Uvicorn`, `PostgreSQL`
-
----
-
-## 📦 Cài đặt Backend
-
-### ⚙️ Yêu cầu:
-- Python 3.11+
-- pip
-
-### 🧪 Các bước setup:
-
-```bash
-
-# Clone repo
-git clone https://github.com/aresu-1704/tomato-disease-detect.git
-cd tomato-disease-detect/backend
-
-# Tạo môi trường ảo
-python -m venv venv
-source venv/bin/activate  # Windows: .\venv\Scripts\activate
-
-# Cài đặt thư viện
-pip install -r requirements.txt
-
-# Chạy server
-uvicorn main:app --reload
 ```
----
-
-## 🗃️ Cài đặt Cơ sở Dữ liệu
-
-### ⚙️ Yêu cầu:
-- PostgreSQL
-
-### 🧪 Các bước setup:
-
-```bash
-
-#Chạy Script database
-psql -U your_postgres_user -d your_database_name -f .DATABASE_SCHEMAS/postgreSQL_database.sql
+lib/
+├── core/
+│   └── service_locator.dart          # Dependency injection setup
+├── models/
+│   ├── disease_info_model.dart       # Model thông tin bệnh
+│   └── disease_history_model.dart    # Model lịch sử
+├── services/
+│   ├── auth_service.dart             # Xác thực
+│   ├── predict_service.dart          # Dự đoán bệnh
+│   └── disease_history_service.dart  # Quản lý lịch sử
+├── screens/
+│   ├── auth/                         # Màn hình đăng nhập, đăng ký
+│   ├── home/                         # Màn hình chính, camera
+│   ├── predict/                      # Màn hình kết quả
+│   └── history/                      # Màn hình lịch sử
+├── widgets/
+│   ├── app_notification.dart         # Custom notification system
+│   ├── gradient_background.dart      # Background gradients
+│   └── modern_loading_indicator.dart # Loading indicators
+└── utils/
+    └── toast_helper.dart             # Notification helper
 ```
 
-## **⚠️ Lưu ý:**
+## Yêu cầu hệ thống
 
-- Đảm bảo bạn đã cài đặt PostgreSQL và đã tạo một cơ sở dữ liệu trống.
+- Flutter SDK: >= 3.7.0
+- Dart SDK: >= 3.0.0
+- Android: minSdkVersion 21 (Android 5.0)
+- iOS: 11.0+
 
-- Thay your_postgres_user bằng tên người dùng PostgreSQL của bạn.
+## Cài đặt và chạy
 
-- Thay your_database_name bằng tên cơ sở dữ liệu mà bạn muốn sử dụng.
+### 1. Clone repository
 
----
+```bash
+git clone <repository-url>
+cd tomato-disease-detect
+```
 
-## 📡 Giao diện API (Swagger UI)
-<p align="center">
-  <img src="images/API/api.jpg" width="800"/>
-</p>
+### 2. Cài đặt dependencies
 
----
+```bash
+flutter pub get
+```
 
-# 📱 Flutter App (Frontend)
+### 3. Cấu hình API endpoint
 
-Ứng dụng nhận diện bệnh cây cà chua được xây dựng bằng Flutter, kết nối với backend YOLOv12 Nano (FastAPI) để quét ảnh lá cây và dự đoán bệnh.
+Cập nhật URL API trong file `lib/constants/api_constant.dart`:
 
-## 📌 Mô tả
+```dart
+class ApiConstants {
+  static const String baseUrl = 'http://your-api-url:8000';
+}
+```
 
-Ứng dụng frontend này được xây dựng bằng Flutter để cung cấp giao diện người dùng, cho phép người dùng:
-- Đăng nhập, đăng ký và khôi phục mật khẩu.
-- Chụp ảnh lá cây và gửi ảnh đến backend để nhận diện bệnh.
-- Xem lịch sử các lần phát hiện bệnh.
+### 4. Chạy ứng dụng
 
-Ứng dụng này kết nối với backend sử dụng FastAPI và YOLOv12 Nano để xử lý ảnh và trả về kết quả dự đoán bệnh cây cà chua.
+```bash
+# Chạy trên emulator/device
+flutter run
 
-## 🚀 Các tính năng chính
+# Build APK cho Android
+flutter build apk --release
 
-- **🔒 Đăng nhập & Đăng ký:** Người dùng có thể đăng nhập vào ứng dụng hoặc tạo tài khoản mới.
-- **🔑 Khôi phục mật khẩu:** Tính năng cho phép người dùng khôi phục mật khẩu của mình qua email.
-- **📸 Chụp ảnh lá cây:** Người dùng có thể chụp ảnh lá cây cà chua bằng camera.
-- **🧠 Nhận diện bệnh cây:** Ảnh sẽ được gửi đến backend và nhận kết quả dự đoán bệnh cây.
-- **📜 Xem lịch sử phát hiện bệnh:** Người dùng có thể xem lại lịch sử các lần phát hiện bệnh từ trước.
+# Build IPA cho iOS
+flutter build ios --release
+```
 
----
+## API Backend
 
-## 🛠 Cài đặt và cấu hình
+Ứng dụng kết nối với backend API FastAPI để:
+- Xác thực người dùng
+- Upload và phân tích ảnh
+- Lưu và lấy lịch sử phân tích
+- Lấy thông tin chi tiết về các loại bệnh
 
-### Yêu cầu
+### Endpoint chính
 
-- Flutter SDK (phiên bản mới nhất)
-- Dart SDK
-- Trình giả lập Android hoặc thiết bị thực để chạy ứng dụng.
+- `POST /auth/login` - Đăng nhập
+- `POST /auth/register` - Đăng ký
+- `POST /predict/predict` - Phân tích ảnh (trả về ảnh có bounding box)
+- `POST /predict/predict-disease` - Lấy thông tin bệnh
+- `GET /history/{user_id}` - Lấy lịch sử
+- `POST /history/save` - Lưu kết quả
 
-### Cài đặt
+## Phiên bản
 
-1. Clone repository frontend:
+**Current Version**: 2.0.0
 
-   ```bash
-   #Clone repo
-   git clone https://github.com/aresu-1704/tomato-disease-detect.git
-   
-   #Chuyển vào thư mục dự án
-   cd tomato-disease-detect/frontend
-   
-   #Cài đặt các phụ thuộc
-   flutter pub get
-   ```
-2. Cấu hình API:
+### Changelog
 
-Cấu hình API url trong `lib/constants/api_constant.dart`:
+**v2.0.0** (API v3.0)
+- Chuyển về server-side bounding box drawing
+- Thêm custom notification system (top overlay)
+- Implement service locator pattern với GetIt
+- Thêm gradient backgrounds cho UI
+- Flexible image sizing theo aspect ratio
+- Cải thiện animations và transitions
 
-   ```bash
-      #Cấu hình URL API backend
-      static const String baseUrl = <YOUR_API_URL>;
-   ```
+**v1.0.0**
+- Release đầu tiên với tính năng cơ bản
 
+## Tác giả
 
-### 🖼️ Hình ảnh giao diện ứng dụng
+Phát triển như một phần của dự án nhận diện bệnh cây trồng.
 
-#### 🔐 Xác thực người dùng
-<p align="center">
-  <img src="images/UI/login.jpg" width="150"/>
-  <img src="images/UI/register.jpg" width="150"/>
-  <img src="images/UI/forgot-password.jpg" width="150"/>
-  <img src="images/UI/verify-otp.jpg" width="150"/>
-  <img src="images/UI/reset-password.jpg" width="150"/>
-</p>
+## License
 
----
-
-#### 🌿 Nhận diện bệnh cây
-<p align="center">
-  <img src="images/UI/camera-upload.jpg" width="300"/>
-  <img src="images/UI/predict-result.jpg" width="300"/>
-</p>
-
----
-
-#### 📜 Lịch sử & chi tiết dự đoán
-<p align="center">
-  <img src="images/UI/history.jpg" width="300"/>
-</p>
-
----
-
-
-
-
+Private project - All rights reserved.

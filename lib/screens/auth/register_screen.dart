@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tomato_detect_app/services/auth_service.dart';
 import 'package:tomato_detect_app/utils/toast_helper.dart';
 import 'package:animate_do/animate_do.dart';
+import '../../widgets/gradient_background.dart';
+import '../../widgets/modern_loading_indicator.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -87,191 +89,222 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFDF6EE),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 58),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              ZoomIn(
-                duration: const Duration(milliseconds: 800),
-                child: Image.asset(
-                  'assets/images/tomato_icon.png',
-                  width: 200,
-                  height: 200,
-                ),
-              ),
-              const SizedBox(height: 15),
-              FadeInDown(
-                duration: const Duration(milliseconds: 600),
-                delay: const Duration(milliseconds: 200),
-                child: Text(
-                  'ĐĂNG KÝ TÀI KHOẢN',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green[800],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 18),
-
-              // Số điện thoại
-              FadeInLeft(
-                duration: const Duration(milliseconds: 500),
-                delay: const Duration(milliseconds: 300),
-                child: _buildTextFormField(
-                  controller: phoneController,
-                  hintText: 'Số điện thoại',
-                  icon: Icons.phone,
-                  focusNode: _phoneFocus,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty)
-                      return 'Số điện thoại không được để trống';
-                    if (!phoneRegex.hasMatch(value))
-                      return 'Số điện thoại không hợp lệ';
-                    return null;
-                  },
-                ),
-              ),
-              const SizedBox(height: 15),
-
-              // Email
-              FadeInRight(
-                duration: const Duration(milliseconds: 500),
-                delay: const Duration(milliseconds: 400),
-                child: _buildTextFormField(
-                  controller: emailController,
-                  hintText: 'Email',
-                  icon: Icons.email,
-                  focusNode: _emailFocus,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty)
-                      return 'Email không được để trống';
-                    if (!emailRegex.hasMatch(value))
-                      return 'Email không hợp lệ';
-                    return null;
-                  },
-                ),
-              ),
-              const SizedBox(height: 15),
-
-              // Mật khẩu
-              FadeInLeft(
-                duration: const Duration(milliseconds: 500),
-                delay: const Duration(milliseconds: 500),
-                child: _buildTextFormField(
-                  controller: passwordController,
-                  hintText: 'Mật khẩu',
-                  icon: Icons.lock,
-                  isPassword: true,
-                  obscureText: _obscurePassword,
-                  focusNode: _passwordFocus,
-                  toggleObscure: () {
-                    setState(() {
-                      _obscurePassword = !_obscurePassword;
-                    });
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty)
-                      return 'Mật khẩu không được để trống';
-                    if (value.length < 8) return 'Mật khẩu phải từ 8 ký tự';
-                    return null;
-                  },
-                ),
-              ),
-              const SizedBox(height: 15),
-
-              // Xác nhận mật khẩu
-              FadeInRight(
-                duration: const Duration(milliseconds: 500),
-                delay: const Duration(milliseconds: 600),
-                child: _buildTextFormField(
-                  controller: confirmPasswordController,
-                  hintText: 'Xác nhận mật khẩu',
-                  icon: Icons.lock,
-                  isPassword: true,
-                  obscureText: _obscureConfirmPassword,
-                  focusNode: _confirmPasswordFocus,
-                  toggleObscure: () {
-                    setState(() {
-                      _obscureConfirmPassword = !_obscureConfirmPassword;
-                    });
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty)
-                      return 'Vui lòng xác nhận mật khẩu';
-                    if (value != passwordController.text)
-                      return 'Mật khẩu không khớp';
-                    return null;
-                  },
-                ),
-              ),
-              const SizedBox(height: 26),
-
-              FadeInUp(
-                duration: const Duration(milliseconds: 600),
-                delay: const Duration(milliseconds: 700),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed:
-                        isLoading
-                            ? null
-                            : () => {
-                              FocusScope.of(context).unfocus(),
-                              _register(),
-                            },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green[700],
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      elevation: 4,
+      body: GradientBackground(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 58),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                ZoomIn(
+                  duration: const Duration(milliseconds: 800),
+                  child: Container(
+                    width: 220,
+                    height: 220,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xFFFDF6EC),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 20,
+                          spreadRadius: 5,
+                        ),
+                      ],
                     ),
-                    child:
-                        isLoading
-                            ? const CircularProgressIndicator(
-                              color: Colors.white,
-                            )
-                            : const Text(
-                              'ĐĂNG KÝ',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                    padding: const EdgeInsets.all(35),
+                    child: Image.asset(
+                      'assets/images/tomato_icon.png',
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 10),
+                const SizedBox(height: 15),
+                FadeInDown(
+                  duration: const Duration(milliseconds: 600),
+                  delay: const Duration(milliseconds: 200),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      'ĐĂNG KÝ TÀI KHOẢN',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black.withOpacity(0.5),
+                            blurRadius: 10,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 18),
 
-              FadeIn(
-                delay: const Duration(milliseconds: 800),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Đã có tài khoản ?'),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        'Đăng nhập',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF002F21),
+                // Số điện thoại
+                FadeInLeft(
+                  duration: const Duration(milliseconds: 500),
+                  delay: const Duration(milliseconds: 300),
+                  child: _buildTextFormField(
+                    controller: phoneController,
+                    hintText: 'Số điện thoại',
+                    icon: Icons.phone,
+                    focusNode: _phoneFocus,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty)
+                        return 'Số điện thoại không được để trống';
+                      if (!phoneRegex.hasMatch(value))
+                        return 'Số điện thoại không hợp lệ';
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(height: 15),
+
+                // Email
+                FadeInRight(
+                  duration: const Duration(milliseconds: 500),
+                  delay: const Duration(milliseconds: 400),
+                  child: _buildTextFormField(
+                    controller: emailController,
+                    hintText: 'Email',
+                    icon: Icons.email,
+                    focusNode: _emailFocus,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty)
+                        return 'Email không được để trống';
+                      if (!emailRegex.hasMatch(value))
+                        return 'Email không hợp lệ';
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(height: 15),
+
+                // Mật khẩu
+                FadeInLeft(
+                  duration: const Duration(milliseconds: 500),
+                  delay: const Duration(milliseconds: 500),
+                  child: _buildTextFormField(
+                    controller: passwordController,
+                    hintText: 'Mật khẩu',
+                    icon: Icons.lock,
+                    isPassword: true,
+                    obscureText: _obscurePassword,
+                    focusNode: _passwordFocus,
+                    toggleObscure: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty)
+                        return 'Mật khẩu không được để trống';
+                      if (value.length < 8) return 'Mật khẩu phải từ 8 ký tự';
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(height: 15),
+
+                // Xác nhận mật khẩu
+                FadeInRight(
+                  duration: const Duration(milliseconds: 500),
+                  delay: const Duration(milliseconds: 600),
+                  child: _buildTextFormField(
+                    controller: confirmPasswordController,
+                    hintText: 'Xác nhận mật khẩu',
+                    icon: Icons.lock,
+                    isPassword: true,
+                    obscureText: _obscureConfirmPassword,
+                    focusNode: _confirmPasswordFocus,
+                    toggleObscure: () {
+                      setState(() {
+                        _obscureConfirmPassword = !_obscureConfirmPassword;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty)
+                        return 'Vui lòng xác nhận mật khẩu';
+                      if (value != passwordController.text)
+                        return 'Mật khẩu không khớp';
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(height: 26),
+
+                FadeInUp(
+                  duration: const Duration(milliseconds: 600),
+                  delay: const Duration(milliseconds: 700),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed:
+                          isLoading
+                              ? null
+                              : () => {
+                                FocusScope.of(context).unfocus(),
+                                _register(),
+                              },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green[700],
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        elevation: 4,
+                      ),
+                      child:
+                          isLoading
+                              ? const ButtonLoadingIndicator()
+                              : const Text(
+                                'ĐĂNG KÝ',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                FadeIn(
+                  delay: const Duration(milliseconds: 800),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('Đã có tài khoản ?'),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          'Đăng nhập',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF002F21),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
-            ],
+                const SizedBox(height: 24),
+              ],
+            ),
           ),
         ),
       ),

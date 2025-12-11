@@ -5,8 +5,8 @@ import 'package:tomato_detect_app/constants/api_constant.dart';
 import 'package:tomato_detect_app/models/disease_info_model.dart';
 
 class PredictService {
-  /// Upload image to /predict endpoint (API v2.0)
-  /// Returns map with: image (Uint8List), class_count (int), class_indices (List<int>)
+  /// Upload image to /predict endpoint (API v3.0 - server-side bbox drawing)
+  /// Returns map with: annotatedImage (Uint8List), class_indices (List<int>)
   Future<Map<String, dynamic>?> uploadImageForPrediction(
     Uint8List imageBytes,
   ) async {
@@ -31,15 +31,19 @@ class PredictService {
         final data = json.decode(response.body);
 
         if (data['status'] == 'success') {
-          // Decode base64 image
-          final processedImage = base64Decode(data['image']);
-          final classCount = data['class_count'];
-          final classIndices = List<int>.from(data['class_indices']);
+          // Parse base64 annotated image
+          final base64Image = data['annotated_image'] as String;
+          final annotatedImageBytes = base64.decode(base64Image);
+
+          // Parse class indices
+          final classIndices =
+              (data['class_indices'] as List<dynamic>)
+                  .map((e) => e as int)
+                  .toList();
 
           return {
             'status': 'success',
-            'image': processedImage,
-            'class_count': classCount,
+            'annotatedImage': Uint8List.fromList(annotatedImageBytes),
             'class_indices': classIndices,
           };
         } else {

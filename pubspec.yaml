@@ -44,6 +44,7 @@ dependencies:
   flutter_animate: ^4.5.0
   shimmer: ^3.0.0
   animate_do: ^3.3.4
+  get_it: ^7.6.0
 
 dev_dependencies:
   flutter_test:
@@ -77,10 +78,14 @@ flutter_icons:
   image_path: "assets/images/tomato_icon.png"
 
 flutter_native_splash:
-  color: "#0xFFFDF6EC"
-  image: assets/images/tomato_icon.png
+  color: "#1B5E20"
+  image: assets/images/splash_icon.png
   android: true
   ios: true
+  android_12:
+    color: "#1B5E20"
+    image: assets/images/splash_icon.png
+  web: false
 
   # To add assets to your application, add an assets section, like this:
   # assets:
