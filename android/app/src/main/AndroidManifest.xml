@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
-        android:label="Rà soát bệnh trên cà chua"
+        android:label="VTomato"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

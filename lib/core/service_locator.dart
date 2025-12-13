@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
-import 'package:tomato_detect_app/services/predict_service.dart';
-import 'package:tomato_detect_app/services/disease_history_service.dart';
-import 'package:tomato_detect_app/services/auth_service.dart';
+import 'package:vtomato_app/services/predict_service.dart';
+import 'package:vtomato_app/services/disease_history_service.dart';
+import 'package:vtomato_app/services/auth_service.dart';
 
 final getIt = GetIt.instance;
 

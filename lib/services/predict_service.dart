@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
-import 'package:tomato_detect_app/constants/api_constant.dart';
-import 'package:tomato_detect_app/models/disease_info_model.dart';
+import 'package:vtomato_app/constants/api_constant.dart';
+import 'package:vtomato_app/models/disease_info_model.dart';
 
 class PredictService {
   /// Upload image to /predict endpoint (API v3.0 - server-side bbox drawing)

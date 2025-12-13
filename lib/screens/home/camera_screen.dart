@@ -3,13 +3,13 @@
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:camera/camera.dart';
-import 'package:tomato_detect_app/screens/history/predict_history_screen.dart';
-import 'package:tomato_detect_app/screens/predict/predict_result_screen.dart';
+import 'package:vtomato_app/screens/history/predict_history_screen.dart';
+import 'package:vtomato_app/screens/predict/predict_result_screen.dart';
 import 'package:flutter/services.dart';
-import 'package:tomato_detect_app/utils/toast_helper.dart';
+import 'package:vtomato_app/utils/toast_helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:tomato_detect_app/utils/image_utils.dart';
+import 'package:vtomato_app/utils/image_utils.dart';
 
 class CameraScreen extends StatefulWidget {
   final String UserId;

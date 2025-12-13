@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tomato_detect_app/services/auth_service.dart';
-import 'package:tomato_detect_app/utils/toast_helper.dart';
+import 'package:vtomato_app/services/auth_service.dart';
+import 'package:vtomato_app/utils/toast_helper.dart';
 import 'login_screen.dart';
 import 'package:animate_do/animate_do.dart';
 import '../../widgets/gradient_background.dart';

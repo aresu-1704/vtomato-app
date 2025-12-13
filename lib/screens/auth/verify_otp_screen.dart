@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:tomato_detect_app/services/auth_service.dart';
-import 'package:tomato_detect_app/utils/toast_helper.dart';
+import 'package:vtomato_app/services/auth_service.dart';
+import 'package:vtomato_app/utils/toast_helper.dart';
 import 'login_screen.dart';
 import 'forgot_password_screen.dart';
 import 'new_password_screen.dart';

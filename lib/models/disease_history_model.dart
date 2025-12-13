@@ -1,4 +1,4 @@
-import 'package:tomato_detect_app/models/disease_info_model.dart';
+import 'package:vtomato_app/models/disease_info_model.dart';
 
 class DiseaseHistoryModel {
   final String imageUrl; // Changed from Uint8List to String (Cloudinary URL)

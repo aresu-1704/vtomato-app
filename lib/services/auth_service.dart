@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:tomato_detect_app/constants/api_constant.dart';
+import 'package:vtomato_app/constants/api_constant.dart';
 
 class AuthService {
   Future<String> login(String email, String password) async {

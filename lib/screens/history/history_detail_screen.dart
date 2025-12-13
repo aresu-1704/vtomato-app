@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tomato_detect_app/models/disease_info_model.dart';
+import 'package:vtomato_app/models/disease_info_model.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:tomato_detect_app/widgets/gradient_background.dart';
+import 'package:vtomato_app/widgets/gradient_background.dart';
 
 class HistoryDetailScreen extends StatefulWidget {
   final String imageUrl;
@@ -63,12 +63,13 @@ class _HistoryDetailScreenState extends State<HistoryDetailScreen> {
           const Color(0xFFE8F5E9),
           const Color(0xFFFEF7ED),
         ],
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            Expanded(
-              flex: 7,
-              child: FadeInDown(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              // Image display
+              FadeInDown(
                 duration: const Duration(milliseconds: 600),
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 28),
@@ -108,17 +109,14 @@ class _HistoryDetailScreenState extends State<HistoryDetailScreen> {
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 12),
+              const SizedBox(height: 12),
 
-            if (hasDiseases)
-              Expanded(
-                flex: 5,
-                child: Padding(
+              // Disease info list
+              if (hasDiseases)
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: ListView.builder(
-                    itemCount: widget.diseaseInfo.length,
-                    itemBuilder: (context, index) {
+                  child: Column(
+                    children: List.generate(widget.diseaseInfo.length, (index) {
                       final disease = widget.diseaseInfo[index];
                       return FadeInUp(
                         duration: const Duration(milliseconds: 500),
@@ -190,11 +188,12 @@ class _HistoryDetailScreenState extends State<HistoryDetailScreen> {
                           ),
                         ),
                       );
-                    },
+                    }),
                   ),
                 ),
-              ),
-          ],
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );

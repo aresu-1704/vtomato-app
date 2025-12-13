@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tomato_detect_app/models/disease_history_model.dart';
-import 'package:tomato_detect_app/screens/history/history_detail_screen.dart';
-import 'package:tomato_detect_app/services/disease_history_service.dart';
+import 'package:vtomato_app/models/disease_history_model.dart';
+import 'package:vtomato_app/screens/history/history_detail_screen.dart';
+import 'package:vtomato_app/services/disease_history_service.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:animate_do/animate_do.dart';
 

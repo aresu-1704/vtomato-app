@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
-import 'package:tomato_detect_app/constants/api_constant.dart';
-import 'package:tomato_detect_app/models/disease_history_model.dart';
+import 'package:vtomato_app/constants/api_constant.dart';
+import 'package:vtomato_app/models/disease_history_model.dart';
 
 class DiseaseHistoryService {
   Future<bool> saveDiseaseHistory(

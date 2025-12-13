@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tomato_detect_app/widgets/app_notification.dart';
+import 'package:vtomato_app/widgets/app_notification.dart';
 
 /// Helper class for showing beautiful top notifications
 /// Uses custom AppNotification overlay instead of SnackBar to avoid conflicts

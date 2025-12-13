@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tomato_detect_app/services/auth_service.dart';
+import 'package:vtomato_app/services/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'forgot_password_screen.dart';
 import 'register_screen.dart';
 import '../home/camera_screen.dart';
-import 'package:tomato_detect_app/utils/toast_helper.dart';
+import 'package:vtomato_app/utils/toast_helper.dart';
 import 'package:animate_do/animate_do.dart';
 import '../../widgets/gradient_background.dart';
 import '../../widgets/modern_loading_indicator.dart';
